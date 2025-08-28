@@ -1,14 +1,19 @@
-import express, { Request, Response } from "express";
+import mongoose from "mongoose";
+import app from "./app";
+import config from "./app/config";
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+const port = config.port;
 
-app.use(express.json());
+const main: () => void = async () => {
+  try {
+    await mongoose.connect(config.db_url as string);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, TypeScript + Express!");
-});
+    app.listen(port, () => {
+      console.log(`🚀 Server running on http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+main();

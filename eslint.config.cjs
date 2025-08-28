@@ -18,7 +18,12 @@ module.exports = [
             prettier: prettierPlugin,
         },
         rules: {
-            "prettier/prettier": "error",
+            "no-unused-vars": "error",
+            "no-unused-expressions": "error",
+            "prefer-const": "error",
+            "no-console": "off",
+            "no-undef": "off",
+
         },
         ignores: ["dist/", "node_modules/"],
     },
