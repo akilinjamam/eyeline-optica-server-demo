@@ -4,7 +4,7 @@ import config from "./app/config";
 
 const port = config.port;
 
-const main: () => void = async () => {
+const main = async () => {
   try {
     await mongoose.connect(config.db_url as string);
 
