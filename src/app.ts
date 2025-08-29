@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import globalErrorHandler from "./app/middleware/globalErrorHandler";
 import notFoundRoute from "./app/middleware/notFoundRoute";
+import router from "./app/routes";
 
 const app: Application = express();
 
@@ -16,6 +17,8 @@ app.use(cors());
 app.get("/", (req: Request, res: Response) => {
 	res.send("Hello, TypeScript + Express!");
 });
+
+app.use("/api/v1/", router);
 
 //not found route
 app.use(notFoundRoute);
