@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { StatusCodes } from "http-status-codes";
 import cloudinary from "../../app/config/cloudinary";
 import catchAsync from "../../app/utils/catchAsync";
@@ -7,7 +6,8 @@ import sendResponse from "../../app/utils/sendResponse";
 import { productService } from "./products.service";
 
 const createProductController = catchAsync(async (req, res) => {
-	const { images, ...remaining } = req.body;
+	req.body = JSON.parse(req.body.data);
+
 	const files = req.files as Express.Multer.File[];
 	const imageUrls: string[] = [];
 
@@ -21,7 +21,7 @@ const createProductController = catchAsync(async (req, res) => {
 		deleteFile(file.path);
 	}
 
-	const result = productService.createProductService({ images: imageUrls, ...remaining });
+	const result = await productService.createProductService({ images: imageUrls, ...req.body });
 
 	sendResponse(res, {
 		success: true,
