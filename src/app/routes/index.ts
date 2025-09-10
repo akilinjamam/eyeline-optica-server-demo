@@ -3,6 +3,7 @@ import productrouter from "../../modules/products/products.route";
 import lenserouter from "../../modules/lenses/lenses.route";
 import salesRouter from "../../modules/sales/sales.route";
 import cartRouter from "../../modules/cart/cart.route";
+import contactlensRouter from "../../modules/contactLens/contactlens.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -21,6 +22,10 @@ const allRoutes = [
 	{
 		path: "/cart",
 		route: cartRouter,
+	},
+	{
+		path: "/contact-lens",
+		route: contactlensRouter,
 	},
 ];
 
