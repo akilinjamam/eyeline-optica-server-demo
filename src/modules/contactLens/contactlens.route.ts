@@ -14,4 +14,6 @@ contactlensRouter.post(
 	contactLensController.createContactLensController
 );
 
+contactlensRouter.get("/", contactLensController.getAllContactLenseController);
+
 export default contactlensRouter;
