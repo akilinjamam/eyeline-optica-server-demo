@@ -16,5 +16,11 @@ productrouter.post(
 );
 
 productrouter.get("/", productController.getAllProductController);
+productrouter.put(
+	"/update-product/:id",
+	combineImagesWithTextData,
+	productController.updateProductController
+);
+productrouter.delete("/delete-product", productController.deleteProductController);
 
 export default productrouter;

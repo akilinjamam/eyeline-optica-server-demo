@@ -9,10 +9,11 @@ const validateRequest =
 			req.body = schema.parse(req.body);
 			next();
 		} catch (error: any) {
+			console.log(error);
 			return res.status(400).json({
 				success: false,
 				message: "Validation Error",
-				errors: error.errors,
+				errors: error,
 			});
 		}
 	};

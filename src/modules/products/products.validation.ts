@@ -15,7 +15,7 @@ export const productSchema = z.object({
 	salesPrice: z.number().nonnegative(),
 	discount: z.number().min(0).max(100),
 	quantity: z.number().int().nonnegative(),
-	sold: z.number().int().nonnegative(),
+	sold: z.number().int().nonnegative().optional(),
 	features: z.array(z.string()).optional(),
 	brand: z.string(),
 	barcode: z.string(),
