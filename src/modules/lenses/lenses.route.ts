@@ -16,5 +16,12 @@ lenserouter.post(
 );
 
 lenserouter.get("/", lenseController.getAllLenseController);
+lenserouter.put(
+	"/update-lens/:id",
+	upload.array("images", 10),
+	combineImagesWithTextData,
+	lenseController.updateLensController
+);
+lenserouter.delete("/delete-lens/:id", lenseController.deleteLensController);
 
 export default lenserouter;

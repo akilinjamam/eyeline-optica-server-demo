@@ -15,5 +15,15 @@ contactlensRouter.post(
 );
 
 contactlensRouter.get("/", contactLensController.getAllContactLenseController);
+contactlensRouter.put(
+	"/update-contact-lens/:id",
+	upload.array("images", 10),
+	combineImagesWithTextData,
+	contactLensController.updateContactLensController
+);
+contactlensRouter.delete(
+	"/delete-contact-lens/:id",
+	contactLensController.deleteContactLensController
+);
 
 export default contactlensRouter;

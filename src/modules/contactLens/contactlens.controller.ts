@@ -25,7 +25,32 @@ const getAllContactLenseController = catchAsync(async (req, res) => {
 	});
 });
 
+const updateContactLensController = catchAsync(async (req, res) => {
+	const { id } = req.params;
+	const result = await contactLensService.updateContactLensService(req.body, id as string);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "Contact Lens updated successfully",
+		data: result,
+	});
+});
+const deleteContactLensController = catchAsync(async (req, res) => {
+	const { ids } = req.body;
+	const result = await contactLensService.deleteContactLensService(ids as string[]);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "Contact Lens deleted successfully",
+		data: result,
+	});
+});
+
 export const contactLensController = {
 	createContactLensController,
 	getAllContactLenseController,
+	updateContactLensController,
+	deleteContactLensController,
 };
