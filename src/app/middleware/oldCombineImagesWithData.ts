@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import cloudinary from "../config/cloudinary";
 import { deleteFile } from "../utils/deleteFile";
-const combineImagesWithTextData = async (req: Request, res: Response, next: NextFunction) => {
+const oldCombineImagesWithTextData = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const files = req.files as Express.Multer.File[];
 		const textData = JSON.parse(req.body.data);
@@ -26,4 +26,4 @@ const combineImagesWithTextData = async (req: Request, res: Response, next: Next
 	}
 };
 
-export default combineImagesWithTextData;
+export default oldCombineImagesWithTextData;
