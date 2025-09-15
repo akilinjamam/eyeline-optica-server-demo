@@ -21,9 +21,6 @@ contactlensRouter.put(
 	combineImagesWithTextData,
 	contactLensController.updateContactLensController
 );
-contactlensRouter.delete(
-	"/delete-contact-lens/:id",
-	contactLensController.deleteContactLensController
-);
+contactlensRouter.delete("/delete-contact-lens", contactLensController.deleteContactLensController);
 
 export default contactlensRouter;

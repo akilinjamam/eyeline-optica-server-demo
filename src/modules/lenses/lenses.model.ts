@@ -6,7 +6,8 @@ const LensSchema = new Schema<ILens>(
 	{
 		name: { type: String, required: true },
 		description: { type: String },
-		price: { type: Number, required: true },
+		purchasePrice: { type: Number, required: true },
+		salesPrice: { type: Number, required: true },
 		stock: { type: Number, required: true, default: 0 },
 		category: { type: String, default: "lens" },
 		brand: { type: String },

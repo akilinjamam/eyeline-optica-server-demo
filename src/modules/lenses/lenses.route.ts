@@ -22,6 +22,6 @@ lenserouter.put(
 	combineImagesWithTextData,
 	lenseController.updateLensController
 );
-lenserouter.delete("/delete-lens/:id", lenseController.deleteLensController);
+lenserouter.delete("/delete-lens", lenseController.deleteLensController);
 
 export default lenserouter;

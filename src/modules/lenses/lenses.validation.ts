@@ -3,7 +3,8 @@ import { z } from "zod";
 export const lensValidationSchema = z.object({
 	name: z.string().min(1, "Lens name is required"),
 	description: z.string().optional(),
-	price: z.number().min(0, "Price must be a positive number"),
+	purchasePrice: z.number().min(0, "Price must be a positive number"),
+	salesPrice: z.number().min(0, "Price must be a positive number"),
 	stock: z.number().int().min(0, "Stock must be a non-negative integer"),
 	category: z.string().default("lens"),
 	brand: z.string().optional(),

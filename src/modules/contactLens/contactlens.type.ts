@@ -11,6 +11,7 @@ export type IContactLens = {
 	powerRange: string; // e.g. "-12.00 to +8.00"
 	uvProtection: boolean;
 	purchasePrice: number;
+	features: string[];
 	salesPrice: number;
 	stock: number;
 	offer: number; // percentage (0-100)
