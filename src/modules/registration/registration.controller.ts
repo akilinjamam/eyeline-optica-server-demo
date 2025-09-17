@@ -24,7 +24,19 @@ const createLoginController = catchAsync(async (req, res) => {
 	});
 });
 
+const getUserRegistrationController = catchAsync(async (req, res) => {
+	const result = await registrationService.getUserRegistrationService();
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "User found successfully",
+		data: result,
+	});
+});
+
 export const registrationController = {
 	createRegistrationController,
 	createLoginController,
+	getUserRegistrationController,
 };

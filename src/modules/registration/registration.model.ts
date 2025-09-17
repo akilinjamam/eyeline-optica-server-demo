@@ -28,6 +28,10 @@ const registrationSchema = new Schema<IRegistration>(
 			required: true,
 			minlength: 6,
 		},
+		access: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true, // adds createdAt and updatedAt

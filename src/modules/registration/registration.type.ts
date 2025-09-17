@@ -8,6 +8,7 @@ export interface IRegistration extends Document {
 	email: string;
 	role: Role;
 	password: string;
+	access: boolean;
 	comparePassword(_: string): Promise<boolean>;
 }
 
@@ -15,4 +16,5 @@ export interface ILogin {
 	email: string;
 	role: Role;
 	password: string;
+	access?: string;
 }
