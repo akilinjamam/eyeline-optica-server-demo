@@ -18,16 +18,16 @@ const createRegistrationService = async (payload: IRegistration) => {
 };
 
 const createLoginService = async (payload: ILogin) => {
-	const { email, password, role } = payload;
+	const { email, password } = payload;
 
 	const user = await RegistrationModel.findOne({ email });
 	if (!user) {
 		throw new AppError(StatusCodes.NOT_FOUND, "User not found");
 	}
 
-	if (user.role !== role) {
-		throw new AppError(StatusCodes.UNAUTHORIZED, "Role doesn't matched");
-	}
+	// if (user.role !== role) {
+	// 	throw new AppError(StatusCodes.UNAUTHORIZED, "Role doesn't matched");
+	// }
 
 	if (!user.access) {
 		throw new AppError(StatusCodes.UNAUTHORIZED, "Please wait for permission to accept");

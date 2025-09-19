@@ -14,7 +14,7 @@ export interface IRegistration extends Document {
 
 export interface ILogin {
 	email: string;
-	role: Role;
+	role?: Role;
 	password: string;
 	access?: string;
 }
