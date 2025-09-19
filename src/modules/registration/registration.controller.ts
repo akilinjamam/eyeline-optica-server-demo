@@ -34,9 +34,34 @@ const getUserRegistrationController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const updateUserRegistrationController = catchAsync(async (req, res) => {
+	const { id } = req.params;
+	const result = await registrationService.updateUserService(id as string, req.body);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "User updated successfully",
+		data: result,
+	});
+});
+
+const deleteUserRegistrationController = catchAsync(async (req, res) => {
+	const { ids } = req.body;
+	const result = await registrationService.deleteUsersService(ids);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "Users deleted successfully",
+		data: result,
+	});
+});
 
 export const registrationController = {
 	createRegistrationController,
 	createLoginController,
 	getUserRegistrationController,
+	deleteUserRegistrationController,
+	updateUserRegistrationController,
 };

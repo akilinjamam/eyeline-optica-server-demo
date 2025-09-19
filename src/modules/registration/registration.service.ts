@@ -14,17 +14,7 @@ const createRegistrationService = async (payload: IRegistration) => {
 
 	const result = await RegistrationModel.create(payload);
 
-	const tokenData = {
-		id: result?._id,
-		role: result?.role,
-		email: result?.email,
-		name: result?.name,
-	};
-	const token = generateToken(tokenData);
-
-	const tokenWithResult = { result, token: `Bearer ${token}` };
-
-	return tokenWithResult;
+	return result;
 };
 
 const createLoginService = async (payload: ILogin) => {
@@ -64,7 +54,37 @@ const createLoginService = async (payload: ILogin) => {
 };
 
 const getUserRegistrationService = async () => {
-	const result = await RegistrationModel.find({});
+	const result = await RegistrationModel.find({}).select("-password -createdAt -updatedAt");
+
+	return result;
+};
+
+const updateUserService = async (id: string, payload: Partial<IRegistration>) => {
+	const user = await RegistrationModel.findById(id);
+	if (!user) {
+		throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+	}
+
+	const updatedUser = await RegistrationModel.findByIdAndUpdate(id, payload, {
+		new: true,
+		runValidators: true,
+	}).select("-password -createdAt -updatedAt");
+
+	return updatedUser;
+};
+
+/**
+ * Delete multiple users
+ */
+const deleteUsersService = async (ids: string[]) => {
+	if (!ids || ids.length === 0) {
+		throw new AppError(StatusCodes.BAD_REQUEST, "No IDs provided for deletion");
+	}
+
+	const result = await RegistrationModel.deleteMany({ _id: { $in: ids } });
+	if (result.deletedCount === 0) {
+		throw new AppError(StatusCodes.NOT_FOUND, "No users found to delete");
+	}
 
 	return result;
 };
@@ -73,4 +93,6 @@ export const registrationService = {
 	createRegistrationService,
 	createLoginService,
 	getUserRegistrationService,
+	updateUserService,
+	deleteUsersService,
 };

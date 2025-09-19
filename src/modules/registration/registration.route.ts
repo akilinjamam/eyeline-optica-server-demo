@@ -17,4 +17,10 @@ registrationRouter.get(
 	registrationController.getUserRegistrationController
 );
 
+registrationRouter.patch(
+	"/update-user/:id",
+	registrationController.updateUserRegistrationController
+);
+registrationRouter.delete("/delete-users", registrationController.deleteUserRegistrationController);
+
 export default registrationRouter;
