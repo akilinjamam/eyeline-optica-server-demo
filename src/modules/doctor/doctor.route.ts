@@ -8,7 +8,7 @@ const doctorRouter = express.Router();
 
 doctorRouter.post(
 	"/create-doctor",
-	upload.array("10"),
+	upload.array("images", 10),
 	combineImagesWithTextData,
 	doctorController.createDoctorsController
 );

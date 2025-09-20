@@ -4,8 +4,7 @@ import sendResponse from "../../app/utils/sendResponse";
 import { doctorServices } from "./doctor.service";
 
 const createDoctorsController = catchAsync(async (req, res) => {
-	const { data } = req.body;
-	const result = await doctorServices.createDoctorService(data);
+	const result = await doctorServices.createDoctorService(req.body);
 
 	sendResponse(res, {
 		statusCode: StatusCodes.OK,
