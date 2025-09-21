@@ -20,7 +20,7 @@ const registrationSchema = new Schema<IRegistration>(
 		},
 		role: {
 			type: String,
-			enum: ["doctor", "employee", "admin"],
+			enum: ["doctor", "employee", "admin", "employee & admin", "doctor & admin"],
 			required: true,
 		},
 		password: {
