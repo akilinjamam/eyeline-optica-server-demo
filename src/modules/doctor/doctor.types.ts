@@ -11,13 +11,14 @@ export interface IReview {
 
 // Doctor type
 export interface IDoctor {
-	name: string;
-	specialities: string[];
-	studies: string[];
-	totalExperience: number;
-	bmdcNumber: string;
+	name?: string;
+	email: string;
+	specialities?: string[];
+	studies?: string[];
+	totalExperience?: number;
+	bmdcNumber?: string;
 	currentlyWorking?: string;
 	description?: string;
 	experienceDetail?: string;
-	images: string[];
+	images?: string[];
 }

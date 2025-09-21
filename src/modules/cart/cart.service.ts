@@ -45,7 +45,7 @@ const createCartService = async (payload: ICart) => {
 		await session.abortTransaction();
 		throw new AppError(StatusCodes.BAD_REQUEST, (error as Error).message);
 	} finally {
-		session.endSession();
+		await session.endSession();
 	}
 };
 

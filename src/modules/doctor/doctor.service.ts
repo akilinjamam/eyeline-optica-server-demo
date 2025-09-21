@@ -8,8 +8,8 @@ export const createDoctorService = async (payload: IDoctor) => {
 	return await Doctor.create(payload);
 };
 
-export const getSingleDoctorService = async (id: string) => {
-	const result = await Doctor.find({ _id: id });
+export const getSingleDoctorService = async (email: string) => {
+	const result = await Doctor.findOne({ email });
 
 	return result;
 };

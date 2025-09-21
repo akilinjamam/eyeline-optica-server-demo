@@ -15,7 +15,7 @@ const createDoctorsController = catchAsync(async (req, res) => {
 });
 
 const getSingleDoctorController = catchAsync(async (req, res) => {
-	const result = await doctorServices.getSingleDoctorService(req.params.id as string);
+	const result = await doctorServices.getSingleDoctorService(req.params.email as string);
 
 	sendResponse(res, {
 		statusCode: StatusCodes.OK,

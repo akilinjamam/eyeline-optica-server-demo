@@ -14,7 +14,12 @@ doctorRouter.post(
 );
 
 doctorRouter.get("/", protect, doctorController.getAllDoctorsController);
-doctorRouter.get("/:id", doctorController.getSingleDoctorController);
-doctorRouter.put("/update-doctor/:id", doctorController.updateDoctorsController);
+doctorRouter.get("/:email", doctorController.getSingleDoctorController);
+doctorRouter.put(
+	"/update-doctor/:id",
+	upload.array("images", 10),
+	combineImagesWithTextData,
+	doctorController.updateDoctorsController
+);
 
 export default doctorRouter;

@@ -3,18 +3,36 @@ import { AppError } from "../../app/errors/AppError";
 import { RegistrationModel } from "./registration.model";
 import { ILogin, IRegistration } from "./registration.type";
 import { generateToken } from "../../app/utils/jwt";
+import mongoose from "mongoose";
+import { Doctor } from "../doctor/doctor.model";
 
 const createRegistrationService = async (payload: IRegistration) => {
-	const { email } = payload;
+	const { email, role } = payload;
 	const findUser = await RegistrationModel.findOne({ email });
 
 	if (findUser) {
 		throw new AppError(StatusCodes.FORBIDDEN, "User Already Registered");
 	}
 
-	const result = await RegistrationModel.create(payload);
+	if (role === "doctor") {
+		const session = await mongoose.startSession();
+		session.startTransaction();
 
-	return result;
+		try {
+			await Doctor.create([{ email: email }], { session });
+
+			const result = await RegistrationModel.create([payload], { session });
+			await session.commitTransaction();
+			return result;
+		} catch (error) {
+			throw new AppError(StatusCodes.BAD_REQUEST, (error as Error).message);
+		} finally {
+			await session.endSession();
+		}
+	} else {
+		const result = await RegistrationModel.create(payload);
+		return result;
+	}
 };
 
 const createLoginService = async (payload: ILogin) => {
@@ -24,10 +42,6 @@ const createLoginService = async (payload: ILogin) => {
 	if (!user) {
 		throw new AppError(StatusCodes.NOT_FOUND, "User not found");
 	}
-
-	// if (user.role !== role) {
-	// 	throw new AppError(StatusCodes.UNAUTHORIZED, "Role doesn't matched");
-	// }
 
 	if (!user.access) {
 		throw new AppError(StatusCodes.UNAUTHORIZED, "Please wait for permission to accept");

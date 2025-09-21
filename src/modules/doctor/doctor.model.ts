@@ -3,14 +3,15 @@ import { IDoctor, IReview } from "./doctor.types";
 
 const DoctorSchema: Schema<IDoctor> = new Schema(
 	{
-		name: { type: String, required: true },
-		specialities: { type: [String], required: true },
-		studies: { type: [String], required: true },
-		totalExperience: { type: Number, required: true },
-		bmdcNumber: { type: String, unique: true, required: true },
-		currentlyWorking: { type: String },
-		description: { type: String },
-		experienceDetail: { type: String },
+		name: { type: String, default: "add your name" },
+		email: { type: String, required: true },
+		specialities: { type: [String], default: "add your specialities like Cardiology, Neurology" },
+		studies: { type: [String], default: "add your Studies like MBBS, FCPS, FRCS" },
+		totalExperience: { type: Number, default: 0 },
+		bmdcNumber: { type: String, unique: true, default: "add your bmdc number" },
+		currentlyWorking: { type: String, default: "add where you work now" },
+		description: { type: String, default: "write something about you" },
+		experienceDetail: { type: String, default: "write your experience history" },
 		images: { type: [String], default: [] }, // e.g. Cloudinary/S3 URLs
 	},
 	{ timestamps: true }
