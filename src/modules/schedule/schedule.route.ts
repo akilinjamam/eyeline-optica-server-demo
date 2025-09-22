@@ -5,6 +5,6 @@ const scheduleRoute = express.Router();
 
 scheduleRoute.post("/create-schedule", schemduleController.createScheduleWithSlotController);
 
-scheduleRoute.get("/get-slot", schemduleController.getAllSlotController);
+scheduleRoute.get("/get-slot/:doctorId", schemduleController.getAllSlotController);
 
 export default scheduleRoute;
