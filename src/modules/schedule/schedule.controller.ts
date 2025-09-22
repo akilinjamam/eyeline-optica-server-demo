@@ -13,6 +13,19 @@ const createScheduleWithSlotController = catchAsync(async (req, res) => {
 	});
 });
 
+const getAllSlotController = catchAsync(async (req, res) => {
+	const { doctorId } = req.params;
+	const result = await scheduleService.getAllSlot(doctorId as string);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		success: true,
+		message: "Slot found successfully",
+		data: result,
+	});
+});
+
 export const schemduleController = {
 	createScheduleWithSlotController,
+	getAllSlotController,
 };

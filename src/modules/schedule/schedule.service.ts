@@ -133,6 +133,12 @@ const createScheduleWithSlotService = async (data: any) => {
 	}
 };
 
+const getAllSlot = async (doctorId: string) => {
+	const result = await Slot.find({ doctor: doctorId }).populate("doctor");
+	return result;
+};
+
 export const scheduleService = {
 	createScheduleWithSlotService,
+	getAllSlot,
 };
