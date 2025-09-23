@@ -82,7 +82,7 @@ const getCheckRoleOfUser = async (email: string, role: string) => {
 		throw new AppError(StatusCodes.NOT_FOUND, "user not found");
 	}
 
-	const isSameAsBefore = checkUser?.role === role;
+	const isSameAsBefore = checkUser?.role === role ? "matched" : "not-matched";
 
 	return isSameAsBefore;
 };
