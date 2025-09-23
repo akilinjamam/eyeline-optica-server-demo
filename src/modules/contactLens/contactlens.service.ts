@@ -15,6 +15,7 @@ const getAllContactLenseService = async (query: Record<string, unknown>) => {
 		.search(["name", "description"])
 		.filter()
 		.fields()
+		.sort()
 		.pagination();
 
 	const meta = await result.countTotal();

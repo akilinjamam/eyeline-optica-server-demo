@@ -14,6 +14,7 @@ const getAllProductsService = async (query: Record<string, unknown>) => {
 		.search(["name", "type"])
 		.filter()
 		.fields()
+		.sort()
 		.pagination();
 
 	const data = await result.modelQuery;
