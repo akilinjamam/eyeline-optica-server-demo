@@ -16,6 +16,11 @@ registrationRouter.get(
 	protect,
 	registrationController.getUserRegistrationController
 );
+registrationRouter.get(
+	"/check-user-role",
+	protect,
+	registrationController.getCheckRoleOfUserController
+);
 
 registrationRouter.patch(
 	"/update-user/:id",

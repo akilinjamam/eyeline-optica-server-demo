@@ -73,6 +73,20 @@ const getUserRegistrationService = async () => {
 	return result;
 };
 
+const getCheckRoleOfUser = async (email: string, role: string) => {
+	const checkUser = await RegistrationModel.findOne({ email })?.select(
+		"-password -createdAt -updatedAt"
+	);
+
+	if (!checkUser) {
+		throw new AppError(StatusCodes.NOT_FOUND, "user not found");
+	}
+
+	const isSameAsBefore = checkUser?.role === role;
+
+	return isSameAsBefore;
+};
+
 const updateUserService = async (id: string, payload: Partial<IRegistration>) => {
 	const user = await RegistrationModel.findById(id);
 	if (!user) {
@@ -107,6 +121,7 @@ export const registrationService = {
 	createRegistrationService,
 	createLoginService,
 	getUserRegistrationService,
+	getCheckRoleOfUser,
 	updateUserService,
 	deleteUsersService,
 };
