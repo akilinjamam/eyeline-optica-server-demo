@@ -7,6 +7,7 @@ import contactlensRouter from "../../modules/contactLens/contactlens.route";
 import registrationRouter from "../../modules/registration/registration.route";
 import doctorRouter from "../../modules/doctor/doctor.route";
 import scheduleRoute from "../../modules/schedule/schedule.route";
+import prescriptionRouter from "../../modules/prescription/prescription.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -41,6 +42,10 @@ const allRoutes = [
 	{
 		path: "/schedule",
 		route: scheduleRoute,
+	},
+	{
+		path: "/prescription",
+		route: prescriptionRouter,
 	},
 ];
 
