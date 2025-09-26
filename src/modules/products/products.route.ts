@@ -4,7 +4,6 @@ import { productController } from "./products.controller";
 import { productSchema } from "./products.validation";
 import validateRequest from "../../app/middleware/validateRequest";
 import combineImagesWithTextData from "../../app/middleware/combineImagesWithData";
-import { protect } from "../../app/middleware/auth";
 
 const productrouter = express.Router();
 
@@ -16,7 +15,7 @@ productrouter.post(
 	productController.createProductController
 );
 
-productrouter.get("/", protect, productController.getAllProductController);
+productrouter.get("/", productController.getAllProductController);
 productrouter.put(
 	"/update-product/:id",
 	upload.array("images", 10),
