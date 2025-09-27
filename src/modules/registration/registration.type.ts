@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Document } from "mongoose";
 
-export type Role = "doctor" | "employee" | "admin";
+export type Role = "doctor" | "employee" | "admin" | "employee & admin" | "doctor & admin";
 
 export interface IRegistration extends Document {
 	name: string;

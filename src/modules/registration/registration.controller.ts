@@ -46,7 +46,7 @@ const getCheckRoleOfUserController = catchAsync(async (req: AuthRequest, res) =>
 		data: result,
 	});
 });
-const updateUserRegistrationController = catchAsync(async (req, res) => {
+const updateUserRegistrationController = catchAsync(async (req: AuthRequest, res) => {
 	const { id } = req.params;
 	const result = await registrationService.updateUserService(id as string, req.body);
 

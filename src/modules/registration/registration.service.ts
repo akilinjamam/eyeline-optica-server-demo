@@ -93,6 +93,28 @@ const updateUserService = async (id: string, payload: Partial<IRegistration>) =>
 		throw new AppError(StatusCodes.NOT_FOUND, "User not found");
 	}
 
+	if (
+		(user?.role === "doctor" || user?.role === "doctor & admin") &&
+		(payload.role === "employee" ||
+			payload?.role === "employee & admin" ||
+			payload.role === "admin")
+	) {
+		throw new AppError(
+			StatusCodes.FORBIDDEN,
+			"sorry you can not change role of doctor as employee or employee & admin or admin"
+		);
+	}
+
+	if (
+		(user?.role === "employee" || user?.role === "employee & admin" || user?.role === "admin") &&
+		(payload.role === "doctor" || payload?.role === "doctor & admin")
+	) {
+		throw new AppError(
+			StatusCodes.FORBIDDEN,
+			"sorry you can not change role of employee as doctor or doctor & admin"
+		);
+	}
+
 	const updatedUser = await RegistrationModel.findByIdAndUpdate(id, payload, {
 		new: true,
 		runValidators: true,
