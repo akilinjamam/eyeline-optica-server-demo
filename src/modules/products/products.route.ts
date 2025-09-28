@@ -16,6 +16,7 @@ productrouter.post(
 );
 
 productrouter.get("/", productController.getAllProductController);
+productrouter.get("/get-single-product/:id", productController.getSingleProductController);
 productrouter.put(
 	"/update-product/:id",
 	upload.array("images", 10),

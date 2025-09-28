@@ -26,6 +26,11 @@ const getAllProductsService = async (query: Record<string, unknown>) => {
 	};
 };
 
+const getSingleProductService = async (id: string) => {
+	const result = await Product.findOne({ _id: id });
+	return result;
+};
+
 const updateProductService = async (payload: Record<string, unknown>, id: string) => {
 	const result = await Product.findByIdAndUpdate(id, payload, {
 		new: true,
@@ -53,4 +58,5 @@ export const productService = {
 	getAllProductsService,
 	updateProductService,
 	deleteProductService,
+	getSingleProductService,
 };
