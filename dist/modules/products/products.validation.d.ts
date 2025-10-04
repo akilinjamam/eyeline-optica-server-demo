@@ -1,0 +1,28 @@
+import { z } from "zod";
+export declare const productSchema: z.ZodObject<{
+    name: z.ZodString;
+    images: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    type: z.ZodString;
+    materialsCategory: z.ZodString;
+    frameCategory: z.ZodString;
+    sizeCategory: z.ZodString;
+    shapeCategory: z.ZodString;
+    biologyCategory: z.ZodString;
+    color: z.ZodString;
+    purchase: z.ZodNumber;
+    salesPrice: z.ZodNumber;
+    discount: z.ZodNumber;
+    quantity: z.ZodNumber;
+    sold: z.ZodOptional<z.ZodNumber>;
+    features: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    brand: z.ZodString;
+    barcode: z.ZodString;
+    badge: z.ZodOptional<z.ZodString>;
+    description: z.ZodString;
+    weeklyDeals: z.ZodBoolean;
+    frameMeasurements: z.ZodOptional<z.ZodString>;
+    frameDetails: z.ZodOptional<z.ZodString>;
+    prescriptionDetails: z.ZodOptional<z.ZodString>;
+    reviews: z.ZodOptional<z.ZodArray<z.ZodAny>>;
+}, z.core.$strip>;
+//# sourceMappingURL=products.validation.d.ts.map
