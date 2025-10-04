@@ -6,7 +6,7 @@
     "2": "tsconfig.json",
     "3": ".env",
     "4": "src",
-    "5": "npm install --production",
+    "5": "npm install",
     "6": "npm run build"
   }
 }
