@@ -1,1 +1,0 @@
-{"version":3,"file":"error.d.ts","sourceRoot":"","sources":["../../../src/app/interface/error.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,YAAY,GAAG;IAC1B,IAAI,EAAE,MAAM,GAAG,MAAM,CAAC;IACtB,OAAO,EAAE,MAAM,CAAC;CAChB,EAAE,CAAC;AAEJ,MAAM,MAAM,qBAAqB,GAAG;IACnC,UAAU,EAAE,MAAM,CAAC;IACnB,OAAO,EAAE,MAAM,CAAC;IAChB,aAAa,EAAE,YAAY,CAAC;CAC5B,CAAC"}

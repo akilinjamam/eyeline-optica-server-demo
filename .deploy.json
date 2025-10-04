@@ -1,9 +1,12 @@
 {
-  "DEPLOYPATH": "/home/akilinja/eyeline-optica-server",
+  "DEPLOYPATH": "/home/akilinja/eyeline-optica-server-live",
   "task": {
-    "0": "dist",
-    "1": "package.json",
-    "2": "package-lock.json",
-    "3": ".env"
+    "0": "package.json",
+    "1": "package-lock.json",
+    "2": "tsconfig.json",
+    "3": ".env",
+    "4": "src",
+    "5": "npm install --production",
+    "6": "npm run build"
   }
 }
