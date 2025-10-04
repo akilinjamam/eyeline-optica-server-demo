@@ -1,12 +1,13 @@
 {
 "DEPLOYPATH": "/home/akilinja/eyeline-optica-server",
 "task": [
-"package.json",
+"dist/",
+".env",
+".prettierrc",
+"eslint.config.cjs",
 "package-lock.json",
-"tsconfig.json",
-"npm install",
-"npm run build",
-"dist",
-"npm run start:prod"
+"package.json",
+"README.md",
+"tsconfig.json"
 ]
 }
