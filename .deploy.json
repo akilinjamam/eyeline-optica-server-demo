@@ -9,5 +9,6 @@
 "npm run build",
 "dist",
 "npm run start:prod"
+
 ]
 }
