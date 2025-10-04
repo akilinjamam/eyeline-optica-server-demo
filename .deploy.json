@@ -1,5 +1,5 @@
 {
-  "DEPLOYPATH": "/home/akilinja/eyeline-optica-server-live",
+  "DEPLOYPATH": "/home/akilinja/eyeline-optica-server",
   "task": {
     "0": "dist",
     "1": "package.json",
