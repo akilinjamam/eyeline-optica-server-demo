@@ -3,12 +3,10 @@
 "task": [
 "package.json",
 "package-lock.json",
-".env",
 "tsconfig.json",
 "npm install",
 "npm run build",
 "dist",
 "npm run start:prod"
-
 ]
 }
