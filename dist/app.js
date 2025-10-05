@@ -19,7 +19,7 @@ app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://eyelineoptica.com", "https://cms.eyelineoptica.com"],
 }));
 app.get("/", (req, res) => {
-    res.send("Hello, TypeScript + Express updated!");
+    res.send("Hello, TypeScript + Express");
 });
 app.use("/api/v1/", routes_1.default);
 //not found route
@@ -27,4 +27,5 @@ app.use(notFoundRoute_1.default);
 //global error handler
 app.use(globalErrorHandler_1.default);
 exports.default = app;
+//https://webuzo.com/docs/endusers-website-owners/guide-to-git-deployment/
 //# sourceMappingURL=app.js.map

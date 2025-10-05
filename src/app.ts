@@ -19,7 +19,7 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("Hello, TypeScript + Express updated!");
+	res.send("Hello, TypeScript + Express");
 });
 
 app.use("/api/v1/", router);
@@ -31,3 +31,5 @@ app.use(notFoundRoute);
 app.use(globalErrorHandler);
 
 export default app;
+
+//https://webuzo.com/docs/endusers-website-owners/guide-to-git-deployment/
