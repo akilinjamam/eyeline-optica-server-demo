@@ -19,7 +19,7 @@ app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://eyelineoptica.com", "https://cms.eyelineoptica.com"],
 }));
 app.get("/", (req, res) => {
-    res.send("Hello, TypeScript + Express");
+    res.send("Hello, TypeScript + Express + again updated");
 });
 app.use("/api/v1/", routes_1.default);
 //not found route

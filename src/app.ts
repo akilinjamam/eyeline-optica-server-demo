@@ -19,7 +19,7 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("Hello, TypeScript + Express");
+	res.send("Hello, TypeScript + Express + again updated");
 });
 
 app.use("/api/v1/", router);
