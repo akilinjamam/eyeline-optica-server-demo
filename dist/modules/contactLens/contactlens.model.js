@@ -40,7 +40,7 @@ const ContactLensSchema = new mongoose_1.Schema({
     color: { type: String, required: true, trim: true },
     type: {
         type: String,
-        enum: ["daily disposable", "monthly", "monthly (colored)"],
+        enum: ["daily disposable", "weekly", "monthly", "monthly (colored)", "toric", "multifocal"],
         default: "daily disposable",
     },
     material: { type: String, required: true },

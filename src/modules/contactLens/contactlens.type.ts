@@ -3,7 +3,14 @@ export type IContactLens = {
 	name: string;
 	brand: string;
 	color: string;
-	type: "daily disposable" | "monthly" | "monthly (colored)" | string; // extendable
+	type:
+		| "daily disposable"
+		| "weekly"
+		| "monthly"
+		| "monthly (colored)"
+		| "toric"
+		| "multifocal"
+		| string; // extendable
 	material: string;
 	waterContent: string; // e.g. "38%" (kept as string for flexibility)
 	diameter: number; // mm

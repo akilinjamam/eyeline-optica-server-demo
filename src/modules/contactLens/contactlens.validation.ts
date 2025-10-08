@@ -5,13 +5,15 @@ export const contactLensSchema = z.object({
 	brand: z.string().min(1, "Brand is required"),
 	color: z.string().min(1, "Color is required"),
 
-	type: z.enum(["daily disposable", "monthly", "monthly (colored)"]).or(z.string().min(1)), // extendable
+	type: z
+		.enum(["daily disposable", "monthly", "monthly (colored)", "weekly", "toric", "multifocal"])
+		.or(z.string().min(1)), // extendable
 
 	material: z.string().min(1, "Material is required"),
-	waterContent: z.string().regex(/^\d+%$/, "Water content must be like '38%'"),
+	waterContent: z.string(),
 
-	diameter: z.number().min(10, "Diameter too small").max(20, "Diameter too large"), // realistic range
-	baseCurve: z.number().min(7, "Base curve too small").max(10, "Base curve too large"),
+	diameter: z.number(), // realistic range
+	baseCurve: z.number(),
 
 	powerRange: z.string(),
 	uvProtection: z.boolean().default(false),

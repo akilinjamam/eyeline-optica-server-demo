@@ -6,11 +6,13 @@ exports.contactLensSchema = zod_1.z.object({
     name: zod_1.z.string().min(1, "Name is required"),
     brand: zod_1.z.string().min(1, "Brand is required"),
     color: zod_1.z.string().min(1, "Color is required"),
-    type: zod_1.z.enum(["daily disposable", "monthly", "monthly (colored)"]).or(zod_1.z.string().min(1)), // extendable
+    type: zod_1.z
+        .enum(["daily disposable", "monthly", "monthly (colored)", "weekly", "toric", "multifocal"])
+        .or(zod_1.z.string().min(1)), // extendable
     material: zod_1.z.string().min(1, "Material is required"),
-    waterContent: zod_1.z.string().regex(/^\d+%$/, "Water content must be like '38%'"),
-    diameter: zod_1.z.number().min(10, "Diameter too small").max(20, "Diameter too large"), // realistic range
-    baseCurve: zod_1.z.number().min(7, "Base curve too small").max(10, "Base curve too large"),
+    waterContent: zod_1.z.string(),
+    diameter: zod_1.z.number(), // realistic range
+    baseCurve: zod_1.z.number(),
     powerRange: zod_1.z.string(),
     uvProtection: zod_1.z.boolean().default(false),
     purchasePrice: zod_1.z.number().min(0, "Purchase price must be >= 0"),

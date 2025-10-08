@@ -7,6 +7,9 @@ export declare const contactLensSchema: z.ZodObject<{
         "daily disposable": "daily disposable";
         monthly: "monthly";
         "monthly (colored)": "monthly (colored)";
+        weekly: "weekly";
+        toric: "toric";
+        multifocal: "multifocal";
     }>, z.ZodString]>;
     material: z.ZodString;
     waterContent: z.ZodString;
@@ -31,6 +34,9 @@ export declare const createContactLensSchema: z.ZodObject<{
         "daily disposable": "daily disposable";
         monthly: "monthly";
         "monthly (colored)": "monthly (colored)";
+        weekly: "weekly";
+        toric: "toric";
+        multifocal: "multifocal";
     }>, z.ZodString]>;
     material: z.ZodString;
     waterContent: z.ZodString;
@@ -55,6 +61,9 @@ export declare const updateContactLensSchema: z.ZodObject<{
         "daily disposable": "daily disposable";
         monthly: "monthly";
         "monthly (colored)": "monthly (colored)";
+        weekly: "weekly";
+        toric: "toric";
+        multifocal: "multifocal";
     }>, z.ZodString]>>;
     material: z.ZodOptional<z.ZodString>;
     waterContent: z.ZodOptional<z.ZodString>;
