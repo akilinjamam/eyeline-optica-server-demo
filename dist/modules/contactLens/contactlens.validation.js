@@ -11,7 +11,7 @@ exports.contactLensSchema = zod_1.z.object({
     waterContent: zod_1.z.string().regex(/^\d+%$/, "Water content must be like '38%'"),
     diameter: zod_1.z.number().min(10, "Diameter too small").max(20, "Diameter too large"), // realistic range
     baseCurve: zod_1.z.number().min(7, "Base curve too small").max(10, "Base curve too large"),
-    powerRange: zod_1.z.string().min(1, "Power range required"),
+    powerRange: zod_1.z.string(),
     uvProtection: zod_1.z.boolean().default(false),
     purchasePrice: zod_1.z.number().min(0, "Purchase price must be >= 0"),
     salesPrice: zod_1.z.number().min(0, "Sales price must be >= 0"),

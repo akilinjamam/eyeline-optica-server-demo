@@ -13,7 +13,7 @@ export const contactLensSchema = z.object({
 	diameter: z.number().min(10, "Diameter too small").max(20, "Diameter too large"), // realistic range
 	baseCurve: z.number().min(7, "Base curve too small").max(10, "Base curve too large"),
 
-	powerRange: z.string().min(1, "Power range required"),
+	powerRange: z.string(),
 	uvProtection: z.boolean().default(false),
 
 	purchasePrice: z.number().min(0, "Purchase price must be >= 0"),
