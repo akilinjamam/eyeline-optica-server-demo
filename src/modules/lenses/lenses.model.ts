@@ -14,7 +14,7 @@ const LensSchema = new Schema<ILens>(
 		images: { type: [String], default: [] },
 		lensType: {
 			type: String,
-			enum: ["single vision", "bifocal", "progressive", "reading"],
+			enum: ["single vision", "bifocal", "progressive", "reading", "zero power"],
 			required: true,
 		},
 		material: {

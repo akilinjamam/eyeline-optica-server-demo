@@ -13,6 +13,7 @@ export declare const lensValidationSchema: z.ZodObject<{
         bifocal: "bifocal";
         progressive: "progressive";
         reading: "reading";
+        "zero power": "zero power";
     }>;
     material: z.ZodEnum<{
         plastic: "plastic";

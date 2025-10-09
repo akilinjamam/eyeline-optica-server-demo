@@ -11,7 +11,7 @@ exports.lensValidationSchema = zod_1.z.object({
     category: zod_1.z.string().default("lens"),
     brand: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url("Invalid image URL")).optional(),
-    lensType: zod_1.z.enum(["single vision", "bifocal", "progressive", "reading"]),
+    lensType: zod_1.z.enum(["single vision", "bifocal", "progressive", "reading", "zero power"]),
     material: zod_1.z.enum(["plastic", "polycarbonate", "high-index", "glass"]),
     coatings: zod_1.z.array(zod_1.z.string()).optional(),
     prescriptionRange: zod_1.z.string().optional(), // "+6.00 to -6.00"

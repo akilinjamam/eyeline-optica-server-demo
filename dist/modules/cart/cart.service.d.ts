@@ -1,14 +1,11 @@
 import { ICart } from "./cart.types";
-import mongoose from "mongoose";
 export declare const cartService: {
-    createCartService: (payload: ICart) => Promise<(mongoose.Document<unknown, {}, ICart, {}, {}> & ICart & {
-        _id: mongoose.Types.ObjectId;
-    } & {
-        __v: number;
-    })[]>;
-    getCartService: () => Promise<(mongoose.Document<unknown, {}, ICart, {}, {}> & ICart & {
-        _id: mongoose.Types.ObjectId;
-    } & {
+    createCartService: (payload: ICart) => Promise<{
+        token: string;
+    }>;
+    getCartService: () => Promise<(import("mongoose").Document<unknown, {}, import("./cart.model").ICart, {}, {}> & import("./cart.model").ICart & Required<{
+        _id: unknown;
+    }> & {
         __v: number;
     })[]>;
 };

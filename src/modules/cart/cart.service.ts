@@ -2,51 +2,28 @@ import { StatusCodes } from "http-status-codes";
 import { AppError } from "../../app/errors/AppError";
 import { Cart } from "./cart.model";
 import { ICart } from "./cart.types";
-import mongoose from "mongoose";
-import { Profile } from "../profile/profile.model";
+import { generateToken } from "../../app/utils/jwt";
 
 const createCartService = async (payload: ICart) => {
-	const session = await mongoose.startSession();
-	session.startTransaction();
+	const result = await Cart.create(payload);
 
-	try {
-		const { username, phone, address, productId, lensId, quantity } = payload;
-
-		// 1. Check or create Profile
-		let profile = await Profile.findOne({ phone }).session(session);
-
-		if (!profile) {
-			const createdProfiles = await Profile.create([{ username, phone, address }], { session });
-			profile = createdProfiles[0] ?? null;
-		}
-
-		if (!profile) {
-			throw new Error("Failed to create or find profile.");
-		}
-
-		const result = await Cart.create(
-			[
-				{
-					profileId: profile._id,
-					username,
-					phone,
-					address,
-					productId,
-					lensId,
-					quantity,
-				},
-			],
-			{ session }
-		);
-
-		await session.commitTransaction();
-		return result;
-	} catch (error) {
-		await session.abortTransaction();
-		throw new AppError(StatusCodes.BAD_REQUEST, (error as Error).message);
-	} finally {
-		await session.endSession();
+	if (!result) {
+		throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, "failed to create Cart");
 	}
+	const findCart = await Cart.findOne({ _id: result._id });
+
+	const tokenData = {
+		id: findCart?._id,
+		role: findCart?.address,
+		email: findCart?.email,
+		name: findCart?.customerName,
+	};
+
+	const token = generateToken(tokenData);
+
+	const resultWithtoken = { token: `Bearer ${token}` };
+
+	return resultWithtoken;
 };
 
 const getCartService = async () => {

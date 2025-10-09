@@ -1,6 +1,6 @@
 // src/types/lens.type.ts
 
-export type LensType = "single vision" | "bifocal" | "progressive" | "reading";
+export type LensType = "single vision" | "bifocal" | "progressive" | "reading" | "zero power";
 
 export type LensMaterial = "plastic" | "polycarbonate" | "high-index" | "glass";
 
