@@ -35,16 +35,25 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cart = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const prescriptionSchema = new mongoose_1.Schema({
+    sphere: { type: String },
+    cylinder: { type: String },
+    axis: { type: String },
+}, { _id: false });
 const CartItemSchema = new mongoose_1.Schema({
     productId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Product" },
     lensId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Lens" },
     contactLensId: { type: mongoose_1.Schema.Types.ObjectId, ref: "ContactLens" },
     accessoryId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Accessory" },
+    prescriptionImg: { type: [String], default: [] },
     type: {
         type: String,
         enum: ["frame", "frame_with_lens", "lens", "contact_lens", "accessory"],
         required: true,
     },
+    pd: { type: Number, default: 0 },
+    leftEye: { type: prescriptionSchema },
+    rightEye: { type: prescriptionSchema },
     quantity: { type: Number, required: true, min: 1 },
     unitPrice: { type: Number, required: true },
     subtotal: { type: Number, required: true },

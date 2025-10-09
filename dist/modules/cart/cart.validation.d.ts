@@ -11,6 +11,18 @@ export declare const cartItemSchema: z.ZodObject<{
     lensId: z.ZodOptional<z.ZodString>;
     contactLensId: z.ZodOptional<z.ZodString>;
     accessoryId: z.ZodOptional<z.ZodString>;
+    prescriptionImg: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>;
+    pd: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+    rightEye: z.ZodOptional<z.ZodObject<{
+        sphere: z.ZodOptional<z.ZodString>;
+        cylinder: z.ZodOptional<z.ZodString>;
+        axis: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
+    leftEye: z.ZodOptional<z.ZodObject<{
+        sphere: z.ZodOptional<z.ZodString>;
+        cylinder: z.ZodOptional<z.ZodString>;
+        axis: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
     quantity: z.ZodNumber;
     unitPrice: z.ZodNumber;
     subtotal: z.ZodNumber;
@@ -18,8 +30,8 @@ export declare const cartItemSchema: z.ZodObject<{
 export declare const cartValidationSchema: z.ZodObject<{
     customerName: z.ZodString;
     phoneNumber: z.ZodString;
-    email: z.ZodString;
-    address: z.ZodString;
+    email: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+    address: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     items: z.ZodArray<z.ZodObject<{
         type: z.ZodEnum<{
             lens: "lens";
@@ -32,6 +44,18 @@ export declare const cartValidationSchema: z.ZodObject<{
         lensId: z.ZodOptional<z.ZodString>;
         contactLensId: z.ZodOptional<z.ZodString>;
         accessoryId: z.ZodOptional<z.ZodString>;
+        prescriptionImg: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>;
+        pd: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+        rightEye: z.ZodOptional<z.ZodObject<{
+            sphere: z.ZodOptional<z.ZodString>;
+            cylinder: z.ZodOptional<z.ZodString>;
+            axis: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+        leftEye: z.ZodOptional<z.ZodObject<{
+            sphere: z.ZodOptional<z.ZodString>;
+            cylinder: z.ZodOptional<z.ZodString>;
+            axis: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
         quantity: z.ZodNumber;
         unitPrice: z.ZodNumber;
         subtotal: z.ZodNumber;

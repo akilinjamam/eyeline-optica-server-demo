@@ -1,9 +1,18 @@
 import mongoose, { Document } from "mongoose";
-interface ICartItem {
+interface IPrescriptionSchema {
+    sphere: string;
+    cylinder: string;
+    axis: string;
+}
+interface ICartItem extends Document {
     productId?: mongoose.Schema.Types.ObjectId;
     lensId?: mongoose.Schema.Types.ObjectId;
     contactLensId?: mongoose.Schema.Types.ObjectId;
     accessoryId?: mongoose.Schema.Types.ObjectId;
+    prescriptionImg?: String[];
+    rightEye: IPrescriptionSchema;
+    leftEye: IPrescriptionSchema;
+    pd: number;
     type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "accessory";
     quantity: number;
     unitPrice: number;

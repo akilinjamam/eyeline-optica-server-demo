@@ -1,11 +1,20 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-interface ICartItem {
+interface IPrescriptionSchema {
+	sphere: string;
+	cylinder: string;
+	axis: string;
+}
+
+interface ICartItem extends Document {
 	productId?: mongoose.Schema.Types.ObjectId; // Frame
 	lensId?: mongoose.Schema.Types.ObjectId; // Lens
 	contactLensId?: mongoose.Schema.Types.ObjectId; // Contact Lens
 	accessoryId?: mongoose.Schema.Types.ObjectId; // Accessory
-
+	prescriptionImg?: String[];
+	rightEye: IPrescriptionSchema;
+	leftEye: IPrescriptionSchema;
+	pd: number;
 	type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "accessory";
 	quantity: number;
 	unitPrice: number; // Price at time of adding to cart
@@ -24,17 +33,30 @@ export interface ICart extends Document {
 	updatedAt: Date;
 }
 
+const prescriptionSchema = new Schema<IPrescriptionSchema>(
+	{
+		sphere: { type: String },
+		cylinder: { type: String },
+		axis: { type: String },
+	},
+	{ _id: false }
+);
+
 const CartItemSchema = new Schema<ICartItem>(
 	{
 		productId: { type: Schema.Types.ObjectId, ref: "Product" },
 		lensId: { type: Schema.Types.ObjectId, ref: "Lens" },
 		contactLensId: { type: Schema.Types.ObjectId, ref: "ContactLens" },
 		accessoryId: { type: Schema.Types.ObjectId, ref: "Accessory" },
+		prescriptionImg: { type: [String], default: [] },
 		type: {
 			type: String,
 			enum: ["frame", "frame_with_lens", "lens", "contact_lens", "accessory"],
 			required: true,
 		},
+		pd: { type: Number, default: 0 },
+		leftEye: { type: prescriptionSchema },
+		rightEye: { type: prescriptionSchema },
 		quantity: { type: Number, required: true, min: 1 },
 		unitPrice: { type: Number, required: true },
 		subtotal: { type: Number, required: true },
