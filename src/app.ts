@@ -14,7 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: ["http://localhost:5173", "https://eyelineoptica.com", "https://cms.eyelineoptica.com"],
+		origin: [
+			"http://localhost:5173",
+			"https://eyelineoptica.com",
+			"https://cms.eyelineoptica.com",
+			"http://localhost:3000",
+		],
 	})
 );
 
