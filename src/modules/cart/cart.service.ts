@@ -16,6 +16,7 @@ const createCartService = async (payload: ICart) => {
 		id: findCart?._id,
 		email: findCart?.email,
 		name: findCart?.customerName,
+		phoneNumber: findCart?.phoneNumber,
 	};
 
 	const token = generateToken(tokenData);

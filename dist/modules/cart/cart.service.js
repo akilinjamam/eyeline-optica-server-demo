@@ -15,6 +15,7 @@ const createCartService = async (payload) => {
         id: findCart?._id,
         email: findCart?.email,
         name: findCart?.customerName,
+        phoneNumber: findCart?.phoneNumber,
     };
     const token = (0, jwt_1.generateToken)(tokenData);
     const resultWithtoken = { token: `Bearer ${token}` };
