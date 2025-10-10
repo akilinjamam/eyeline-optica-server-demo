@@ -14,7 +14,6 @@ const createCartService = async (payload: ICart) => {
 
 	const tokenData = {
 		id: findCart?._id,
-		role: findCart?.address,
 		email: findCart?.email,
 		name: findCart?.customerName,
 	};
@@ -28,7 +27,11 @@ const createCartService = async (payload: ICart) => {
 
 const getCartService = async (id: string) => {
 	try {
-		const carts = await Cart.find({ _id: id });
+		const carts = await Cart.find({ _id: id })
+			.populate("items.productId") // populate frame
+			.populate("items.lensId") // populate lens
+			.populate("items.contactLensId"); // populate contact lens
+		// .populate("items.accessoryId"); // populate accessory
 
 		return carts;
 	} catch (error) {
