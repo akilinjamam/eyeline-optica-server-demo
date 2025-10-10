@@ -3,7 +3,7 @@ export declare const cartService: {
     createCartService: (payload: ICart) => Promise<{
         token: string;
     }>;
-    getCartService: () => Promise<(import("mongoose").Document<unknown, {}, import("./cart.model").ICart, {}, {}> & import("./cart.model").ICart & Required<{
+    getCartService: (id: string) => Promise<(import("mongoose").Document<unknown, {}, import("./cart.model").ICart, {}, {}> & import("./cart.model").ICart & Required<{
         _id: unknown;
     }> & {
         __v: number;

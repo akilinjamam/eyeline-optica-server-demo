@@ -18,7 +18,7 @@ const createCartController = (0, catchAsync_1.default)(async (req, res) => {
     });
 });
 const getCartController = (0, catchAsync_1.default)(async (req, res) => {
-    const result = await cart_service_1.cartService.getCartService();
+    const result = await cart_service_1.cartService.getCartService(req.params.id);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,

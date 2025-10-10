@@ -14,7 +14,7 @@ const createCartController = catchAsync(async (req, res) => {
 	});
 });
 const getCartController = catchAsync(async (req, res) => {
-	const result = await cartService.getCartService();
+	const result = await cartService.getCartService(req.params.id as string);
 
 	sendResponse(res, {
 		statusCode: StatusCodes.OK,
