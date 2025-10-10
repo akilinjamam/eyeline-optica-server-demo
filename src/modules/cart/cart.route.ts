@@ -12,6 +12,6 @@ cartRouter.post(
 	cartController.createCartController
 );
 
-cartRouter.get("/get-cart-by-id/:id", cartController.getCartController);
+cartRouter.get("/get-cart-by-id/:phoneId", cartController.getCartController);
 
 export default cartRouter;

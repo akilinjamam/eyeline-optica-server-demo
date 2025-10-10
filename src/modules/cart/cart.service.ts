@@ -25,9 +25,9 @@ const createCartService = async (payload: ICart) => {
 	return resultWithtoken;
 };
 
-const getCartService = async (id: string) => {
+const getCartService = async (phoneNumber: string) => {
 	try {
-		const carts = await Cart.find({ _id: id })
+		const carts = await Cart.find({ phoneNumber })
 			.populate("items.productId") // populate frame
 			.populate("items.lensId") // populate lens
 			.populate("items.contactLensId"); // populate contact lens

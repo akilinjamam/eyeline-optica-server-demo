@@ -20,9 +20,9 @@ const createCartService = async (payload) => {
     const resultWithtoken = { token: `Bearer ${token}` };
     return resultWithtoken;
 };
-const getCartService = async (id) => {
+const getCartService = async (phoneNumber) => {
     try {
-        const carts = await cart_model_1.Cart.find({ _id: id })
+        const carts = await cart_model_1.Cart.find({ phoneNumber })
             .populate("items.productId") // populate frame
             .populate("items.lensId") // populate lens
             .populate("items.contactLensId"); // populate contact lens
