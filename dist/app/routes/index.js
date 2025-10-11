@@ -13,6 +13,7 @@ const registration_route_1 = __importDefault(require("../../modules/registration
 const doctor_route_1 = __importDefault(require("../../modules/doctor/doctor.route"));
 const schedule_route_1 = __importDefault(require("../../modules/schedule/schedule.route"));
 const prescription_route_1 = __importDefault(require("../../modules/prescription/prescription.route"));
+const customerLogin_route_1 = __importDefault(require("../../modules/customerLogin/customerLogin.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -50,6 +51,10 @@ const allRoutes = [
     {
         path: "/prescription",
         route: prescription_route_1.default,
+    },
+    {
+        path: "/login",
+        route: customerLogin_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));
