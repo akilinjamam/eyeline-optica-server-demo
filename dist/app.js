@@ -19,7 +19,9 @@ app.use((0, cors_1.default)({
     origin: [
         "http://localhost:5173",
         "https://eyelineoptica.com",
+        "https://www.eyelineoptica.com",
         "https://cms.eyelineoptica.com",
+        "https://www.cms.eyelineoptica.com",
         "http://localhost:3000",
     ],
 }));
