@@ -1,9 +1,12 @@
-import { ICart } from "./cart.types";
+import { ICart } from "./cart.model";
 export declare const cartService: {
     createCartService: (payload: ICart) => Promise<{
         token: string;
     }>;
-    getCartService: (phoneNumber: string) => Promise<(import("mongoose").Document<unknown, {}, import("./cart.model").ICart, {}, {}> & import("./cart.model").ICart & Required<{
+    createCartWithPrescriptionImg: (payload: any) => Promise<{
+        token: string;
+    }>;
+    getCartService: (phoneNumber: string) => Promise<(import("mongoose").Document<unknown, {}, ICart, {}, {}> & ICart & Required<{
         _id: unknown;
     }> & {
         __v: number;

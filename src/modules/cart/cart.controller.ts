@@ -13,6 +13,16 @@ const createCartController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const createCartWithPrescriptionImgController = catchAsync(async (req, res) => {
+	const result = await cartService.createCartWithPrescriptionImg(req.body);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		success: true,
+		message: "Cart created with prescription images successfully",
+		data: result,
+	});
+});
 const getCartController = catchAsync(async (req, res) => {
 	const result = await cartService.getCartService(req.params.phoneId as string);
 
@@ -26,5 +36,6 @@ const getCartController = catchAsync(async (req, res) => {
 
 export const cartController = {
 	createCartController,
+	createCartWithPrescriptionImgController,
 	getCartController,
 };

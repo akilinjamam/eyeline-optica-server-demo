@@ -21,6 +21,25 @@ const createCartService = async (payload) => {
     const resultWithtoken = { token: `Bearer ${token}` };
     return resultWithtoken;
 };
+const createCartWithPrescriptionImg = async (payload) => {
+    const { items, prescriptionImg, ...remaining } = payload;
+    const newModifiedItems = [{ ...items[0], prescriptionImg: prescriptionImg }];
+    const newPayload = { ...remaining, items: newModifiedItems };
+    const result = await cart_model_1.Cart.create(newPayload);
+    if (!result) {
+        throw new AppError_1.AppError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, "failed to create Cart");
+    }
+    const findCart = await cart_model_1.Cart.findOne({ _id: result._id });
+    const tokenData = {
+        id: findCart?._id,
+        email: findCart?.email,
+        name: findCart?.customerName,
+        phoneNumber: findCart?.phoneNumber,
+    };
+    const token = (0, jwt_1.generateToken)(tokenData);
+    const resultWithtoken = { token: `Bearer ${token}` };
+    return resultWithtoken;
+};
 const getCartService = async (phoneNumber) => {
     try {
         const carts = await cart_model_1.Cart.find({ phoneNumber })
@@ -36,6 +55,7 @@ const getCartService = async (phoneNumber) => {
 };
 exports.cartService = {
     createCartService,
+    createCartWithPrescriptionImg,
     getCartService,
 };
 //# sourceMappingURL=cart.service.js.map

@@ -1,11 +1,37 @@
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "../../app/errors/AppError";
-import { Cart } from "./cart.model";
-import { ICart } from "./cart.types";
+import { Cart, ICart } from "./cart.model";
+
 import { generateToken } from "../../app/utils/jwt";
 
 const createCartService = async (payload: ICart) => {
 	const result = await Cart.create(payload);
+
+	if (!result) {
+		throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, "failed to create Cart");
+	}
+	const findCart = await Cart.findOne({ _id: result._id });
+
+	const tokenData = {
+		id: findCart?._id,
+		email: findCart?.email,
+		name: findCart?.customerName,
+		phoneNumber: findCart?.phoneNumber,
+	};
+
+	const token = generateToken(tokenData);
+
+	const resultWithtoken = { token: `Bearer ${token}` };
+
+	return resultWithtoken;
+};
+
+const createCartWithPrescriptionImg = async (payload: any) => {
+	const { items, prescriptionImg, ...remaining } = payload;
+	const newModifiedItems = [{ ...items[0], prescriptionImg: prescriptionImg }];
+	const newPayload = { ...remaining, items: newModifiedItems };
+
+	const result = await Cart.create(newPayload);
 
 	if (!result) {
 		throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, "failed to create Cart");
@@ -42,5 +68,6 @@ const getCartService = async (phoneNumber: string) => {
 
 export const cartService = {
 	createCartService,
+	createCartWithPrescriptionImg,
 	getCartService,
 };

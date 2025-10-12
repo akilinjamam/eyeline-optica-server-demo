@@ -17,6 +17,15 @@ const createCartController = (0, catchAsync_1.default)(async (req, res) => {
         data: result,
     });
 });
+const createCartWithPrescriptionImgController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await cart_service_1.cartService.createCartWithPrescriptionImg(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "Cart created with prescription images successfully",
+        data: result,
+    });
+});
 const getCartController = (0, catchAsync_1.default)(async (req, res) => {
     const result = await cart_service_1.cartService.getCartService(req.params.phoneId);
     (0, sendResponse_1.default)(res, {
@@ -28,6 +37,7 @@ const getCartController = (0, catchAsync_1.default)(async (req, res) => {
 });
 exports.cartController = {
     createCartController,
+    createCartWithPrescriptionImgController,
     getCartController,
 };
 //# sourceMappingURL=cart.controller.js.map
