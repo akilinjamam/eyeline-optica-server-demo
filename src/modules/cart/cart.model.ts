@@ -16,6 +16,7 @@ interface ICartItem extends Document {
 	leftEye: IPrescriptionSchema;
 	pd: number;
 	type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "accessory";
+	submitType: string;
 	quantity: number;
 	unitPrice: number; // Price at time of adding to cart
 	subtotal: number; // quantity * unitPrice
@@ -54,6 +55,7 @@ const CartItemSchema = new Schema<ICartItem>(
 			enum: ["frame", "frame_with_lens", "lens", "contact_lens", "accessory"],
 			required: true,
 		},
+		submitType: { type: String },
 		pd: { type: Number, default: 0 },
 		leftEye: { type: prescriptionSchema },
 		rightEye: { type: prescriptionSchema },

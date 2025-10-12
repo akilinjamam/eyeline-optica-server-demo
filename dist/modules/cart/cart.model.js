@@ -51,6 +51,7 @@ const CartItemSchema = new mongoose_1.Schema({
         enum: ["frame", "frame_with_lens", "lens", "contact_lens", "accessory"],
         required: true,
     },
+    submitType: { type: String },
     pd: { type: Number, default: 0 },
     leftEye: { type: prescriptionSchema },
     rightEye: { type: prescriptionSchema },

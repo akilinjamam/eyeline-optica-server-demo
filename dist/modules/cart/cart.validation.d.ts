@@ -7,6 +7,7 @@ export declare const cartItemSchema: z.ZodObject<{
         contact_lens: "contact_lens";
         accessory: "accessory";
     }>;
+    submitType: z.ZodOptional<z.ZodString>;
     productId: z.ZodOptional<z.ZodString>;
     lensId: z.ZodOptional<z.ZodString>;
     contactLensId: z.ZodOptional<z.ZodString>;
@@ -40,6 +41,7 @@ export declare const cartValidationSchema: z.ZodObject<{
             contact_lens: "contact_lens";
             accessory: "accessory";
         }>;
+        submitType: z.ZodOptional<z.ZodString>;
         productId: z.ZodOptional<z.ZodString>;
         lensId: z.ZodOptional<z.ZodString>;
         contactLensId: z.ZodOptional<z.ZodString>;

@@ -14,6 +14,7 @@ interface ICartItem extends Document {
     leftEye: IPrescriptionSchema;
     pd: number;
     type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "accessory";
+    submitType: string;
     quantity: number;
     unitPrice: number;
     subtotal: number;
