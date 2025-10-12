@@ -26,6 +26,10 @@ const getAllLenseService = async (query) => {
         data,
     };
 };
+const getSingleLensService = async (id) => {
+    const result = await lenses_model_1.Lens.findOne({ _id: id });
+    return result;
+};
 const updateLensService = async (payload, id) => {
     const result = await lenses_model_1.Lens.findByIdAndUpdate(id, payload, {
         new: true,
@@ -48,5 +52,6 @@ exports.lenseService = {
     getAllLenseService,
     updateLensService,
     deleteLensService,
+    getSingleLensService,
 };
 //# sourceMappingURL=lenses.service.js.map

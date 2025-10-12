@@ -23,6 +23,16 @@ const getAllLenseController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const getsingleLenseController = catchAsync(async (req, res) => {
+	const result = await lenseService.getSingleLensService(req.params.id as string);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		success: true,
+		message: "Lense id found successfully",
+		data: result,
+	});
+});
 
 const updateLensController = catchAsync(async (req, res) => {
 	const { id } = req.params;
@@ -50,6 +60,7 @@ const deleteLensController = catchAsync(async (req, res) => {
 export const lenseController = {
 	createLenseController,
 	getAllLenseController,
+	getsingleLenseController,
 	updateLensController,
 	deleteLensController,
 };

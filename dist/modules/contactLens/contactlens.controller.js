@@ -26,6 +26,15 @@ const getAllContactLenseController = (0, catchAsync_1.default)(async (req, res) 
         data: result,
     });
 });
+const getSingleContactLenseController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await contactlens_service_1.contactLensService.getSingleContactLensService(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "contact Lense id found successfully",
+        data: result,
+    });
+});
 const updateContactLensController = (0, catchAsync_1.default)(async (req, res) => {
     const { id } = req.params;
     const result = await contactlens_service_1.contactLensService.updateContactLensService(req.body, id);
@@ -49,6 +58,7 @@ const deleteContactLensController = (0, catchAsync_1.default)(async (req, res) =
 exports.contactLensController = {
     createContactLensController,
     getAllContactLenseController,
+    getSingleContactLenseController,
     updateContactLensController,
     deleteContactLensController,
 };

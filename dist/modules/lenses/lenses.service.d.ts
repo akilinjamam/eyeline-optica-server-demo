@@ -24,5 +24,10 @@ export declare const lenseService: {
         __v: number;
     }>;
     deleteLensService: (ids: string[]) => Promise<import("mongodb").DeleteResult>;
+    getSingleLensService: (id: string) => Promise<(import("mongoose").Document<unknown, {}, ILens, {}, {}> & ILens & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }) | null>;
 };
 //# sourceMappingURL=lenses.service.d.ts.map

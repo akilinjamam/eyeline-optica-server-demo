@@ -23,5 +23,6 @@ lenserouter.put(
 	lenseController.updateLensController
 );
 lenserouter.delete("/delete-lens", lenseController.deleteLensController);
+lenserouter.get("/get-lens-by-id/:id", lenseController.getsingleLenseController);
 
 export default lenserouter;

@@ -18,6 +18,11 @@ export declare const contactLensService: {
             __v: number;
         })[];
     }>;
+    getSingleContactLensService: (id: string) => Promise<(import("mongoose").Document<unknown, {}, IContactLens, {}, {}> & IContactLens & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }) | null>;
     updateContactLensService: (payload: Record<string, unknown>, id: string) => Promise<import("mongoose").Document<unknown, {}, IContactLens, {}, {}> & IContactLens & {
         _id: import("mongoose").Types.ObjectId;
     } & {

@@ -26,6 +26,11 @@ const getAllLenseService = async (query: Record<string, unknown>) => {
 	};
 };
 
+const getSingleLensService = async (id: string) => {
+	const result = await Lens.findOne({ _id: id });
+	return result;
+};
+
 const updateLensService = async (payload: Record<string, unknown>, id: string) => {
 	const result = await Lens.findByIdAndUpdate(id, payload, {
 		new: true,
@@ -53,4 +58,5 @@ export const lenseService = {
 	getAllLenseService,
 	updateLensService,
 	deleteLensService,
+	getSingleLensService,
 };

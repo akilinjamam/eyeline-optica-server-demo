@@ -26,6 +26,15 @@ const getAllLenseController = (0, catchAsync_1.default)(async (req, res) => {
         data: result,
     });
 });
+const getsingleLenseController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await lenses_service_1.lenseService.getSingleLensService(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "Lense id found successfully",
+        data: result,
+    });
+});
 const updateLensController = (0, catchAsync_1.default)(async (req, res) => {
     const { id } = req.params;
     const result = await lenses_service_1.lenseService.updateLensService(req.body, id);
@@ -49,6 +58,7 @@ const deleteLensController = (0, catchAsync_1.default)(async (req, res) => {
 exports.lenseController = {
     createLenseController,
     getAllLenseController,
+    getsingleLenseController,
     updateLensController,
     deleteLensController,
 };

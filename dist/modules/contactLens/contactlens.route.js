@@ -14,5 +14,6 @@ contactlensRouter.post("/create-contact-lens", multer_1.upload.array("images", 1
 contactlensRouter.get("/", contactlens_controller_1.contactLensController.getAllContactLenseController);
 contactlensRouter.put("/update-contact-lens/:id", multer_1.upload.array("images", 10), combineImagesWithData_1.default, contactlens_controller_1.contactLensController.updateContactLensController);
 contactlensRouter.delete("/delete-contact-lens", contactlens_controller_1.contactLensController.deleteContactLensController);
+contactlensRouter.get("/get-contact-lens-by-id/:id", contactlens_controller_1.contactLensController.getSingleContactLenseController);
 exports.default = contactlensRouter;
 //# sourceMappingURL=contactlens.route.js.map

@@ -22,5 +22,9 @@ contactlensRouter.put(
 	contactLensController.updateContactLensController
 );
 contactlensRouter.delete("/delete-contact-lens", contactLensController.deleteContactLensController);
+contactlensRouter.get(
+	"/get-contact-lens-by-id/:id",
+	contactLensController.getSingleContactLenseController
+);
 
 export default contactlensRouter;

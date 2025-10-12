@@ -14,5 +14,6 @@ lenserouter.post("/create-lens", multer_1.upload.array("images", 10), combineIma
 lenserouter.get("/", lenses_controller_1.lenseController.getAllLenseController);
 lenserouter.put("/update-lens/:id", multer_1.upload.array("images", 10), combineImagesWithData_1.default, lenses_controller_1.lenseController.updateLensController);
 lenserouter.delete("/delete-lens", lenses_controller_1.lenseController.deleteLensController);
+lenserouter.get("/get-lens-by-id/:id", lenses_controller_1.lenseController.getsingleLenseController);
 exports.default = lenserouter;
 //# sourceMappingURL=lenses.route.js.map

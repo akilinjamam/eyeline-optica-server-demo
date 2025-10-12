@@ -27,6 +27,11 @@ const getAllContactLenseService = async (query: Record<string, unknown>) => {
 	};
 };
 
+const getSingleContactLensService = async (id: string) => {
+	const result = await ContactLens.findOne({ _id: id });
+	return result;
+};
+
 const updateContactLensService = async (payload: Record<string, unknown>, id: string) => {
 	const result = await ContactLens.findByIdAndUpdate(id, payload, {
 		new: true,
@@ -52,6 +57,7 @@ const deleteContactLensService = async (ids: string[]) => {
 export const contactLensService = {
 	createContactLensService,
 	getAllContactLenseService,
+	getSingleContactLensService,
 	updateContactLensService,
 	deleteContactLensService,
 };
