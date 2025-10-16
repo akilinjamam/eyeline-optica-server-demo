@@ -125,7 +125,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		session.endSession();
 
 		// SSLCommerz initialization (outside transaction)
-		const is_live = false;
+		const is_live = true;
 		const data = {
 			total_amount: payableAmount,
 			currency: "BDT",
@@ -133,7 +133,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			success_url: `${config.success_url}=${salesId}`,
 			fail_url: `${config.fail_url}=${salesId}`,
 			cancel_url: `${config.cancelled_url}=${salesId}`,
-			ipn_url: "http://localhost:5000/ipn",
+			ipn_url: "https://server.eyelineoptica.com/api/v1/ssl/ipn",
 			shipping_method: "Courier",
 			product_name: productName,
 			product_category: "Optical",
