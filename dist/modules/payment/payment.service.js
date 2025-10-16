@@ -162,7 +162,6 @@ const paymentSuccessService = async (salesId) => {
             .session(session));
         if (!findSales)
             throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "sales-not-found");
-        await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received" }, { new: true, runValidators: true, session });
         // Product stock update
         const updateStock = async (model, item, soldQty) => {
             const remaining = item.quantity - soldQty;
@@ -178,6 +177,7 @@ const paymentSuccessService = async (salesId) => {
             await updateStock(lenses_model_1.Lens, findSales.lensId, findSales.quantity);
         if (findSales.contactLensId)
             await updateStock(contactlens_model_1.default, findSales.contactLensId, findSales.quantity);
+        await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received" }, { new: true, runValidators: true, session });
         // Save Payment History
         const { customerId, productId, lensId, contactLensId, payableAmount, dueAmount, deliveryFee, quantity, subtotal, } = findSales;
         const paymentHistoryData = {

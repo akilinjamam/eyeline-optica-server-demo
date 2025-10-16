@@ -57,7 +57,7 @@ const saleSchema = new Schema<ISale>(
 		subtotal: { type: Number, required: true },
 		status: {
 			type: String,
-			enum: ["pending", "Order receieved", "processsing", "packaging", "on the way", "delivered"],
+			enum: ["pending", "Order received", "processsing", "packaging", "on the way", "delivered"],
 			default: "pending",
 		},
 	},
