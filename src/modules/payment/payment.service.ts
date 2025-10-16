@@ -10,285 +10,242 @@ import { v4 as uuidv4 } from "uuid";
 import { Lens } from "../lenses/lenses.model";
 import ContactLens from "../contactLens/contactlens.model";
 import { PaymentHistory } from "../paymentHistory/paymentHistory.model";
+import mongoose from "mongoose";
+
 const createPaymentService = async (payload: TPaymentData) => {
-	const {
-		cart_id,
-		customer_name,
-		customer_phone,
-		customer_address,
-		customer_email,
-		payableAmount,
-		dueAmount,
-		quantity,
-	} = payload;
+	const session = await mongoose.startSession();
+	session.startTransaction();
 
-	const findCart = (await Cart.findOne({ _id: cart_id })
-		.populate("items.productId")
-		.populate("items.lensId")
-		.populate("items.contactLensId")) as any;
+	try {
+		const {
+			cart_id,
+			customer_name,
+			customer_phone,
+			customer_address,
+			customer_email,
+			payableAmount,
+			dueAmount,
+			quantity,
+		} = payload;
 
-	const { productId, lensId, contactLensId, subtotal } = findCart?.items[0] || ({} as any);
-	const deliveryFee = findCart?.deliveryFee;
-	const { customerId } = findCart as ICart;
+		const findCart = (await Cart.findOne({ _id: cart_id })
+			.populate("items.productId")
+			.populate("items.lensId")
+			.populate("items.contactLensId")) as any;
 
-	const transectionId = `REF${uuidv4()}`;
-	let productName = "";
+		if (!findCart) throw new AppError(StatusCodes.NOT_FOUND, "cart-not-found");
 
-	if (productId && lensId) {
-		productName = `${productId?.name} + ${lensId?.name}`;
-	}
-	if (productId && !lensId) {
-		productName = productId?.name;
-	}
-	if (!productId && lensId) {
-		productName = lensId?.name;
-	}
-	if (contactLensId) {
-		productName = contactLensId?.name;
-	}
+		const { productId, lensId, contactLensId, subtotal } = findCart?.items[0] || ({} as any);
+		const deliveryFee = findCart?.deliveryFee;
+		const { customerId } = findCart as ICart;
 
-	const date = new Date();
-	const arrangeDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, "0")}${date.getDate().toString().padStart(2, "0")}`;
+		const transectionId = `REF${uuidv4()}`;
+		let productName = "";
 
-	const getLastSales = await Sale.findOne().sort({ createdAt: -1 });
+		if (productId && lensId) productName = `${productId?.name} + ${lensId?.name}`;
+		if (productId && !lensId) productName = productId?.name;
+		if (!productId && lensId) productName = lensId?.name;
+		if (contactLensId) productName = contactLensId?.name;
 
-	const lastInvoice = getLastSales?.invoiceNo?.slice(8);
+		const date = new Date();
+		const arrangeDate = `${date.getFullYear()}${(date.getMonth() + 1)
+			.toString()
+			.padStart(2, "0")}${date.getDate().toString().padStart(2, "0")}`;
 
-	let newBarcode;
+		const getLastSales = await Sale.findOne().sort({ createdAt: -1 });
+		const lastInvoice = getLastSales?.invoiceNo?.slice(8);
+		let newBarcode;
 
-	if (lastInvoice === "99999") {
-		newBarcode = "00001";
-	} else {
-		if (getLastSales) {
-			const zeros = "00000";
-			const zerosLength = zeros?.length;
-			const convertIntoNumberAndAddOne = Number(lastInvoice) + 1;
-			const barcodeNumberLength = convertIntoNumberAndAddOne?.toString()?.length;
-			const remainingZerosLength = zerosLength - barcodeNumberLength;
-			const remainingZeros = zeros?.slice(0, remainingZerosLength);
-
-			const result = `${remainingZeros}${convertIntoNumberAndAddOne}`;
-			newBarcode = result;
-		} else {
+		if (lastInvoice === "99999") {
 			newBarcode = "00001";
+		} else {
+			if (getLastSales) {
+				const zeros = "00000";
+				const zerosLength = zeros?.length;
+				const convertIntoNumberAndAddOne = Number(lastInvoice) + 1;
+				const barcodeNumberLength = convertIntoNumberAndAddOne?.toString()?.length;
+				const remainingZerosLength = zerosLength - barcodeNumberLength;
+				const remainingZeros = zeros?.slice(0, remainingZerosLength);
+				newBarcode = `${remainingZeros}${convertIntoNumberAndAddOne}`;
+			} else {
+				newBarcode = "00001";
+			}
 		}
+
+		const salesData = {
+			invoiceNo: `${arrangeDate}${newBarcode}`,
+			tran_id: transectionId,
+			customerId,
+			customer_name,
+			customer_phone,
+			customer_address,
+			customer_email,
+			payableAmount,
+			dueAmount,
+			quantity,
+			productId: productId?._id,
+			lensId: lensId?._id,
+			contactLensId: contactLensId?._id,
+			deliveryFee,
+			subtotal,
+		};
+
+		// Stock validation
+		if (productId) {
+			if (productId.quantity === 0) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame out of stock");
+			}
+			if (productId.quantity < quantity)
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame amount you have given out of stock");
+		}
+		if (lensId) {
+			if (lensId.quantity === 0) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "lens out of stock");
+			}
+			if (lensId.quantity < quantity)
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame amount you have given out of stock");
+		}
+		if (contactLensId) {
+			if (contactLensId.quantity === 0) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "contact lens out of stock");
+			}
+			if (contactLensId.quantity < quantity) {
+				throw new AppError(
+					StatusCodes.NOT_ACCEPTABLE,
+					"contact lens pair amount you have given out of stock"
+				);
+			}
+		}
+
+		// Create Sale with transaction
+		const saleDoc = (await Sale.create([salesData], { session })) as any;
+		const salesId = saleDoc[0]._id;
+
+		await session.commitTransaction();
+		session.endSession();
+
+		// SSLCommerz initialization (outside transaction)
+		const is_live = false;
+		const data = {
+			total_amount: payableAmount,
+			currency: "BDT",
+			tran_id: transectionId,
+			success_url: `${config.success_url}=${salesId}`,
+			fail_url: `${config.fail_url}=${salesId}`,
+			cancel_url: `${config.cancelled_url}=${salesId}`,
+			ipn_url: "http://localhost:5000/ipn",
+			shipping_method: "Courier",
+			product_name: productName,
+			product_category: "Optical",
+			product_profile: "general",
+			cus_name: customer_name,
+			cus_email: customer_email,
+			cus_add1: customer_address,
+			cus_add2: customer_address,
+			cus_city: customer_address,
+			cus_state: customer_address,
+			cus_postcode: "4000",
+			cus_country: "Bangladesh",
+			cus_phone: customer_phone,
+			cus_fax: customer_phone,
+			ship_name: customer_name,
+			ship_add1: customer_address,
+			ship_add2: customer_address,
+			ship_city: customer_address,
+			ship_state: customer_address,
+			ship_postcode: 4000,
+			ship_country: "Bangladesh",
+		};
+
+		const sslcz = new SSLCommerzPayment(config.store_id, config.store_pass, is_live);
+		const apiResponse = await sslcz.init(data);
+		return apiResponse.GatewayPageURL;
+	} catch (error) {
+		await session.abortTransaction();
+		session.endSession();
+		throw error;
 	}
-
-	const salesData = {
-		invoiceNo: `${arrangeDate}${newBarcode}`,
-		tran_id: transectionId,
-		customerId,
-		customer_name,
-		customer_phone,
-		customer_address,
-		customer_email,
-		payableAmount,
-		dueAmount,
-		quantity,
-		productId: productId?._id,
-		lensId: lensId?._id,
-		contactLensId: contactLensId?._id,
-		deliveryFee,
-		subtotal,
-	};
-
-	if (findCart?.items[0]?.productId) {
-		const productQty = findCart?.items[0]?.productId?.quantity;
-		if (productQty === 0) throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame-stock-out");
-
-		if (productQty < quantity)
-			throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame amount you have given out of stock");
-	}
-	if (findCart?.items[0]?.lensId) {
-		const lensQty = findCart?.items[0]?.lensId?.quantity;
-		if (lensQty === 0) throw new AppError(StatusCodes.NOT_ACCEPTABLE, "lens-stock-out");
-
-		if (lensQty < quantity)
-			throw new AppError(
-				StatusCodes.NOT_ACCEPTABLE,
-				"lens pair amount you have given out of stock"
-			);
-	}
-
-	if (findCart?.items[0]?.contactLensId) {
-		const contactLensQty = findCart?.items[0]?.contactLensId?.quantity;
-		if (contactLensQty === 0)
-			throw new AppError(StatusCodes.NOT_ACCEPTABLE, "contact-lens-stock-out");
-
-		if (contactLensQty < quantity)
-			throw new AppError(
-				StatusCodes.NOT_ACCEPTABLE,
-				"contact lens pair amount you have given out of stock"
-			);
-	}
-
-	const salesId = (await Sale.create(salesData))._id;
-
-	console.log(salesId);
-
-	const is_live = false;
-
-	const data = {
-		total_amount: payableAmount,
-		currency: "BDT",
-		tran_id: transectionId, // use unique tran_id for each api call
-		success_url: `${config.success_url}=${salesId}`,
-		fail_url: `${config.fail_url}=${salesId}`,
-		cancel_url: `${config.cancelled_url}=${salesId}`,
-		ipn_url: "http://localhost:5000/ipn",
-		shipping_method: "Courier",
-		product_name: productName,
-		product_category: "Optical",
-		product_profile: "general",
-		cus_name: customer_name,
-		cus_email: customer_email,
-		cus_add1: customer_address,
-		cus_add2: customer_address,
-		cus_city: customer_address,
-		cus_state: customer_address,
-		cus_postcode: "4000",
-		cus_country: "Bangladesh",
-		cus_phone: customer_phone,
-		cus_fax: customer_phone,
-		ship_name: customer_name,
-		ship_add1: customer_address,
-		ship_add2: customer_address,
-		ship_city: customer_address,
-		ship_state: customer_address,
-		ship_postcode: 4000,
-		ship_country: "Bangladesh",
-	};
-
-	const sslcz = await new SSLCommerzPayment(config.store_id, config.store_pass, is_live);
-
-	const res = await sslcz.init(data).then((apiResponse: any) => {
-		const result = apiResponse.GatewayPageURL;
-		return result;
-	});
-
-	return await res;
 };
 
 const paymentSuccessService = async (salesId: string) => {
-	const findSales = (await Sale.findOne({ _id: salesId })
-		.populate("productId")
-		.populate("lensId")
-		.populate("contactLensId")) as any;
+	const session = await mongoose.startSession();
+	session.startTransaction();
 
-	if (!findSales) throw new AppError(StatusCodes.NOT_FOUND, "sales-not-found");
+	try {
+		const findSales = (await Sale.findOne({ _id: salesId })
+			.populate("productId")
+			.populate("lensId")
+			.populate("contactLensId")
+			.session(session)) as any;
 
-	if (findSales) {
+		if (!findSales) throw new AppError(StatusCodes.NOT_FOUND, "sales-not-found");
+
 		await Sale.findByIdAndUpdate(
-			findSales?._id,
-			{ status: "Order receieved" },
-			{ new: true, runValidators: true }
+			findSales._id,
+			{ status: "Order received" },
+			{ new: true, runValidators: true, session }
 		);
+
+		// Product stock update
+		const updateStock = async (model: any, item: any, soldQty: number) => {
+			const remaining = item.quantity - soldQty;
+			const sold = item.sold + soldQty;
+			const update: any = { quantity: remaining, sold };
+			if (remaining === 0) update.stock = false;
+			await model.findByIdAndUpdate(item._id, update, { session, new: true, runValidators: true });
+		};
+
+		if (findSales.productId) await updateStock(Product, findSales.productId, findSales.quantity);
+		if (findSales.lensId) await updateStock(Lens, findSales.lensId, findSales.quantity);
+		if (findSales.contactLensId)
+			await updateStock(ContactLens, findSales.contactLensId, findSales.quantity);
+
+		// Save Payment History
+		const {
+			customerId,
+			productId,
+			lensId,
+			contactLensId,
+			payableAmount,
+			dueAmount,
+			deliveryFee,
+			quantity,
+			subtotal,
+		} = findSales;
+
+		const paymentHistoryData = {
+			customerId,
+			productId,
+			lensId,
+			contactLensId,
+			payableAmount,
+			dueAmount,
+			deliveryFee,
+			quantity,
+			subtotal,
+		};
+
+		await PaymentHistory.create([paymentHistoryData], { session });
+
+		await session.commitTransaction();
+		session.endSession();
+
+		return "success";
+	} catch (error) {
+		await session.abortTransaction();
+		session.endSession();
+		throw error;
 	}
-
-	// for product
-	if (findSales?.productId) {
-		if (findSales.productId.quantity > 0) {
-			const soldQty = findSales.quantity;
-			const remainingProductQty = findSales.productId.quantity - soldQty;
-			const updateSold = findSales.productId.sold + soldQty;
-
-			if (remainingProductQty === 0) {
-				await Product.findByIdAndUpdate(
-					findSales?.productId?._id,
-					{ quantity: remainingProductQty, sold: updateSold, stock: false },
-					{ new: true, runValidators: true }
-				);
-			} else {
-				await Product.findByIdAndUpdate(
-					findSales?.productId?._id,
-					{ quantity: remainingProductQty, sold: updateSold },
-					{ new: true, runValidators: true }
-				);
-			}
-		}
-	}
-
-	// for lens
-	if (findSales?.lensId) {
-		if (findSales.lensId.quantity > 0) {
-			const soldQty = findSales.quantity;
-			const remainingLensQty = findSales.lensId.quantity - soldQty;
-			const updateSold = findSales.lensId.sold + soldQty;
-
-			if (remainingLensQty === 0) {
-				await Lens.findByIdAndUpdate(
-					findSales.lensId?._id,
-					{ quantity: remainingLensQty, sold: updateSold, stock: false },
-					{ new: true, runValidators: true }
-				);
-			} else {
-				await Lens.findByIdAndUpdate(
-					findSales.lensId?._id,
-					{ quantity: remainingLensQty, sold: updateSold },
-					{ new: true, runValidators: true }
-				);
-			}
-		}
-	}
-	// for contact lens
-	if (findSales?.contactLensId) {
-		if (findSales.contactLensId.quantity > 0) {
-			const soldQty = findSales.quantity;
-			const remainingContactLensQty = findSales.contactLensId.quantity - soldQty;
-			const updateSold = findSales.contactLensId.sold + soldQty;
-
-			if (remainingContactLensQty === 0) {
-				await ContactLens.findByIdAndUpdate(
-					findSales.contactLensId?._id,
-					{ quantity: remainingContactLensQty, sold: updateSold, stock: false },
-					{ new: true, runValidators: true }
-				);
-			} else {
-				await ContactLens.findByIdAndUpdate(
-					findSales.contactLensId?._id,
-					{ quantity: remainingContactLensQty, sold: updateSold },
-					{ new: true, runValidators: true }
-				);
-			}
-		}
-	}
-
-	const {
-		customerId,
-		productId,
-		lensId,
-		contactLensId,
-		payableAmount,
-		dueAmount,
-		deliveryFee,
-		quantity,
-		subtotal,
-	} = findSales;
-
-	const paymentHistoryData = {
-		customerId,
-		productId,
-		lensId,
-		contactLensId,
-		payableAmount,
-		dueAmount,
-		deliveryFee,
-		quantity,
-		subtotal,
-	};
-
-	const result = await PaymentHistory.create(paymentHistoryData);
-
-	if (result) return "success";
 };
 
 const paymentFailService = async (saleId: string) => {
-	const findSaleData = await Sale.deleteOne({ _id: saleId });
-	if (findSaleData.acknowledged) return "saleData deleted";
+	const result = await Sale.deleteOne({ _id: saleId });
+	if (result.acknowledged) return "saleData deleted";
 };
+
 const paymentCancelledService = async (saleId: string) => {
-	const findSaleData = await Sale.deleteOne({ _id: saleId });
-	if (findSaleData.acknowledged) return "saleData deleted";
+	const result = await Sale.deleteOne({ _id: saleId });
+	if (result.acknowledged) return "saleData deleted";
 };
 
 export const paymentService = {
