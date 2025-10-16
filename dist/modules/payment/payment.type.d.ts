@@ -1,4 +1,5 @@
 export type TPaymentData = {
+    quantity: number;
     cart_id: string;
     customer_name: string;
     customer_phone: number;

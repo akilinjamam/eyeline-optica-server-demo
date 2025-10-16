@@ -1,5 +1,6 @@
 import mongoose, { Document, Model } from "mongoose";
 export interface ISale extends Document {
+    quantity: number;
     invoiceNo: string;
     tran_id: string;
     customerId: mongoose.Types.ObjectId;

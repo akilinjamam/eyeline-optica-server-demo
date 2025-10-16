@@ -8,6 +8,9 @@ declare const _default: {
     jwt_secret: string | undefined;
     store_id: string | undefined;
     store_pass: string | undefined;
+    success_url: string | undefined;
+    fail_url: string | undefined;
+    cancelled_url: string | undefined;
 };
 export default _default;
 //# sourceMappingURL=index.d.ts.map

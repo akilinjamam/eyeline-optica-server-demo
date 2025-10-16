@@ -33,26 +33,14 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Sale = void 0;
+exports.PaymentHistory = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const saleSchema = new mongoose_1.Schema({
-    invoiceNo: { type: String, required: true },
+const paymentHistorySchema = new mongoose_1.Schema({
     customerId: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Customer",
         required: true,
     },
-    tran_id: {
-        type: String,
-        required: true,
-    },
-    quantity: { type: Number, required: true },
-    customer_name: { type: String, required: true },
-    customer_phone: { type: String, required: true },
-    customer_address: { type: String, required: true },
-    customer_email: { type: String, required: true },
-    payableAmount: { type: Number, required: true },
-    dueAmount: { type: Number, required: true },
     productId: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Product",
@@ -68,15 +56,19 @@ const saleSchema = new mongoose_1.Schema({
         ref: "ContactLens",
         default: "",
     },
+    payableAmount: { type: Number, required: true },
+    quantity: { type: Number, required: true },
+    dueAmount: { type: Number, required: true },
     deliveryFee: { type: Number, required: true },
     subtotal: { type: Number, required: true },
     status: {
         type: String,
-        enum: ["pending", "Order receieved", "processsing", "packaging", "on the way", "delivered"],
-        default: "pending",
+        enum: ["Order receieved", "processsing", "packaging", "on the way", "delivered"],
+        default: "Order receieved",
     },
 }, {
-    timestamps: true, // adds createdAt and updatedAt
+    timestamps: true, // adds createdAt & updatedAt automatically
 });
-exports.Sale = mongoose_1.default.models.Sale || mongoose_1.default.model("Sale", saleSchema);
-//# sourceMappingURL=sale.model.js.map
+exports.PaymentHistory = mongoose_1.default.models.PaymentHistory ||
+    mongoose_1.default.model("PaymentHistory", paymentHistorySchema);
+//# sourceMappingURL=paymentHistory.model.js.map

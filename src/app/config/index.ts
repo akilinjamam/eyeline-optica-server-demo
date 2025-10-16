@@ -12,4 +12,7 @@ export default {
 	jwt_secret: process.env.JWT_SECRET,
 	store_id: process.env.STORE_ID,
 	store_pass: process.env.STORE_PASSWORD,
+	success_url: process.env.SUCCESS_URL,
+	fail_url: process.env.FAIL_URL,
+	cancelled_url: process.env.CANCELLED_URL,
 };

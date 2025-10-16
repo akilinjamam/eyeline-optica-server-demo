@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface ISale extends Document {
+	quantity: number;
 	invoiceNo: string;
 	tran_id: string;
 	customerId: mongoose.Types.ObjectId;
@@ -30,6 +31,7 @@ const saleSchema = new Schema<ISale>(
 			type: String,
 			required: true,
 		},
+		quantity: { type: Number, required: true },
 		customer_name: { type: String, required: true },
 		customer_phone: { type: String, required: true },
 		customer_address: { type: String, required: true },

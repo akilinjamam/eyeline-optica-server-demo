@@ -19,15 +19,26 @@ const createPaymentController = (0, catchAsync_1.default)(async (req, res) => {
 });
 const paymentSuccessController = (0, catchAsync_1.default)(async (req, res) => {
     const result = await payment_service_1.paymentService.paymentSuccessService(req.query.salesId);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_codes_1.StatusCodes.OK,
-        success: true,
-        message: "payment success done",
-        data: result,
-    });
+    if (result === "success") {
+        res.redirect("https://eyelineoptica.com/payment-success");
+    }
+});
+const paymentFailController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await payment_service_1.paymentService.paymentFailService(req.query.salesId);
+    if (result === "saleData deleted") {
+        res.redirect("https://eyelineoptica.com/payment-failed");
+    }
+});
+const paymentCancelledController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await payment_service_1.paymentService.paymentCancelledService(req.query.salesId);
+    if (result === "saleData deleted") {
+        res.redirect("https://eyelineoptica.com/payment-cancelled");
+    }
 });
 exports.paymentController = {
     createPaymentController,
     paymentSuccessController,
+    paymentFailController,
+    paymentCancelledController,
 };
 //# sourceMappingURL=payment.controller.js.map
