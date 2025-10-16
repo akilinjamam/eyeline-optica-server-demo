@@ -132,9 +132,9 @@ const createPaymentService = async (payload: TPaymentData) => {
 		total_amount: payableAmount,
 		currency: "BDT",
 		tran_id: transectionId, // use unique tran_id for each api call
-		success_url: `http://localhost:5000/api/v1/ssl/payment-success?salesId=${salesId}`,
-		fail_url: `http://localhost:5000/api/v1/ssl/payment-fail?salesId=${salesId}`,
-		cancel_url: `http://localhost:5000/api/v1/ssl/payment-cancelled?salesId=${salesId}`,
+		success_url: `${config.success_url}=${salesId}`,
+		fail_url: `${config.fail_url}=${salesId}`,
+		cancel_url: `${config.cancelled_url}=${salesId}`,
 		ipn_url: "http://localhost:5000/ipn",
 		shipping_method: "Courier",
 		product_name: productName,
