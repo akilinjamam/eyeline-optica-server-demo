@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const products_route_1 = __importDefault(require("../../modules/products/products.route"));
 const lenses_route_1 = __importDefault(require("../../modules/lenses/lenses.route"));
-const sales_route_1 = __importDefault(require("../../modules/sales/sales.route"));
 const cart_route_1 = __importDefault(require("../../modules/cart/cart.route"));
 const contactlens_route_1 = __importDefault(require("../../modules/contactLens/contactlens.route"));
 const registration_route_1 = __importDefault(require("../../modules/registration/registration.route"));
@@ -14,6 +13,7 @@ const doctor_route_1 = __importDefault(require("../../modules/doctor/doctor.rout
 const schedule_route_1 = __importDefault(require("../../modules/schedule/schedule.route"));
 const prescription_route_1 = __importDefault(require("../../modules/prescription/prescription.route"));
 const customerLogin_route_1 = __importDefault(require("../../modules/customerLogin/customerLogin.route"));
+const payment_route_1 = __importDefault(require("../../modules/payment/payment.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -23,10 +23,6 @@ const allRoutes = [
     {
         path: "/lens",
         route: lenses_route_1.default,
-    },
-    {
-        path: "/sales",
-        route: sales_route_1.default,
     },
     {
         path: "/cart",
@@ -55,6 +51,10 @@ const allRoutes = [
     {
         path: "/login",
         route: customerLogin_route_1.default,
+    },
+    {
+        path: "/ssl",
+        route: payment_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));

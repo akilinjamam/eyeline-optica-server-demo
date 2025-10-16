@@ -1,7 +1,6 @@
 import express from "express";
 import productrouter from "../../modules/products/products.route";
 import lenserouter from "../../modules/lenses/lenses.route";
-import salesRouter from "../../modules/sales/sales.route";
 import cartRouter from "../../modules/cart/cart.route";
 import contactlensRouter from "../../modules/contactLens/contactlens.route";
 import registrationRouter from "../../modules/registration/registration.route";
@@ -9,6 +8,7 @@ import doctorRouter from "../../modules/doctor/doctor.route";
 import scheduleRoute from "../../modules/schedule/schedule.route";
 import prescriptionRouter from "../../modules/prescription/prescription.route";
 import customerLoginRoute from "../../modules/customerLogin/customerLogin.route";
+import paymentRouter from "../../modules/payment/payment.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -19,10 +19,6 @@ const allRoutes = [
 	{
 		path: "/lens",
 		route: lenserouter,
-	},
-	{
-		path: "/sales",
-		route: salesRouter,
 	},
 	{
 		path: "/cart",
@@ -51,6 +47,10 @@ const allRoutes = [
 	{
 		path: "/login",
 		route: customerLoginRoute,
+	},
+	{
+		path: "/ssl",
+		route: paymentRouter,
 	},
 ];
 

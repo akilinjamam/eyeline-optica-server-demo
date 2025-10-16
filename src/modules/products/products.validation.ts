@@ -26,4 +26,5 @@ export const productSchema = z.object({
 	frameDetails: z.string().optional(),
 	prescriptionDetails: z.string().optional(),
 	reviews: z.array(z.any()).optional(),
+	stock: z.boolean().default(true),
 });

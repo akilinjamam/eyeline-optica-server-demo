@@ -53,4 +53,5 @@ export interface IProduct {
 	frameMeasurements: string;
 	frameDetails: string;
 	prescriptionDetails: string;
+	stock: boolean;
 }

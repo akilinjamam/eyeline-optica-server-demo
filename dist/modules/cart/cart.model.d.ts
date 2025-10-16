@@ -4,7 +4,7 @@ interface IPrescriptionSchema {
     cylinder: string;
     axis: string;
 }
-interface ICartItem extends Document {
+export interface ICartItem extends Document {
     productId?: mongoose.Schema.Types.ObjectId;
     lensId?: mongoose.Schema.Types.ObjectId;
     contactLensId?: mongoose.Schema.Types.ObjectId;
@@ -20,6 +20,7 @@ interface ICartItem extends Document {
     subtotal: number;
 }
 export interface ICart extends Document {
+    customerId: mongoose.Schema.Types.ObjectId;
     customerName: string;
     phoneNumber: string;
     email: string;

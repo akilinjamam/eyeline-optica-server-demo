@@ -6,7 +6,7 @@ interface IPrescriptionSchema {
 	axis: string;
 }
 
-interface ICartItem extends Document {
+export interface ICartItem extends Document {
 	productId?: mongoose.Schema.Types.ObjectId; // Frame
 	lensId?: mongoose.Schema.Types.ObjectId; // Lens
 	contactLensId?: mongoose.Schema.Types.ObjectId; // Contact Lens
@@ -23,6 +23,7 @@ interface ICartItem extends Document {
 }
 
 export interface ICart extends Document {
+	customerId: mongoose.Schema.Types.ObjectId;
 	customerName: string;
 	phoneNumber: string;
 	email: string;
@@ -68,6 +69,7 @@ const CartItemSchema = new Schema<ICartItem>(
 
 const CartSchema = new Schema<ICart>(
 	{
+		customerId: { type: Schema.Types.ObjectId, ref: "Customer" },
 		customerName: { type: String, required: true },
 		phoneNumber: { type: String, required: true },
 		email: { type: String },

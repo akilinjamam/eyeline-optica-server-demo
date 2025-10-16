@@ -49,6 +49,7 @@ const ProductSchema = new Schema<IProduct>(
 		frameMeasurements: { type: String },
 		frameDetails: { type: String },
 		prescriptionDetails: { type: String },
+		stock: { type: Boolean, default: true },
 	},
 	{ timestamps: true }
 );

@@ -81,6 +81,7 @@ const ProductSchema = new mongoose_1.Schema({
     frameMeasurements: { type: String },
     frameDetails: { type: String },
     prescriptionDetails: { type: String },
+    stock: { type: Boolean, default: true },
 }, { timestamps: true });
 const Product = mongoose_1.default.model("Product", ProductSchema);
 exports.default = Product;

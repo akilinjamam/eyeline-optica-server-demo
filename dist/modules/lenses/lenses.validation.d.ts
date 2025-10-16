@@ -4,10 +4,12 @@ export declare const lensValidationSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodString>;
     purchasePrice: z.ZodNumber;
     salesPrice: z.ZodNumber;
-    stock: z.ZodNumber;
+    stock: z.ZodDefault<z.ZodBoolean>;
+    quantity: z.ZodNumber;
     category: z.ZodDefault<z.ZodString>;
     brand: z.ZodOptional<z.ZodString>;
     images: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    sold: z.ZodDefault<z.ZodNumber>;
     lensType: z.ZodEnum<{
         "single vision": "single vision";
         bifocal: "bifocal";

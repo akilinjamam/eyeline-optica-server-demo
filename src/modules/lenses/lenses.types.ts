@@ -9,9 +9,11 @@ export interface ILens {
 	description?: string;
 	purchasePrice: number;
 	salesPrice: number;
-	stock: number;
+	stock: boolean;
+	quantity: number;
 	category: string;
 	brand?: string;
+	sold: number;
 	images: string[];
 	lensType: LensType;
 	material: LensMaterial;

@@ -20,8 +20,9 @@ export const contactLensSchema = z.object({
 
 	purchasePrice: z.number().min(0, "Purchase price must be >= 0"),
 	salesPrice: z.number().min(0, "Sales price must be >= 0"),
-	stock: z.number().int().min(0).default(0),
-
+	stock: z.boolean().default(true),
+	quantity: z.number().min(1, "Quantity must be at least 1"),
+	sold: z.number().default(0),
 	offer: z.number().min(0).max(100).default(0),
 	rating: z.number().min(0).max(5).default(0),
 

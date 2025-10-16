@@ -32,5 +32,6 @@ export interface IProduct {
     frameMeasurements: string;
     frameDetails: string;
     prescriptionDetails: string;
+    stock: boolean;
 }
 //# sourceMappingURL=products.types.d.ts.map

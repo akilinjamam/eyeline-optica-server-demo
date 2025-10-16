@@ -28,5 +28,6 @@ exports.productSchema = zod_1.z.object({
     frameDetails: zod_1.z.string().optional(),
     prescriptionDetails: zod_1.z.string().optional(),
     reviews: zod_1.z.array(zod_1.z.any()).optional(),
+    stock: zod_1.z.boolean().default(true),
 });
 //# sourceMappingURL=products.validation.js.map

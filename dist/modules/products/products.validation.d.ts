@@ -24,5 +24,6 @@ export declare const productSchema: z.ZodObject<{
     frameDetails: z.ZodOptional<z.ZodString>;
     prescriptionDetails: z.ZodOptional<z.ZodString>;
     reviews: z.ZodOptional<z.ZodArray<z.ZodAny>>;
+    stock: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
 //# sourceMappingURL=products.validation.d.ts.map

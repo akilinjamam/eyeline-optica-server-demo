@@ -20,7 +20,9 @@ export type IContactLens = {
 	purchasePrice: number;
 	features: string[];
 	salesPrice: number;
-	stock: number;
+	stock: boolean;
+	sold: number;
+	quantity: number;
 	offer: number; // percentage (0-100)
 	rating: number; // 1-5
 	description: string;

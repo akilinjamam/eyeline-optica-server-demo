@@ -60,6 +60,7 @@ const CartItemSchema = new mongoose_1.Schema({
     subtotal: { type: Number, required: true },
 }, { _id: false });
 const CartSchema = new mongoose_1.Schema({
+    customerId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Customer" },
     customerName: { type: String, required: true },
     phoneNumber: { type: String, required: true },
     email: { type: String },

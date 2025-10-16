@@ -14,5 +14,7 @@ exports.default = {
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
     jwt_secret: process.env.JWT_SECRET,
+    store_id: process.env.STORE_ID,
+    store_pass: process.env.STORE_PASSWORD,
 };
 //# sourceMappingURL=index.js.map
