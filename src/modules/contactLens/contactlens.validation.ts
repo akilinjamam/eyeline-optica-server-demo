@@ -25,7 +25,7 @@ export const contactLensSchema = z.object({
 	sold: z.number().default(0),
 	offer: z.number().min(0).max(100).default(0),
 	rating: z.number().min(0).max(5).default(0),
-
+	barcode: z.string().optional().default("not-added"),
 	features: z.array(z.string()).optional(),
 	description: z.string().optional(),
 	images: z.array(z.string().url("Must be a valid URL")).optional().default([]),

@@ -56,6 +56,7 @@ const ContactLensSchema = new mongoose_1.Schema({
     sold: { type: Number, default: 0 },
     quantity: { type: Number, required: true },
     offer: { type: Number, min: 0, max: 100, default: 0 },
+    barcode: { type: String, default: "not-added" },
     rating: { type: Number, min: 0, max: 5, default: 0 },
     description: { type: String },
     images: [{ type: String }],

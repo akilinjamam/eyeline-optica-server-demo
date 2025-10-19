@@ -9,6 +9,7 @@ import scheduleRoute from "../../modules/schedule/schedule.route";
 import prescriptionRouter from "../../modules/prescription/prescription.route";
 import customerLoginRoute from "../../modules/customerLogin/customerLogin.route";
 import paymentRouter from "../../modules/payment/payment.route";
+import accessoryRouter from "../../modules/accessory/accessory.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -51,6 +52,10 @@ const allRoutes = [
 	{
 		path: "/ssl",
 		route: paymentRouter,
+	},
+	{
+		path: "/accessory",
+		route: accessoryRouter,
 	},
 ];
 

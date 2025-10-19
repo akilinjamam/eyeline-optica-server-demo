@@ -22,6 +22,7 @@ exports.contactLensSchema = zod_1.z.object({
     sold: zod_1.z.number().default(0),
     offer: zod_1.z.number().min(0).max(100).default(0),
     rating: zod_1.z.number().min(0).max(5).default(0),
+    barcode: zod_1.z.string().optional().default("not-added"),
     features: zod_1.z.array(zod_1.z.string()).optional(),
     description: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url("Must be a valid URL")).optional().default([]),

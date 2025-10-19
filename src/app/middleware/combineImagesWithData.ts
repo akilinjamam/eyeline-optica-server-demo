@@ -8,7 +8,6 @@ const combineImagesWithTextData = async (req: Request, res: Response, next: Next
 	try {
 		const textData: IProduct = JSON.parse(req.body.data);
 		const { images: oldImageUrls, ...remainingTextData } = textData;
-		console.log(textData);
 
 		// Upload new images to Cloudinary
 		const newImageUrls: string[] = [];

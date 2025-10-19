@@ -24,6 +24,7 @@ export type IContactLens = {
 	sold: number;
 	quantity: number;
 	offer: number; // percentage (0-100)
+	barcode: string;
 	rating: number; // 1-5
 	description: string;
 	images: string[];

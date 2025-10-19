@@ -5,6 +5,8 @@ export interface ILens {
     description?: string;
     purchasePrice: number;
     salesPrice: number;
+    discount: number;
+    barcode: string;
     stock: boolean;
     quantity: number;
     category: string;

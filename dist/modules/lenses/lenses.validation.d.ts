@@ -4,6 +4,8 @@ export declare const lensValidationSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodString>;
     purchasePrice: z.ZodNumber;
     salesPrice: z.ZodNumber;
+    discount: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+    barcode: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     stock: z.ZodDefault<z.ZodBoolean>;
     quantity: z.ZodNumber;
     category: z.ZodDefault<z.ZodString>;

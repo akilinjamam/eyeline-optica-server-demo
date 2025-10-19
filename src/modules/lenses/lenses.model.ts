@@ -8,6 +8,8 @@ const LensSchema = new Schema<ILens>(
 		description: { type: String },
 		purchasePrice: { type: Number, required: true },
 		salesPrice: { type: Number, required: true },
+		discount: { type: Number, default: 0 },
+		barcode: { type: String, default: "not-added" },
 		quantity: { type: Number, required: true },
 		stock: { type: Boolean, required: true, default: true },
 		sold: { type: Number, required: true, default: 0 },

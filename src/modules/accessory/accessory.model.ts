@@ -1,0 +1,115 @@
+import mongoose, { Schema, Document, Model } from "mongoose";
+
+export interface IAccessoryItems extends Document {
+	name: string;
+	barcode: string;
+	brand: string;
+	discount: number;
+	category: string;
+	quantity: number;
+	stock: boolean;
+	purchasePrice: number;
+	salesPrice: number;
+	sold: number;
+	description: string;
+	measurement: string;
+}
+
+export interface IAccessory extends Document {
+	images: string[];
+	type:
+		| "With Solution"
+		| "With Bag"
+		| "With Kit"
+		| "With Solution + Kit"
+		| "With Solution + Bag"
+		| "With Kit + Bag"
+		| "With Solution + Bag + Kit"
+		| "others";
+	items: IAccessoryItems[];
+}
+
+const AccessoryItemsSchema = new Schema<IAccessoryItems>({
+	name: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	barcode: {
+		type: String,
+		trim: true,
+		default: "not-added",
+	},
+	brand: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	category: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	quantity: {
+		type: Number,
+		required: true,
+		min: 0,
+	},
+	stock: {
+		type: Boolean,
+		default: true,
+	},
+	purchasePrice: {
+		type: Number,
+		required: true,
+		min: 0,
+	},
+	salesPrice: {
+		type: Number,
+		required: true,
+		min: 0,
+	},
+	discount: { type: Number, default: 0 },
+	sold: {
+		type: Number,
+		default: 0,
+		min: 0,
+	},
+	measurement: {
+		type: String,
+		required: true,
+	},
+	description: {
+		type: String,
+		default: "not-added",
+	},
+});
+
+const AccessorySchema = new Schema<IAccessory>(
+	{
+		images: { type: [String], default: [] },
+		type: {
+			type: String,
+			enum: [
+				"With Solution",
+				"With Bag",
+				"With Kit",
+				"With Solution + Kit",
+				"With Solution + Bag",
+				"With Kit + Bag",
+				"With Solution + Bag + Kit",
+				"others",
+			],
+			default: "others",
+		},
+		items: { type: [AccessoryItemsSchema], required: true, default: [] },
+	},
+	{
+		timestamps: true,
+	}
+);
+
+const Accessory: Model<IAccessory> =
+	mongoose.models.Accessory || mongoose.model<IAccessory>("Accessory", AccessorySchema);
+
+export default Accessory;

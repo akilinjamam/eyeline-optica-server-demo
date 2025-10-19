@@ -7,6 +7,8 @@ exports.lensValidationSchema = zod_1.z.object({
     description: zod_1.z.string().optional(),
     purchasePrice: zod_1.z.number().min(0, "Price must be a positive number"),
     salesPrice: zod_1.z.number().min(0, "Price must be a positive number"),
+    discount: zod_1.z.number().optional().default(0),
+    barcode: zod_1.z.string().optional().default("not-added"),
     stock: zod_1.z.boolean().default(true),
     quantity: zod_1.z.number().min(1, "Quantity must be at least 1"),
     category: zod_1.z.string().default("lens"),

@@ -14,6 +14,7 @@ const schedule_route_1 = __importDefault(require("../../modules/schedule/schedul
 const prescription_route_1 = __importDefault(require("../../modules/prescription/prescription.route"));
 const customerLogin_route_1 = __importDefault(require("../../modules/customerLogin/customerLogin.route"));
 const payment_route_1 = __importDefault(require("../../modules/payment/payment.route"));
+const accessory_route_1 = __importDefault(require("../../modules/accessory/accessory.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -55,6 +56,10 @@ const allRoutes = [
     {
         path: "/ssl",
         route: payment_route_1.default,
+    },
+    {
+        path: "/accessory",
+        route: accessory_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));

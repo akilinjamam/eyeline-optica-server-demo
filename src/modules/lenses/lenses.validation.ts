@@ -5,6 +5,8 @@ export const lensValidationSchema = z.object({
 	description: z.string().optional(),
 	purchasePrice: z.number().min(0, "Price must be a positive number"),
 	salesPrice: z.number().min(0, "Price must be a positive number"),
+	discount: z.number().optional().default(0),
+	barcode: z.string().optional().default("not-added"),
 	stock: z.boolean().default(true),
 	quantity: z.number().min(1, "Quantity must be at least 1"),
 	category: z.string().default("lens"),
