@@ -113,8 +113,8 @@ const getCartService = async (phoneNumber) => {
         const carts = await cart_model_1.Cart.find({ phoneNumber })
             .populate("items.productId") // populate frame
             .populate("items.lensId") // populate lens
-            .populate("items.contactLensId"); // populate contact lens
-        // .populate("items.accessoryId"); // populate accessory
+            .populate("items.contactLensId")
+            .populate("items.accessoryId"); // populate accessory
         return carts;
     }
     catch (error) {
