@@ -5,6 +5,7 @@ export declare const cartItemSchema: z.ZodObject<{
         frame: "frame";
         frame_with_lens: "frame_with_lens";
         contact_lens: "contact_lens";
+        contact_lens_with_accessory: "contact_lens_with_accessory";
         accessory: "accessory";
     }>;
     submitType: z.ZodOptional<z.ZodString>;
@@ -39,6 +40,7 @@ export declare const cartValidationSchema: z.ZodObject<{
             frame: "frame";
             frame_with_lens: "frame_with_lens";
             contact_lens: "contact_lens";
+            contact_lens_with_accessory: "contact_lens_with_accessory";
             accessory: "accessory";
         }>;
         submitType: z.ZodOptional<z.ZodString>;

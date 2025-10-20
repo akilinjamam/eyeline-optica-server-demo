@@ -10,7 +10,14 @@ const prescriptionSchema = zod_1.z.object({
 });
 // 🛒 Each item in the cart
 exports.cartItemSchema = zod_1.z.object({
-    type: zod_1.z.enum(["frame", "frame_with_lens", "lens", "contact_lens", "accessory"]),
+    type: zod_1.z.enum([
+        "frame",
+        "frame_with_lens",
+        "lens",
+        "contact_lens",
+        "contact_lens_with_accessory",
+        "accessory",
+    ]),
     submitType: zod_1.z.string().optional(),
     productId: zod_1.z.string().optional(),
     lensId: zod_1.z.string().optional(),
@@ -43,6 +50,8 @@ exports.cartValidationSchema = zod_1.z.object({
                 return !!item.lensId;
             case "contact_lens":
                 return !!item.contactLensId;
+            case "contact_lens_with_accessory":
+                return !!item.contactLensId && !!item.accessoryId;
             case "accessory":
                 return !!item.accessoryId;
             default:

@@ -9,7 +9,14 @@ const prescriptionSchema = z.object({
 
 // 🛒 Each item in the cart
 export const cartItemSchema = z.object({
-	type: z.enum(["frame", "frame_with_lens", "lens", "contact_lens", "accessory"]),
+	type: z.enum([
+		"frame",
+		"frame_with_lens",
+		"lens",
+		"contact_lens",
+		"contact_lens_with_accessory",
+		"accessory",
+	]),
 	submitType: z.string().optional(),
 	productId: z.string().optional(),
 	lensId: z.string().optional(),
@@ -45,6 +52,8 @@ export const cartValidationSchema = z.object({
 							return !!item.lensId;
 						case "contact_lens":
 							return !!item.contactLensId;
+						case "contact_lens_with_accessory":
+							return !!item.contactLensId && !!item.accessoryId;
 						case "accessory":
 							return !!item.accessoryId;
 						default:

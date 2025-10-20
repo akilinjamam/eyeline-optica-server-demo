@@ -15,7 +15,13 @@ export interface ICartItem extends Document {
 	rightEye: IPrescriptionSchema;
 	leftEye: IPrescriptionSchema;
 	pd: number;
-	type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "accessory";
+	type:
+		| "frame"
+		| "frame_with_lens"
+		| "lens"
+		| "contact_lens"
+		| "contact_lens_with_accessory"
+		| "accessory";
 	submitType: string;
 	quantity: number;
 	unitPrice: number; // Price at time of adding to cart
@@ -53,7 +59,14 @@ const CartItemSchema = new Schema<ICartItem>(
 		prescriptionImg: { type: [String], default: [] },
 		type: {
 			type: String,
-			enum: ["frame", "frame_with_lens", "lens", "contact_lens", "accessory"],
+			enum: [
+				"frame",
+				"frame_with_lens",
+				"lens",
+				"contact_lens",
+				"contact_lens_with_accessory",
+				"accessory",
+			],
 			required: true,
 		},
 		submitType: { type: String },

@@ -13,7 +13,7 @@ export interface ICartItem extends Document {
     rightEye: IPrescriptionSchema;
     leftEye: IPrescriptionSchema;
     pd: number;
-    type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "accessory";
+    type: "frame" | "frame_with_lens" | "lens" | "contact_lens" | "contact_lens_with_accessory" | "accessory";
     submitType: string;
     quantity: number;
     unitPrice: number;
