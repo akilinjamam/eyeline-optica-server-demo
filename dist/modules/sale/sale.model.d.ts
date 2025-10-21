@@ -13,6 +13,7 @@ export interface ISale extends Document {
     productId: mongoose.Types.ObjectId;
     lensId: mongoose.Types.ObjectId;
     contactLensId: mongoose.Types.ObjectId;
+    accessoryId: mongoose.Types.ObjectId;
     deliveryFee: number;
     subtotal: number;
     status: "pending" | "receieved" | "processsing" | "packaging" | "on the way" | "delivered";

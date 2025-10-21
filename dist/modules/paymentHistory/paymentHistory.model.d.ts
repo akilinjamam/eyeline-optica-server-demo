@@ -4,6 +4,7 @@ export interface IPaymentHistory extends Document {
     productId: mongoose.Types.ObjectId;
     lensId: mongoose.Types.ObjectId;
     contactLensId: mongoose.Types.ObjectId;
+    accessoryId: mongoose.Types.ObjectId;
     payableAmount: number;
     quantity: number;
     dueAmount: number;

@@ -56,6 +56,11 @@ const paymentHistorySchema = new mongoose_1.Schema({
         ref: "ContactLens",
         default: "",
     },
+    accessoryId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Accessory",
+        default: "",
+    },
     payableAmount: { type: Number, required: true },
     quantity: { type: Number, required: true },
     dueAmount: { type: Number, required: true },

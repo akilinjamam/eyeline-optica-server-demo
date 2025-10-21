@@ -5,6 +5,7 @@ export interface IPaymentHistory extends Document {
 	productId: mongoose.Types.ObjectId;
 	lensId: mongoose.Types.ObjectId;
 	contactLensId: mongoose.Types.ObjectId;
+	accessoryId: mongoose.Types.ObjectId;
 	payableAmount: number;
 	quantity: number;
 	dueAmount: number;
@@ -33,6 +34,11 @@ const paymentHistorySchema = new Schema<IPaymentHistory>(
 		contactLensId: {
 			type: Schema.Types.ObjectId,
 			ref: "ContactLens",
+			default: "",
+		},
+		accessoryId: {
+			type: Schema.Types.ObjectId,
+			ref: "Accessory",
 			default: "",
 		},
 		payableAmount: { type: Number, required: true },

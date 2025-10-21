@@ -16,6 +16,7 @@ const lenses_model_1 = require("../lenses/lenses.model");
 const contactlens_model_1 = __importDefault(require("../contactLens/contactlens.model"));
 const paymentHistory_model_1 = require("../paymentHistory/paymentHistory.model");
 const mongoose_1 = __importDefault(require("mongoose"));
+const accessory_model_1 = __importDefault(require("../accessory/accessory.model"));
 const createPaymentService = async (payload) => {
     const session = await mongoose_1.default.startSession();
     session.startTransaction();
@@ -24,10 +25,11 @@ const createPaymentService = async (payload) => {
         const findCart = (await cart_model_1.Cart.findOne({ _id: cart_id })
             .populate("items.productId")
             .populate("items.lensId")
-            .populate("items.contactLensId"));
+            .populate("items.contactLensId")
+            .populate("items.accessoryId"));
         if (!findCart)
             throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "cart-not-found");
-        const { productId, lensId, contactLensId, subtotal } = findCart?.items[0] || {};
+        const { productId, lensId, contactLensId, accessoryId, subtotal } = findCart?.items[0] || {};
         const deliveryFee = findCart?.deliveryFee;
         const { customerId } = findCart;
         const transectionId = `REF${(0, uuid_1.v4)()}`;
@@ -78,6 +80,7 @@ const createPaymentService = async (payload) => {
             productId: productId?._id,
             lensId: lensId?._id,
             contactLensId: contactLensId?._id,
+            accessoryId: accessoryId?._id,
             deliveryFee,
             subtotal,
         };
@@ -104,11 +107,21 @@ const createPaymentService = async (payload) => {
                 throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_ACCEPTABLE, "contact lens pair amount you have given out of stock");
             }
         }
+        if (accessoryId) {
+            const findZeroQty = accessoryId?.items?.map((qty) => qty.quantity);
+            if (findZeroQty.some((qty) => qty < quantity)) {
+                throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_ACCEPTABLE, "accessory amount you have given out of stock");
+            }
+            if (findZeroQty.includes(0)) {
+                throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_ACCEPTABLE, "accessory out of stock");
+            }
+        }
         // Create Sale with transaction
         const saleDoc = (await sale_model_1.Sale.create([salesData], { session }));
         const salesId = saleDoc[0]._id;
         await session.commitTransaction();
         session.endSession();
+        // success_url: `${config.success_url}=${salesId}`,
         // SSLCommerz initialization (outside transaction)
         const is_live = true;
         const data = {
@@ -159,6 +172,7 @@ const paymentSuccessService = async (salesId) => {
             .populate("productId")
             .populate("lensId")
             .populate("contactLensId")
+            .populate("accessoryId")
             .session(session));
         if (!findSales)
             throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "sales-not-found");
@@ -177,14 +191,23 @@ const paymentSuccessService = async (salesId) => {
             await updateStock(lenses_model_1.Lens, findSales.lensId, findSales.quantity);
         if (findSales.contactLensId)
             await updateStock(contactlens_model_1.default, findSales.contactLensId, findSales.quantity);
+        // Update Accessory stock
+        if (findSales?.accessoryId) {
+            const soldQty = findSales?.quantity;
+            // Step 1: decrement quantity & increment sold
+            await accessory_model_1.default.updateOne({ _id: findSales?.accessoryId._id }, { $inc: { "items.$[].quantity": -soldQty, "items.$[].sold": soldQty } }, { session });
+            // Step 2: set stock=false for items where quantity <= 0
+            await accessory_model_1.default.updateOne({ _id: findSales?.accessoryId._id }, { $set: { "items.$[elem].stock": false } }, { arrayFilters: [{ "elem.quantity": { $lte: 0 } }], session });
+        }
         await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received" }, { new: true, runValidators: true, session });
         // Save Payment History
-        const { customerId, productId, lensId, contactLensId, payableAmount, dueAmount, deliveryFee, quantity, subtotal, } = findSales;
+        const { customerId, productId, lensId, contactLensId, accessoryId, payableAmount, dueAmount, deliveryFee, quantity, subtotal, } = findSales;
         const paymentHistoryData = {
             customerId,
             productId,
             lensId,
             contactLensId,
+            accessoryId,
             payableAmount,
             dueAmount,
             deliveryFee,

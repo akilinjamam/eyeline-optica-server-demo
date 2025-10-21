@@ -68,6 +68,11 @@ const saleSchema = new mongoose_1.Schema({
         ref: "ContactLens",
         default: "",
     },
+    accessoryId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Accessory",
+        default: "",
+    },
     deliveryFee: { type: Number, required: true },
     subtotal: { type: Number, required: true },
     status: {

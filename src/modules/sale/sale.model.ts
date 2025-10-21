@@ -14,6 +14,7 @@ export interface ISale extends Document {
 	productId: mongoose.Types.ObjectId;
 	lensId: mongoose.Types.ObjectId;
 	contactLensId: mongoose.Types.ObjectId;
+	accessoryId: mongoose.Types.ObjectId;
 	deliveryFee: number;
 	subtotal: number;
 	status: "pending" | "receieved" | "processsing" | "packaging" | "on the way" | "delivered";
@@ -51,6 +52,11 @@ const saleSchema = new Schema<ISale>(
 		contactLensId: {
 			type: Schema.Types.ObjectId,
 			ref: "ContactLens",
+			default: "",
+		},
+		accessoryId: {
+			type: Schema.Types.ObjectId,
+			ref: "Accessory",
 			default: "",
 		},
 		deliveryFee: { type: Number, required: true },

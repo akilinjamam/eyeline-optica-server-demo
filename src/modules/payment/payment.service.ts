@@ -11,6 +11,7 @@ import { Lens } from "../lenses/lenses.model";
 import ContactLens from "../contactLens/contactlens.model";
 import { PaymentHistory } from "../paymentHistory/paymentHistory.model";
 import mongoose from "mongoose";
+import Accessory from "../accessory/accessory.model";
 
 const createPaymentService = async (payload: TPaymentData) => {
 	const session = await mongoose.startSession();
@@ -31,11 +32,13 @@ const createPaymentService = async (payload: TPaymentData) => {
 		const findCart = (await Cart.findOne({ _id: cart_id })
 			.populate("items.productId")
 			.populate("items.lensId")
-			.populate("items.contactLensId")) as any;
+			.populate("items.contactLensId")
+			.populate("items.accessoryId")) as any;
 
 		if (!findCart) throw new AppError(StatusCodes.NOT_FOUND, "cart-not-found");
 
-		const { productId, lensId, contactLensId, subtotal } = findCart?.items[0] || ({} as any);
+		const { productId, lensId, contactLensId, accessoryId, subtotal } =
+			findCart?.items[0] || ({} as any);
 		const deliveryFee = findCart?.deliveryFee;
 		const { customerId } = findCart as ICart;
 
@@ -86,6 +89,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			productId: productId?._id,
 			lensId: lensId?._id,
 			contactLensId: contactLensId?._id,
+			accessoryId: accessoryId?._id,
 			deliveryFee,
 			subtotal,
 		};
@@ -117,13 +121,26 @@ const createPaymentService = async (payload: TPaymentData) => {
 			}
 		}
 
+		if (accessoryId) {
+			const findZeroQty = accessoryId?.items?.map((qty: any) => qty.quantity);
+			if (findZeroQty.some((qty: number) => qty < quantity)) {
+				throw new AppError(
+					StatusCodes.NOT_ACCEPTABLE,
+					"accessory amount you have given out of stock"
+				);
+			}
+			if (findZeroQty.includes(0)) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "accessory out of stock");
+			}
+		}
+
 		// Create Sale with transaction
 		const saleDoc = (await Sale.create([salesData], { session })) as any;
 		const salesId = saleDoc[0]._id;
 
 		await session.commitTransaction();
 		session.endSession();
-
+		// success_url: `${config.success_url}=${salesId}`,
 		// SSLCommerz initialization (outside transaction)
 		const is_live = true;
 		const data = {
@@ -176,6 +193,7 @@ const paymentSuccessService = async (salesId: string) => {
 			.populate("productId")
 			.populate("lensId")
 			.populate("contactLensId")
+			.populate("accessoryId")
 			.session(session)) as any;
 
 		if (!findSales) throw new AppError(StatusCodes.NOT_FOUND, "sales-not-found");
@@ -194,6 +212,25 @@ const paymentSuccessService = async (salesId: string) => {
 		if (findSales.contactLensId)
 			await updateStock(ContactLens, findSales.contactLensId, findSales.quantity);
 
+		// Update Accessory stock
+		if (findSales?.accessoryId) {
+			const soldQty = findSales?.quantity;
+
+			// Step 1: decrement quantity & increment sold
+			await Accessory.updateOne(
+				{ _id: findSales?.accessoryId._id },
+				{ $inc: { "items.$[].quantity": -soldQty, "items.$[].sold": soldQty } },
+				{ session }
+			);
+
+			// Step 2: set stock=false for items where quantity <= 0
+			await Accessory.updateOne(
+				{ _id: findSales?.accessoryId._id },
+				{ $set: { "items.$[elem].stock": false } },
+				{ arrayFilters: [{ "elem.quantity": { $lte: 0 } }], session }
+			);
+		}
+
 		await Sale.findByIdAndUpdate(
 			findSales._id,
 			{ status: "Order received" },
@@ -206,6 +243,7 @@ const paymentSuccessService = async (salesId: string) => {
 			productId,
 			lensId,
 			contactLensId,
+			accessoryId,
 			payableAmount,
 			dueAmount,
 			deliveryFee,
@@ -218,6 +256,7 @@ const paymentSuccessService = async (salesId: string) => {
 			productId,
 			lensId,
 			contactLensId,
+			accessoryId,
 			payableAmount,
 			dueAmount,
 			deliveryFee,
