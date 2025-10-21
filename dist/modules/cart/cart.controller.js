@@ -35,9 +35,19 @@ const getCartController = (0, catchAsync_1.default)(async (req, res) => {
         data: result,
     });
 });
+const deleteCartController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await cart_service_1.cartService.deleteCartService(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "Lense deleted successfully",
+        data: result,
+    });
+});
 exports.cartController = {
     createCartController,
     createCartWithPrescriptionImgController,
+    deleteCartController,
     getCartController,
 };
 //# sourceMappingURL=cart.controller.js.map

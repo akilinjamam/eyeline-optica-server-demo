@@ -13,5 +13,6 @@ const cartRouter = express_1.default.Router();
 cartRouter.post("/create-cart", (0, validateRequest_1.default)(cart_validation_1.cartValidationSchema), cart_controller_1.cartController.createCartController);
 cartRouter.post("/create-cart-with-prescription", multer_1.upload.array("prescriptionImg", 10), combineImagesWithDataForCart_1.default, cart_controller_1.cartController.createCartWithPrescriptionImgController);
 cartRouter.get("/get-cart-by-id/:phoneId", cart_controller_1.cartController.getCartController);
+cartRouter.delete("/delete-cart-by-id/:id", cart_controller_1.cartController.deleteCartController);
 exports.default = cartRouter;
 //# sourceMappingURL=cart.route.js.map

@@ -15,5 +15,6 @@ export declare const cartService: {
     }> & {
         __v: number;
     })[]>;
+    deleteCartService: (id: string) => Promise<mongoose.mongo.DeleteResult>;
 };
 //# sourceMappingURL=cart.service.d.ts.map

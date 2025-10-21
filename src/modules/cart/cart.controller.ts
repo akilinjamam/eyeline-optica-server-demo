@@ -34,8 +34,20 @@ const getCartController = catchAsync(async (req, res) => {
 	});
 });
 
+const deleteCartController = catchAsync(async (req, res) => {
+	const result = await cartService.deleteCartService(req.params.id as string);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		success: true,
+		message: "Lense deleted successfully",
+		data: result,
+	});
+});
+
 export const cartController = {
 	createCartController,
 	createCartWithPrescriptionImgController,
+	deleteCartController,
 	getCartController,
 };

@@ -21,5 +21,6 @@ cartRouter.post(
 );
 
 cartRouter.get("/get-cart-by-id/:phoneId", cartController.getCartController);
+cartRouter.delete("/delete-cart-by-id/:id", cartController.deleteCartController);
 
 export default cartRouter;

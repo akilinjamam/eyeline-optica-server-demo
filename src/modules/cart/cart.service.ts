@@ -146,8 +146,14 @@ const getCartService = async (phoneNumber: string) => {
 	}
 };
 
+const deleteCartService = async (id: string) => {
+	const result = await Cart.deleteOne({ _id: id });
+	return result;
+};
+
 export const cartService = {
 	createCartService,
 	createCartWithPrescriptionImg,
 	getCartService,
+	deleteCartService,
 };

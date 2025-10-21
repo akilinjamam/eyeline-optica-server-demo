@@ -121,9 +121,14 @@ const getCartService = async (phoneNumber) => {
         throw new Error("Failed to fetch cart: " + error.message);
     }
 };
+const deleteCartService = async (id) => {
+    const result = await cart_model_1.Cart.deleteOne({ _id: id });
+    return result;
+};
 exports.cartService = {
     createCartService: exports.createCartService,
     createCartWithPrescriptionImg,
     getCartService,
+    deleteCartService,
 };
 //# sourceMappingURL=cart.service.js.map
