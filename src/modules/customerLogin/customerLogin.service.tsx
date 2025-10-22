@@ -10,6 +10,7 @@ const createCustomerLogin = async (payload: {phoneNumber:string}) => {
 
     const tokenData = {
             id: findUserCart?._id,
+            customerId:findUserCart?.customerId,
             email: findUserCart?.email,
             name: findUserCart?.customerName,
             phoneNumber: findUserCart?.phoneNumber,

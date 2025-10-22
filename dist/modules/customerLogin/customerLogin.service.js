@@ -11,6 +11,7 @@ const createCustomerLogin = async (payload) => {
         throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "user not found, please add product to cart");
     const tokenData = {
         id: findUserCart?._id,
+        customerId: findUserCart?.customerId,
         email: findUserCart?.email,
         name: findUserCart?.customerName,
         phoneNumber: findUserCart?.phoneNumber,
