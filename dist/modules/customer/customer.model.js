@@ -37,7 +37,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const customerSchema = new mongoose_1.Schema({
     name: { type: String, default: "not-added" },
     email: { type: String, default: "not-added" },
-    phoneNumber: { type: Number, required: true },
+    phoneNumber: { type: String, required: true },
     address: { type: String, default: " not-added" },
 }, {
     timestamps: true,

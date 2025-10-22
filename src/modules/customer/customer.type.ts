@@ -1,6 +1,6 @@
 export type TCustomer = {
 	name: string;
 	email: string;
-	phoneNumber: number;
+	phoneNumber: string;
 	address: string;
 };

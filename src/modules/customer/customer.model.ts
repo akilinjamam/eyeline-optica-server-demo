@@ -5,7 +5,7 @@ const customerSchema: Schema<TCustomer> = new Schema(
 	{
 		name: { type: String, default: "not-added" },
 		email: { type: String, default: "not-added" },
-		phoneNumber: { type: Number, required: true },
+		phoneNumber: { type: String, required: true },
 		address: { type: String, default: " not-added" },
 	},
 	{

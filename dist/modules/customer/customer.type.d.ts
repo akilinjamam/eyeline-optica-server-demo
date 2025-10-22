@@ -1,7 +1,7 @@
 export type TCustomer = {
     name: string;
     email: string;
-    phoneNumber: number;
+    phoneNumber: string;
     address: string;
 };
 //# sourceMappingURL=customer.type.d.ts.map
