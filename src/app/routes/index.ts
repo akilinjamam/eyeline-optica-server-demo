@@ -12,6 +12,7 @@ import paymentRouter from "../../modules/payment/payment.route";
 import accessoryRouter from "../../modules/accessory/accessory.route";
 import searchRouter from "../../modules/searchFilter/searchFilter.route";
 import paymentHistoryRouter from "../../modules/paymentHistory/paymentHistory.route";
+import salesRouter from "../../modules/sale/sale.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -66,6 +67,10 @@ const allRoutes = [
 	{
 		path: "/payment-history",
 		route: paymentHistoryRouter,
+	},
+	{
+		path: "/sales",
+		route: salesRouter,
 	},
 ];
 

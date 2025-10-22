@@ -73,12 +73,29 @@ const saleSchema = new mongoose_1.Schema({
         ref: "Accessory",
         default: "",
     },
+    paymentHistoryId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "PaymentHistory",
+        default: null,
+    },
     deliveryFee: { type: Number, required: true },
     subtotal: { type: Number, required: true },
     status: {
         type: String,
         enum: ["pending", "Order received", "processsing", "packaging", "on the way", "delivered"],
         default: "pending",
+    },
+    saleType: {
+        type: String,
+        enum: [
+            "Only Frame",
+            "Only Lens",
+            "Only Contact-Lens",
+            "Only Accessory",
+            "Frame and Lens",
+            "Contact-Lens and Accessory",
+        ],
+        required: true,
     },
 }, {
     timestamps: true, // adds createdAt and updatedAt

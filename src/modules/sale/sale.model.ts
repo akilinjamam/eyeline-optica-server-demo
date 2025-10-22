@@ -1,6 +1,13 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface ISale extends Document {
+	saleType:
+		| "Only Frame"
+		| "Only Lens"
+		| "Only Contact-Lens"
+		| "Only Accessory"
+		| "Frame and Lens"
+		| "Contact-Lens and Accessory";
 	quantity: number;
 	invoiceNo: string;
 	tran_id: string;
@@ -15,6 +22,7 @@ export interface ISale extends Document {
 	lensId: mongoose.Types.ObjectId;
 	contactLensId: mongoose.Types.ObjectId;
 	accessoryId: mongoose.Types.ObjectId;
+	paymentHistoryId: mongoose.Types.ObjectId;
 	deliveryFee: number;
 	subtotal: number;
 	status: "pending" | "receieved" | "processsing" | "packaging" | "on the way" | "delivered";
@@ -59,12 +67,29 @@ const saleSchema = new Schema<ISale>(
 			ref: "Accessory",
 			default: "",
 		},
+		paymentHistoryId: {
+			type: Schema.Types.ObjectId,
+			ref: "PaymentHistory",
+			default: null,
+		},
 		deliveryFee: { type: Number, required: true },
 		subtotal: { type: Number, required: true },
 		status: {
 			type: String,
 			enum: ["pending", "Order received", "processsing", "packaging", "on the way", "delivered"],
 			default: "pending",
+		},
+		saleType: {
+			type: String,
+			enum: [
+				"Only Frame",
+				"Only Lens",
+				"Only Contact-Lens",
+				"Only Accessory",
+				"Frame and Lens",
+				"Contact-Lens and Accessory",
+			],
+			required: true,
 		},
 	},
 	{

@@ -34,14 +34,39 @@ const createPaymentService = async (payload) => {
         const { customerId } = findCart;
         const transectionId = `REF${(0, uuid_1.v4)()}`;
         let productName = "";
-        if (productId && lensId)
+        let saleType = "";
+        /*
+        "Only Frame",
+                "Only Lens",
+                "Only Contact-Lens",
+                "Only Accessory",
+                "Frame and Lens",
+                "Contact-Lens and Accessory",
+        */
+        if (productId && lensId) {
             productName = `${productId?.name} + ${lensId?.name}`;
-        if (productId && !lensId)
+            saleType = "Frame and Lens";
+        }
+        if (productId && !lensId) {
             productName = productId?.name;
-        if (!productId && lensId)
+            saleType = "Only Frame";
+        }
+        if (!productId && lensId) {
             productName = lensId?.name;
-        if (contactLensId)
+            saleType = "Only Lens";
+        }
+        if (contactLensId && !accessoryId) {
             productName = contactLensId?.name;
+            saleType = "Only Contact-Lens";
+        }
+        if (!contactLensId && accessoryId) {
+            productName = accessoryId?.type;
+            saleType = "Only Accessory";
+        }
+        if (contactLensId && accessoryId) {
+            productName = `${contactLensId?.name} + ${accessoryId?.type}`;
+            saleType = "Contact-Lens and Accessory";
+        }
         const date = new Date();
         const arrangeDate = `${date.getFullYear()}${(date.getMonth() + 1)
             .toString()
@@ -69,6 +94,7 @@ const createPaymentService = async (payload) => {
         const salesData = {
             invoiceNo: `${arrangeDate}${newBarcode}`,
             tran_id: transectionId,
+            saleType,
             customerId,
             customer_name,
             customer_phone,
@@ -199,7 +225,6 @@ const paymentSuccessService = async (salesId) => {
             // Step 2: set stock=false for items where quantity <= 0
             await accessory_model_1.default.updateOne({ _id: findSales?.accessoryId._id }, { $set: { "items.$[elem].stock": false } }, { arrayFilters: [{ "elem.quantity": { $lte: 0 } }], session });
         }
-        await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received" }, { new: true, runValidators: true, session });
         // Save Payment History
         const { customerId, productId, lensId, contactLensId, accessoryId, payableAmount, dueAmount, deliveryFee, quantity, subtotal, } = findSales;
         const paymentHistoryData = {
@@ -214,7 +239,8 @@ const paymentSuccessService = async (salesId) => {
             quantity,
             subtotal,
         };
-        await paymentHistory_model_1.PaymentHistory.create([paymentHistoryData], { session });
+        const [paymentHistory] = await paymentHistory_model_1.PaymentHistory.create([paymentHistoryData], { session });
+        await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received", paymentHistoryId: paymentHistory?._id }, { new: true, runValidators: true, session });
         await session.commitTransaction();
         session.endSession();
         return "success";

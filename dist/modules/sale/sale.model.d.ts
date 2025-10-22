@@ -1,5 +1,6 @@
 import mongoose, { Document, Model } from "mongoose";
 export interface ISale extends Document {
+    saleType: "Only Frame" | "Only Lens" | "Only Contact-Lens" | "Only Accessory" | "Frame and Lens" | "Contact-Lens and Accessory";
     quantity: number;
     invoiceNo: string;
     tran_id: string;
@@ -14,6 +15,7 @@ export interface ISale extends Document {
     lensId: mongoose.Types.ObjectId;
     contactLensId: mongoose.Types.ObjectId;
     accessoryId: mongoose.Types.ObjectId;
+    paymentHistoryId: mongoose.Types.ObjectId;
     deliveryFee: number;
     subtotal: number;
     status: "pending" | "receieved" | "processsing" | "packaging" | "on the way" | "delivered";

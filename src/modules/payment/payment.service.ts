@@ -44,11 +44,41 @@ const createPaymentService = async (payload: TPaymentData) => {
 
 		const transectionId = `REF${uuidv4()}`;
 		let productName = "";
+		let saleType = "";
 
-		if (productId && lensId) productName = `${productId?.name} + ${lensId?.name}`;
-		if (productId && !lensId) productName = productId?.name;
-		if (!productId && lensId) productName = lensId?.name;
-		if (contactLensId) productName = contactLensId?.name;
+		/* 
+		"Only Frame",
+				"Only Lens",
+				"Only Contact-Lens",
+				"Only Accessory",
+				"Frame and Lens",
+				"Contact-Lens and Accessory",
+		*/
+
+		if (productId && lensId) {
+			productName = `${productId?.name} + ${lensId?.name}`;
+			saleType = "Frame and Lens";
+		}
+		if (productId && !lensId) {
+			productName = productId?.name;
+			saleType = "Only Frame";
+		}
+		if (!productId && lensId) {
+			productName = lensId?.name;
+			saleType = "Only Lens";
+		}
+		if (contactLensId && !accessoryId) {
+			productName = contactLensId?.name;
+			saleType = "Only Contact-Lens";
+		}
+		if (!contactLensId && accessoryId) {
+			productName = accessoryId?.type;
+			saleType = "Only Accessory";
+		}
+		if (contactLensId && accessoryId) {
+			productName = `${contactLensId?.name} + ${accessoryId?.type}`;
+			saleType = "Contact-Lens and Accessory";
+		}
 
 		const date = new Date();
 		const arrangeDate = `${date.getFullYear()}${(date.getMonth() + 1)
@@ -78,6 +108,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		const salesData = {
 			invoiceNo: `${arrangeDate}${newBarcode}`,
 			tran_id: transectionId,
+			saleType,
 			customerId,
 			customer_name,
 			customer_phone,
@@ -235,12 +266,6 @@ const paymentSuccessService = async (salesId: string) => {
 			);
 		}
 
-		await Sale.findByIdAndUpdate(
-			findSales._id,
-			{ status: "Order received" },
-			{ new: true, runValidators: true, session }
-		);
-
 		// Save Payment History
 		const {
 			customerId,
@@ -268,7 +293,13 @@ const paymentSuccessService = async (salesId: string) => {
 			subtotal,
 		};
 
-		await PaymentHistory.create([paymentHistoryData], { session });
+		const [paymentHistory] = await PaymentHistory.create([paymentHistoryData], { session });
+
+		await Sale.findByIdAndUpdate(
+			findSales._id,
+			{ status: "Order received", paymentHistoryId: paymentHistory?._id },
+			{ new: true, runValidators: true, session }
+		);
 
 		await session.commitTransaction();
 		session.endSession();

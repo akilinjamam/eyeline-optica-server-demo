@@ -9,13 +9,21 @@ const AppError_1 = require("../errors/AppError");
 const http_status_codes_1 = require("http-status-codes");
 const config_1 = __importDefault(require("../config"));
 const sendResponse_1 = __importDefault(require("../utils/sendResponse"));
-const protect = (req, res, next) => {
+const registration_model_1 = require("../../modules/registration/registration.model");
+const protect = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
         throw new AppError_1.AppError(http_status_codes_1.StatusCodes.UNAUTHORIZED, "Not authorized");
     }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_secret);
+        if (!decoded)
+            return;
+        const checkRegistered = await registration_model_1.RegistrationModel.findById(decoded?.id);
+        if (!checkRegistered)
+            throw new AppError_1.AppError(http_status_codes_1.StatusCodes.UNAUTHORIZED, "user not registered");
+        if (!checkRegistered.access)
+            throw new AppError_1.AppError(http_status_codes_1.StatusCodes.UNAUTHORIZED, "access not allowed yet");
         req.user = decoded;
         next();
     }
