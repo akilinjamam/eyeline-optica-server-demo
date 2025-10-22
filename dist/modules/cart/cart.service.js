@@ -40,6 +40,7 @@ const createCartService = async (payload) => {
         const findCart = await cart_model_1.Cart.findOne({ _id: result[0]?._id }).session(session);
         // 🔹 Step 3: Generate token
         const tokenData = {
+            customerId: findCart?.customerId,
             id: findCart?._id,
             email: findCart?.email,
             name: findCart?.customerName,

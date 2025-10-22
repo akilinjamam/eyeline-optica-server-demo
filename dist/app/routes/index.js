@@ -16,6 +16,7 @@ const customerLogin_route_1 = __importDefault(require("../../modules/customerLog
 const payment_route_1 = __importDefault(require("../../modules/payment/payment.route"));
 const accessory_route_1 = __importDefault(require("../../modules/accessory/accessory.route"));
 const searchFilter_route_1 = __importDefault(require("../../modules/searchFilter/searchFilter.route"));
+const paymentHistory_route_1 = __importDefault(require("../../modules/paymentHistory/paymentHistory.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -65,6 +66,10 @@ const allRoutes = [
     {
         path: "/search",
         route: searchFilter_route_1.default,
+    },
+    {
+        path: "/payment-history",
+        route: paymentHistory_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));

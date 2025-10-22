@@ -47,6 +47,7 @@ export const createCartService = async (payload: ICart) => {
 
 		// 🔹 Step 3: Generate token
 		const tokenData = {
+			customerId: findCart?.customerId,
 			id: findCart?._id,
 			email: findCart?.email,
 			name: findCart?.customerName,
