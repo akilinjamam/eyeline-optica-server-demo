@@ -12,5 +12,10 @@ export declare const paymentHistoryService: {
             __v: number;
         })[];
     }>;
+    getSinglePaymentHistoryService: (payment_his_id: string) => Promise<(import("mongoose").Document<unknown, {}, import("./paymentHistory.model").IPaymentHistory, {}, {}> & import("./paymentHistory.model").IPaymentHistory & Required<{
+        _id: unknown;
+    }> & {
+        __v: number;
+    }) | null>;
 };
 //# sourceMappingURL=paymentHistory.service.d.ts.map

@@ -17,7 +17,17 @@ const getPaymentHistoryController = (0, catchAsync_1.default)(async (req, res) =
         data: result,
     });
 });
+const getSinglePaymentHistoryController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await paymentHistory_service_1.paymentHistoryService.getSinglePaymentHistoryService(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "single payment history found successfully",
+        data: result,
+    });
+});
 exports.paymentHistoryController = {
     getPaymentHistoryController,
+    getSinglePaymentHistoryController,
 };
 //# sourceMappingURL=paymentHistory.controller.js.map

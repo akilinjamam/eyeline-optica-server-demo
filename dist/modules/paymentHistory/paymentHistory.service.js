@@ -25,7 +25,12 @@ const getPaymentHistoryService = async (cus_id, query) => {
         data,
     };
 };
+const getSinglePaymentHistoryService = async (payment_his_id) => {
+    const res = await paymentHistory_model_1.PaymentHistory.findOne({ _id: payment_his_id });
+    return res;
+};
 exports.paymentHistoryService = {
     getPaymentHistoryService,
+    getSinglePaymentHistoryService,
 };
 //# sourceMappingURL=paymentHistory.service.js.map

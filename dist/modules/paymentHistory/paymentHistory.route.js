@@ -7,5 +7,6 @@ const express_1 = __importDefault(require("express"));
 const paymentHistory_controller_1 = require("./paymentHistory.controller");
 const paymentHistoryRouter = express_1.default.Router();
 paymentHistoryRouter.get("/get-payment-history/:cus_id", paymentHistory_controller_1.paymentHistoryController.getPaymentHistoryController);
+paymentHistoryRouter.get("/get-single-payment-history/:id", paymentHistory_controller_1.paymentHistoryController.getSinglePaymentHistoryController);
 exports.default = paymentHistoryRouter;
 //# sourceMappingURL=paymentHistory.route.js.map
