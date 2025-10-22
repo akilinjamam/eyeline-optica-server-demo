@@ -7,7 +7,12 @@ exports.paymentHistoryService = void 0;
 const QueryBuilder_1 = __importDefault(require("../../app/middleware/QueryBuilder"));
 const paymentHistory_model_1 = require("./paymentHistory.model");
 const getPaymentHistoryService = async (cus_id, query) => {
-    const result = new QueryBuilder_1.default(paymentHistory_model_1.PaymentHistory.find({ customerId: cus_id }), query)
+    const result = new QueryBuilder_1.default(paymentHistory_model_1.PaymentHistory.find({ customerId: cus_id })
+        .populate("customerId", "_id name")
+        .populate("productId", "_id name salesPrice")
+        .populate("lensId", "_id name salesPrice")
+        .populate("contactLensId", "_id name salesPrice")
+        .populate("accessoryId"), query)
         .search(["payableAmount"])
         .fields()
         .filter()
