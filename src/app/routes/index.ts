@@ -10,6 +10,7 @@ import prescriptionRouter from "../../modules/prescription/prescription.route";
 import customerLoginRoute from "../../modules/customerLogin/customerLogin.route";
 import paymentRouter from "../../modules/payment/payment.route";
 import accessoryRouter from "../../modules/accessory/accessory.route";
+import searchRouter from "../../modules/searchFilter/searchFilter.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -56,6 +57,10 @@ const allRoutes = [
 	{
 		path: "/accessory",
 		route: accessoryRouter,
+	},
+	{
+		path: "/search",
+		route: searchRouter,
 	},
 ];
 

@@ -15,6 +15,7 @@ const prescription_route_1 = __importDefault(require("../../modules/prescription
 const customerLogin_route_1 = __importDefault(require("../../modules/customerLogin/customerLogin.route"));
 const payment_route_1 = __importDefault(require("../../modules/payment/payment.route"));
 const accessory_route_1 = __importDefault(require("../../modules/accessory/accessory.route"));
+const searchFilter_route_1 = __importDefault(require("../../modules/searchFilter/searchFilter.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -60,6 +61,10 @@ const allRoutes = [
     {
         path: "/accessory",
         route: accessory_route_1.default,
+    },
+    {
+        path: "/search",
+        route: searchFilter_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));

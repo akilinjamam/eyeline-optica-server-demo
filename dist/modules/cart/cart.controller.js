@@ -40,7 +40,7 @@ const deleteCartController = (0, catchAsync_1.default)(async (req, res) => {
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
-        message: "Lense deleted successfully",
+        message: "Cart deleted successfully",
         data: result,
     });
 });
