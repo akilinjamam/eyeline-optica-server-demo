@@ -26,6 +26,12 @@ const getPaymentHistoryService = async (cus_id: string, query: Record<string, un
 	};
 };
 
+const getSinglePaymentHistoryService = async (payment_his_id: string) => {
+	const res = await PaymentHistory.findOne({ _id: payment_his_id });
+	return res;
+};
+
 export const paymentHistoryService = {
 	getPaymentHistoryService,
+	getSinglePaymentHistoryService,
 };
