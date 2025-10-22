@@ -27,8 +27,15 @@ const getPaymentHistoryService = async (cus_id: string, query: Record<string, un
 };
 
 const getSinglePaymentHistoryService = async (payment_his_id: string) => {
-	const res = await PaymentHistory.findOne({ _id: payment_his_id });
-	return res;
+	const res = await PaymentHistory.findOne({ _id: payment_his_id })
+		.populate("customerId", "_id name")
+		.populate("productId", "_id name salesPrice")
+		.populate("lensId", "_id name salesPrice")
+		.populate("contactLensId", "_id name salesPrice")
+		.populate("accessoryId");
+	return {
+		data: res,
+	};
 };
 
 export const paymentHistoryService = {

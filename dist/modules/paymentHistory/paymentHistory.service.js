@@ -26,8 +26,15 @@ const getPaymentHistoryService = async (cus_id, query) => {
     };
 };
 const getSinglePaymentHistoryService = async (payment_his_id) => {
-    const res = await paymentHistory_model_1.PaymentHistory.findOne({ _id: payment_his_id });
-    return res;
+    const res = await paymentHistory_model_1.PaymentHistory.findOne({ _id: payment_his_id })
+        .populate("customerId", "_id name")
+        .populate("productId", "_id name salesPrice")
+        .populate("lensId", "_id name salesPrice")
+        .populate("contactLensId", "_id name salesPrice")
+        .populate("accessoryId");
+    return {
+        data: res,
+    };
 };
 exports.paymentHistoryService = {
     getPaymentHistoryService,
