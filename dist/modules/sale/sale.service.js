@@ -13,7 +13,10 @@ const getSaleService = async (query) => {
         .populate("productId", "name salesPrice purchase sold quantity stock _id")
         .populate("lensId", "name salesPrice purchasePrice sold quantity stock _id")
         .populate("contactLensId", "name salesPrice purchasePrice sold quantity stock _id")
-        .populate("accessoryId", "type")
+        .populate({
+        path: "accessoryId",
+        select: "type items",
+    })
         .populate("customerId", "name phoneNumber address"), query)
         .search(["saleType"])
         .filter()
