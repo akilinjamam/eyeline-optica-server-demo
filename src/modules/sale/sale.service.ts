@@ -1,9 +1,10 @@
+import NewQueryBuilder from "../../app/middleware/NewQueryBuilder";
 import QueryBuilder from "../../app/middleware/QueryBuilder";
 import Customer from "../customer/customer.model";
 import { Sale } from "./sale.model";
 
 const getSaleService = async (query: Record<string, unknown>) => {
-	const result = new QueryBuilder(
+	const result = new NewQueryBuilder(
 		Sale.find({})
 			.populate("productId", "name salesPrice purchase sold quantity stock _id")
 			.populate("lensId", "name salesPrice purchasePrice sold quantity stock _id")

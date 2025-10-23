@@ -35,14 +35,6 @@ const createPaymentService = async (payload) => {
         const transectionId = `REF${(0, uuid_1.v4)()}`;
         let productName = "";
         let saleType = "";
-        /*
-        "Only Frame",
-                "Only Lens",
-                "Only Contact-Lens",
-                "Only Accessory",
-                "Frame and Lens",
-                "Contact-Lens and Accessory",
-        */
         if (productId && lensId) {
             productName = `${productId?.name} + ${lensId?.name}`;
             saleType = "Frame and Lens";
