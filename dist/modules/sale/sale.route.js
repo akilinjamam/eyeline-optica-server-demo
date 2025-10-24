@@ -9,6 +9,6 @@ const sale_controller_1 = require("./sale.controller");
 const salesRouter = express_1.default.Router();
 salesRouter.get("/get-sales", auth_1.protect, sale_controller_1.salescontroller.getSalescontroller);
 salesRouter.get("/get-customer", sale_controller_1.salescontroller.getCustomercontroller);
-salesRouter.patch("/update-status/:id", sale_controller_1.salescontroller.updateStatuscontroller);
+salesRouter.patch("/update-status/:id", auth_1.protect, sale_controller_1.salescontroller.updateStatuscontroller);
 exports.default = salesRouter;
 //# sourceMappingURL=sale.route.js.map
