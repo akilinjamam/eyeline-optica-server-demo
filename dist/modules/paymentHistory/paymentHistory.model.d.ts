@@ -10,7 +10,7 @@ export interface IPaymentHistory extends Document {
     dueAmount: number;
     deliveryFee: number;
     subtotal: number;
-    status: "Order receieved" | "processsing" | "packaging" | "on the way" | "delivered";
+    status: "Order received" | "processsing" | "packaging" | "on the way" | "delivered";
 }
 export declare const PaymentHistory: Model<IPaymentHistory>;
 //# sourceMappingURL=paymentHistory.model.d.ts.map

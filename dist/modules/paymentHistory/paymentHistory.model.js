@@ -68,8 +68,8 @@ const paymentHistorySchema = new mongoose_1.Schema({
     subtotal: { type: Number, required: true },
     status: {
         type: String,
-        enum: ["Order receieved", "processsing", "packaging", "on the way", "delivered"],
-        default: "Order receieved",
+        enum: ["Order received", "processsing", "packaging", "on the way", "delivered"],
+        default: "Order received",
     },
 }, {
     timestamps: true, // adds createdAt & updatedAt automatically

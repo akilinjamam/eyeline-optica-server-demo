@@ -11,7 +11,7 @@ export interface IPaymentHistory extends Document {
 	dueAmount: number;
 	deliveryFee: number;
 	subtotal: number;
-	status: "Order receieved" | "processsing" | "packaging" | "on the way" | "delivered";
+	status: "Order received" | "processsing" | "packaging" | "on the way" | "delivered";
 }
 
 const paymentHistorySchema = new Schema<IPaymentHistory>(
@@ -48,8 +48,8 @@ const paymentHistorySchema = new Schema<IPaymentHistory>(
 		subtotal: { type: Number, required: true },
 		status: {
 			type: String,
-			enum: ["Order receieved", "processsing", "packaging", "on the way", "delivered"],
-			default: "Order receieved",
+			enum: ["Order received", "processsing", "packaging", "on the way", "delivered"],
+			default: "Order received",
 		},
 	},
 	{

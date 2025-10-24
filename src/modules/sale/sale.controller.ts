@@ -24,7 +24,19 @@ const getCustomercontroller = catchAsync(async (req, res) => {
 	});
 });
 
+const updateStatuscontroller = catchAsync(async (req, res) => {
+	const result = await salesService.updateStatusService(req?.params.id as string, req.body);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "sales and payment history updated successfully",
+		data: result,
+	});
+});
+
 export const salescontroller = {
 	getSalescontroller,
 	getCustomercontroller,
+	updateStatuscontroller,
 };
