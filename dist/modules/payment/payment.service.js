@@ -29,7 +29,7 @@ const createPaymentService = async (payload) => {
             .populate("items.accessoryId"));
         if (!findCart)
             throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "cart-not-found");
-        const { productId, lensId, contactLensId, accessoryId, subtotal } = findCart?.items[0] || {};
+        const { productId, lensId, contactLensId, accessoryId, subtotal, pd, prescriptionImg, rightEye, leftEye, submitType, } = findCart?.items[0] || {};
         const deliveryFee = findCart?.deliveryFee;
         const { customerId } = findCart;
         const transectionId = `REF${(0, uuid_1.v4)()}`;
@@ -101,7 +101,13 @@ const createPaymentService = async (payload) => {
             accessoryId: accessoryId?._id,
             deliveryFee,
             subtotal,
+            submitType,
+            pd,
+            prescriptionImg,
+            leftEye,
+            rightEye,
         };
+        console.log(salesData);
         // Stock validation
         if (productId) {
             if (productId.quantity === 0) {

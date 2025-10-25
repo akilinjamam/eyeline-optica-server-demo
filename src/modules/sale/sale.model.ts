@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
+import { IPrescriptionSchema } from "../cart/cart.model";
 
 export interface ISale extends Document {
 	saleType:
@@ -25,8 +26,22 @@ export interface ISale extends Document {
 	paymentHistoryId: mongoose.Types.ObjectId;
 	deliveryFee: number;
 	subtotal: number;
-	status: "pending" | "receieved" | "processsing" | "packaging" | "on the way" | "delivered";
+	status: "pending" | "Order received" | "processsing" | "packaging" | "on the way" | "delivered";
+	pd: string;
+	prescriptionImg: string[];
+	leftEye: IPrescriptionSchema;
+	rightEye: IPrescriptionSchema;
+	submitType: string;
 }
+
+const prescriptionSchema = new Schema<IPrescriptionSchema>(
+	{
+		sphere: { type: String, default: null },
+		cylinder: { type: String, default: null },
+		axis: { type: String, default: null },
+	},
+	{ _id: false }
+);
 
 const saleSchema = new Schema<ISale>(
 	{
@@ -91,6 +106,14 @@ const saleSchema = new Schema<ISale>(
 			],
 			required: true,
 		},
+		pd: {
+			type: String,
+			default: null,
+		},
+		leftEye: { type: prescriptionSchema, default: null },
+		rightEye: { type: prescriptionSchema, default: null },
+		prescriptionImg: { type: [String], default: null },
+		submitType: { type: String, default: "" },
 	},
 	{
 		timestamps: true, // adds createdAt and updatedAt

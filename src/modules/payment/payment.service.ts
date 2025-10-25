@@ -37,15 +37,24 @@ const createPaymentService = async (payload: TPaymentData) => {
 
 		if (!findCart) throw new AppError(StatusCodes.NOT_FOUND, "cart-not-found");
 
-		const { productId, lensId, contactLensId, accessoryId, subtotal } =
-			findCart?.items[0] || ({} as any);
+		const {
+			productId,
+			lensId,
+			contactLensId,
+			accessoryId,
+			subtotal,
+			pd,
+			prescriptionImg,
+			rightEye,
+			leftEye,
+			submitType,
+		} = findCart?.items[0] || ({} as any);
 		const deliveryFee = findCart?.deliveryFee;
 		const { customerId } = findCart as ICart;
 
 		const transectionId = `REF${uuidv4()}`;
 		let productName = "";
 		let saleType = "";
-
 
 		if (productId && lensId) {
 			productName = `${productId?.name} + ${lensId?.name}`;
@@ -115,8 +124,13 @@ const createPaymentService = async (payload: TPaymentData) => {
 			accessoryId: accessoryId?._id,
 			deliveryFee,
 			subtotal,
+			submitType,
+			pd,
+			prescriptionImg,
+			leftEye,
+			rightEye,
 		};
-
+		console.log(salesData);
 		// Stock validation
 		if (productId) {
 			if (productId.quantity === 0) {

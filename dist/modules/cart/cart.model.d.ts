@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-interface IPrescriptionSchema {
+export interface IPrescriptionSchema {
     sphere: string;
     cylinder: string;
     axis: string;
@@ -36,5 +36,4 @@ export declare const Cart: mongoose.Model<ICart, {}, {}, {}, mongoose.Document<u
 }> & {
     __v: number;
 }, any>;
-export {};
 //# sourceMappingURL=cart.model.d.ts.map

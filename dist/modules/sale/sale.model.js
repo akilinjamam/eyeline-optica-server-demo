@@ -35,6 +35,11 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sale = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const prescriptionSchema = new mongoose_1.Schema({
+    sphere: { type: String, default: null },
+    cylinder: { type: String, default: null },
+    axis: { type: String, default: null },
+}, { _id: false });
 const saleSchema = new mongoose_1.Schema({
     invoiceNo: { type: String, required: true },
     customerId: {
@@ -97,6 +102,14 @@ const saleSchema = new mongoose_1.Schema({
         ],
         required: true,
     },
+    pd: {
+        type: String,
+        default: null,
+    },
+    leftEye: { type: prescriptionSchema, default: null },
+    rightEye: { type: prescriptionSchema, default: null },
+    prescriptionImg: { type: [String], default: null },
+    submitType: { type: String, default: "" },
 }, {
     timestamps: true, // adds createdAt and updatedAt
 });

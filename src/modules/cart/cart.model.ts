@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-interface IPrescriptionSchema {
+export interface IPrescriptionSchema {
 	sphere: string;
 	cylinder: string;
 	axis: string;
