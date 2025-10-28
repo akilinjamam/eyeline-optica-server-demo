@@ -23,11 +23,11 @@ export declare const accessoryService: {
     }> & {
         __v: number;
     }) | null>;
-    updateAccessoryService: (id: string, payload: Record<string, unknown>) => Promise<(import("mongoose").Document<unknown, {}, IAccessory, {}, {}> & IAccessory & Required<{
+    updateAccessoryService: (id: string, payload: any) => Promise<import("mongoose").Document<unknown, {}, IAccessory, {}, {}> & IAccessory & Required<{
         _id: unknown;
     }> & {
         __v: number;
-    }) | null>;
+    }>;
     deleteAccessoryService: (ids: string[]) => Promise<import("mongodb").DeleteResult>;
 };
 //# sourceMappingURL=accessory.service.d.ts.map

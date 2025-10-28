@@ -31,7 +31,15 @@ const getSingleAccessoryService = async (id) => {
     return result;
 };
 const updateAccessoryService = async (id, payload) => {
-    const result = await accessory_model_1.default.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
+    console.log(payload);
+    const result = await accessory_model_1.default.findByIdAndUpdate(id, {
+        type: payload.data.type,
+        images: payload.images || [],
+        items: payload.data.items,
+    }, { new: true });
+    if (!result) {
+        throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "Product not found");
+    }
     return result;
 };
 const deleteAccessoryService = async (ids) => {

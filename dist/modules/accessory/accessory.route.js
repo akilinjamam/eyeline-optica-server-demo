@@ -9,8 +9,9 @@ const combineImagesWithData_1 = __importDefault(require("../../app/middleware/co
 const validateRequest_1 = __importDefault(require("../../app/middleware/validateRequest"));
 const accessory_validation_1 = require("./accessory.validation");
 const accessory_controller_1 = require("./accessory.controller");
+const auth_1 = require("../../app/middleware/auth");
 const accessoryRouter = express_1.default.Router();
-accessoryRouter.post("/create-accessory", multer_1.upload.array("images", 10), combineImagesWithData_1.default, (0, validateRequest_1.default)(accessory_validation_1.accessorySchema), accessory_controller_1.accessoryController.createAccessoryController);
+accessoryRouter.post("/create-accessory", auth_1.protect, multer_1.upload.array("images", 10), combineImagesWithData_1.default, (0, validateRequest_1.default)(accessory_validation_1.accessorySchema), accessory_controller_1.accessoryController.createAccessoryController);
 accessoryRouter.get("/get-accessories", accessory_controller_1.accessoryController.getAllAccessoryController);
 accessoryRouter.put("/update-accessory/:id", multer_1.upload.array("images", 10), combineImagesWithData_1.default, accessory_controller_1.accessoryController.updateAccessoryController);
 accessoryRouter.delete("/delete-accessory", accessory_controller_1.accessoryController.deleteAccessoryController);

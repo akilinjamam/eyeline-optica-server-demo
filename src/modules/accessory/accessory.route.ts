@@ -4,11 +4,13 @@ import combineImagesWithTextData from "../../app/middleware/combineImagesWithDat
 import validateRequest from "../../app/middleware/validateRequest";
 import { accessorySchema } from "./accessory.validation";
 import { accessoryController } from "./accessory.controller";
+import { protect } from "../../app/middleware/auth";
 
 const accessoryRouter = express.Router();
 
 accessoryRouter.post(
 	"/create-accessory",
+	protect,
 	upload.array("images", 10),
 	combineImagesWithTextData,
 	validateRequest(accessorySchema),

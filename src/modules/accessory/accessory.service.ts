@@ -30,8 +30,21 @@ const getSingleAccessoryService = async (id: string) => {
 	return result;
 };
 
-const updateAccessoryService = async (id: string, payload: Record<string, unknown>) => {
-	const result = await Accessory.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
+const updateAccessoryService = async (id: string, payload: any) => {
+	console.log(payload);
+	const result = await Accessory.findByIdAndUpdate(
+		id,
+		{
+			type: payload.data.type,
+			images: payload.images || [],
+			items: payload.data.items,
+		},
+		{ new: true }
+	);
+
+	if (!result) {
+		throw new AppError(StatusCodes.NOT_FOUND, "Product not found");
+	}
 
 	return result;
 };
