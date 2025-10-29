@@ -13,6 +13,7 @@ import accessoryRouter from "../../modules/accessory/accessory.route";
 import searchRouter from "../../modules/searchFilter/searchFilter.route";
 import paymentHistoryRouter from "../../modules/paymentHistory/paymentHistory.route";
 import salesRouter from "../../modules/sale/sale.route";
+import cateogoryRouter from "../../modules/category/category.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -71,6 +72,10 @@ const allRoutes = [
 	{
 		path: "/sales",
 		route: salesRouter,
+	},
+	{
+		path: "/category",
+		route: cateogoryRouter,
 	},
 ];
 
