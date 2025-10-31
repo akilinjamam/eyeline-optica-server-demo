@@ -38,7 +38,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const blogSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     category: { type: String, required: true },
-    images: { type: String, required: true },
+    images: { type: [String], default: [] },
     description: { type: String, required: true },
 }, { timestamps: true });
 exports.Blog = mongoose_1.default.model("Blog", blogSchema);
