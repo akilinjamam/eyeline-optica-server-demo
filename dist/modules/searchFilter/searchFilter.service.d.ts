@@ -54,6 +54,7 @@ export declare const searchFilterService: {
         deliveryTime?: string;
         offer?: number;
         rating?: number;
+        badge: string;
         _id: import("mongoose").Types.ObjectId;
         __v: number;
     } | {

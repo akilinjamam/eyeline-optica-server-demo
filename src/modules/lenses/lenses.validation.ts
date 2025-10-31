@@ -26,6 +26,7 @@ export const lensValidationSchema = z.object({
 	deliveryTime: z.string().optional(),
 	offer: z.number().min(0).max(100).default(0), // discount %
 	rating: z.number().min(0).max(5).optional(),
+	badge: z.string(),
 });
 
 // Type inference for TypeScript

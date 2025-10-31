@@ -27,5 +27,6 @@ exports.lensValidationSchema = zod_1.z.object({
     deliveryTime: zod_1.z.string().optional(),
     offer: zod_1.z.number().min(0).max(100).default(0), // discount %
     rating: zod_1.z.number().min(0).max(5).optional(),
+    badge: zod_1.z.string(),
 });
 //# sourceMappingURL=lenses.validation.js.map

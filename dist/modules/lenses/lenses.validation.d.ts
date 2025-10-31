@@ -35,6 +35,7 @@ export declare const lensValidationSchema: z.ZodObject<{
     deliveryTime: z.ZodOptional<z.ZodString>;
     offer: z.ZodDefault<z.ZodNumber>;
     rating: z.ZodOptional<z.ZodNumber>;
+    badge: z.ZodString;
 }, z.core.$strip>;
 export type LensInput = z.infer<typeof lensValidationSchema>;
 //# sourceMappingURL=lenses.validation.d.ts.map

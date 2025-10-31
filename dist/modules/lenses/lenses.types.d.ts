@@ -25,5 +25,6 @@ export interface ILens {
     deliveryTime?: string;
     offer?: number;
     rating?: number;
+    badge: string;
 }
 //# sourceMappingURL=lenses.types.d.ts.map

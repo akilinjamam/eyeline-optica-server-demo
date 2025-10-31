@@ -29,4 +29,5 @@ export interface ILens {
 	deliveryTime?: string;
 	offer?: number;
 	rating?: number;
+	badge: string;
 }
