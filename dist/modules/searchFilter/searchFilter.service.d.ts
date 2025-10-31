@@ -80,6 +80,7 @@ export declare const searchFilterService: {
         rating: number;
         description: string;
         images: string[];
+        powerType: "with power" | "without Power";
         _id: import("mongoose").Types.ObjectId;
         __v: number;
     })[]>;

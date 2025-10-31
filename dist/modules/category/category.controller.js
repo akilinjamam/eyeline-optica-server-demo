@@ -41,7 +41,7 @@ const updateCategoryController = (0, catchAsync_1.default)(async (req, res) => {
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: "Contact Lens updated successfully",
+        message: "Category updated successfully",
         data: result,
     });
 });

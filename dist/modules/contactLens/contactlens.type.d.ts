@@ -21,5 +21,6 @@ export type IContactLens = {
     rating: number;
     description: string;
     images: string[];
+    powerType: "with power" | "without Power";
 };
 //# sourceMappingURL=contactlens.type.d.ts.map

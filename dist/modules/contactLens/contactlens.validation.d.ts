@@ -11,6 +11,10 @@ export declare const contactLensSchema: z.ZodObject<{
         toric: "toric";
         multifocal: "multifocal";
     }>, z.ZodString]>;
+    powerType: z.ZodUnion<[z.ZodEnum<{
+        "with power": "with power";
+        "without power": "without power";
+    }>, z.ZodString]>;
     material: z.ZodString;
     waterContent: z.ZodString;
     diameter: z.ZodNumber;
@@ -41,6 +45,10 @@ export declare const createContactLensSchema: z.ZodObject<{
         toric: "toric";
         multifocal: "multifocal";
     }>, z.ZodString]>;
+    powerType: z.ZodUnion<[z.ZodEnum<{
+        "with power": "with power";
+        "without power": "without power";
+    }>, z.ZodString]>;
     material: z.ZodString;
     waterContent: z.ZodString;
     diameter: z.ZodNumber;
@@ -70,6 +78,10 @@ export declare const updateContactLensSchema: z.ZodObject<{
         weekly: "weekly";
         toric: "toric";
         multifocal: "multifocal";
+    }>, z.ZodString]>>;
+    powerType: z.ZodOptional<z.ZodUnion<[z.ZodEnum<{
+        "with power": "with power";
+        "without power": "without power";
     }>, z.ZodString]>>;
     material: z.ZodOptional<z.ZodString>;
     waterContent: z.ZodOptional<z.ZodString>;

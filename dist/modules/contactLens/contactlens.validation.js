@@ -9,6 +9,7 @@ exports.contactLensSchema = zod_1.z.object({
     type: zod_1.z
         .enum(["daily disposable", "monthly", "monthly (colored)", "weekly", "toric", "multifocal"])
         .or(zod_1.z.string().min(1)), // extendable
+    powerType: zod_1.z.enum(["with power", "without power"]).or(zod_1.z.string().min(1)),
     material: zod_1.z.string().min(1, "Material is required"),
     waterContent: zod_1.z.string(),
     diameter: zod_1.z.number(), // realistic range

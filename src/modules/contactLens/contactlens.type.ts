@@ -28,4 +28,5 @@ export type IContactLens = {
 	rating: number; // 1-5
 	description: string;
 	images: string[];
+	powerType: "with power" | "without Power";
 };

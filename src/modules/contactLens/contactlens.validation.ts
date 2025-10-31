@@ -8,6 +8,7 @@ export const contactLensSchema = z.object({
 	type: z
 		.enum(["daily disposable", "monthly", "monthly (colored)", "weekly", "toric", "multifocal"])
 		.or(z.string().min(1)), // extendable
+	powerType: z.enum(["with power", "without power"]).or(z.string().min(1)),
 
 	material: z.string().min(1, "Material is required"),
 	waterContent: z.string(),
