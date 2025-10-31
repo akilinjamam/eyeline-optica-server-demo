@@ -13,7 +13,7 @@ blogRouter.post(
 	combineImagesWithTextData,
 	BlogController.createBlogController
 );
-blogRouter.get("/", protect, BlogController.getAllBlogController);
+blogRouter.get("/", BlogController.getAllBlogController);
 blogRouter.put(
 	"/update-blog/:id",
 	protect,
@@ -22,6 +22,6 @@ blogRouter.put(
 	BlogController.updateBlogController
 );
 blogRouter.delete("/delete-blog", protect, BlogController.deleteBlogController);
-blogRouter.get("/get-blog-by-id/:id", protect, BlogController.getSingleBlogController);
+blogRouter.get("/get-blog-by-id/:id", BlogController.getSingleBlogController);
 
 export default blogRouter;
