@@ -16,6 +16,7 @@ export interface IAccessoryItems extends Document {
 export interface IAccessory extends Document {
     images: string[];
     type: "With Solution" | "With Bag" | "With Kit" | "With Solution + Kit" | "With Solution + Bag" | "With Kit + Bag" | "With Solution + Bag + Kit" | "others";
+    weeklyDeals: boolean;
     items: IAccessoryItems[];
 }
 declare const Accessory: Model<IAccessory>;

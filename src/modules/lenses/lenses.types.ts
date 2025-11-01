@@ -30,4 +30,5 @@ export interface ILens {
 	offer?: number;
 	rating?: number;
 	badge: string;
+	weeklyDeals: boolean;
 }

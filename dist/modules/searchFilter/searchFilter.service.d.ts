@@ -31,6 +31,7 @@ export declare const searchFilterService: {
         offer?: number;
         rating?: number;
         badge: string;
+        weeklyDeals: boolean;
         _id: import("mongoose").Types.ObjectId;
         __v: number;
     })[]>;

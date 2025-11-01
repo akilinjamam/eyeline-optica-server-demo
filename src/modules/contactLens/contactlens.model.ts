@@ -29,6 +29,7 @@ const ContactLensSchema: Schema<IContactLens> = new Schema(
 		description: { type: String },
 		images: [{ type: String }],
 		powerType: { type: String, required: true, enum: ["with power", "without power"] },
+		weeklyDeals: { type: Boolean, default: false },
 	},
 	{ timestamps: true }
 );

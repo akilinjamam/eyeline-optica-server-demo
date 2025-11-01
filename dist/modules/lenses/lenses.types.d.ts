@@ -26,5 +26,6 @@ export interface ILens {
     offer?: number;
     rating?: number;
     badge: string;
+    weeklyDeals: boolean;
 }
 //# sourceMappingURL=lenses.types.d.ts.map

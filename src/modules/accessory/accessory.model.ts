@@ -26,6 +26,7 @@ export interface IAccessory extends Document {
 		| "With Kit + Bag"
 		| "With Solution + Bag + Kit"
 		| "others";
+	weeklyDeals: boolean;
 	items: IAccessoryItems[];
 }
 
@@ -88,6 +89,7 @@ const AccessoryItemsSchema = new Schema<IAccessoryItems>({
 const AccessorySchema = new Schema<IAccessory>(
 	{
 		images: { type: [String], default: [] },
+		weeklyDeals: { type: Boolean, default: false },
 		type: {
 			type: String,
 			enum: [

@@ -28,5 +28,6 @@ exports.lensValidationSchema = zod_1.z.object({
     offer: zod_1.z.number().min(0).max(100).default(0), // discount %
     rating: zod_1.z.number().min(0).max(5).optional(),
     badge: zod_1.z.string(),
+    weeklyDeals: zod_1.z.boolean().default(false),
 });
 //# sourceMappingURL=lenses.validation.js.map

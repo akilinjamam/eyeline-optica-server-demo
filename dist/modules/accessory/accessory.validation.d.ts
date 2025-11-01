@@ -25,6 +25,7 @@ export declare const accessorySchema: z.ZodObject<{
         "With Solution + Bag + Kit": "With Solution + Bag + Kit";
         others: "others";
     }>>;
+    weeklyDeals: z.ZodDefault<z.ZodBoolean>;
     items: z.ZodArray<z.ZodObject<{
         name: z.ZodString;
         barcode: z.ZodDefault<z.ZodString>;

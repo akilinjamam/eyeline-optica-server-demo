@@ -37,6 +37,7 @@ const LensSchema = new Schema<ILens>(
 		offer: { type: Number, default: 0 },
 		rating: { type: Number, min: 0, max: 5 },
 		badge: { type: String, required: true },
+		weeklyDeals: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,

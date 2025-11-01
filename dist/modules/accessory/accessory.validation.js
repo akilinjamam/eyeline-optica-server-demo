@@ -35,6 +35,7 @@ exports.accessorySchema = zod_1.z.object({
         "others",
     ])
         .default("others"),
+    weeklyDeals: zod_1.z.boolean().default(false),
     items: zod_1.z.array(exports.accessoryItemSchema).min(1, "At least one item is required"),
 });
 //# sourceMappingURL=accessory.validation.js.map
