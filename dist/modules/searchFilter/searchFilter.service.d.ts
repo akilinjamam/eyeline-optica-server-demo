@@ -9,6 +9,7 @@ export declare const searchFilterService: {
         salesPrice: number;
         brand: string;
         WeeklyDeals: boolean;
+        badge: string;
     } | {
         category: string;
         name: string;

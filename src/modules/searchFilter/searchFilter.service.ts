@@ -28,6 +28,7 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 			salesPrice: price,
 			brand,
 			WeeklyDeals: item.weeklyDeals,
+			badge: "no-badge",
 		};
 	});
 
@@ -61,7 +62,7 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 		];
 	}
 
-	const projection = "_id name salesPrice brand weeklyDeals images color";
+	const projection = "_id name salesPrice brand weeklyDeals images color badge";
 	const [frame, lenses, contactlenses] = await Promise.all([
 		Product.find(searchFilterForFrame).select(projection),
 		Lens.find(searchFilterForLensAndContactLens).select(projection),
