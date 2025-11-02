@@ -1,3 +1,4 @@
+import { IWeeklyDeals } from "../weeklyDeals/weeklydeals.model";
 export declare const searchFilterService: {
     getSearchItemService: (search: Record<string, unknown>) => Promise<({
         category: string;
@@ -35,5 +36,11 @@ export declare const searchFilterService: {
         _id: import("mongoose").Types.ObjectId;
         __v: number;
     })[]>;
+    updateWeeklyDeals: (payload: IWeeklyDeals, id: string) => Promise<import("mongoose").UpdateWriteOpResult>;
+    getWeeklyDeals: () => Promise<(import("mongoose").Document<unknown, {}, IWeeklyDeals, {}, {}> & IWeeklyDeals & Required<{
+        _id: unknown;
+    }> & {
+        __v: number;
+    }) | undefined>;
 };
 //# sourceMappingURL=searchFilter.service.d.ts.map

@@ -2,6 +2,7 @@ import Accessory, { IAccessory, IAccessoryItems } from "../accessory/accessory.m
 import ContactLens from "../contactLens/contactlens.model";
 import { Lens } from "../lenses/lenses.model";
 import Product from "../products/products.model";
+import { IWeeklyDeals, WeeklyDeals } from "../weeklyDeals/weeklydeals.model";
 
 interface SearchFilter {
 	$or?: { [key: string]: any }[];
@@ -74,6 +75,22 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 	return allItems;
 };
 
+const updateWeeklyDeals = async (payload: IWeeklyDeals, id: string) => {
+	const result = await WeeklyDeals.updateOne(
+		{ _id: id },
+		{ $set: payload },
+		{ runValidators: true }
+	);
+
+	return result;
+};
+const getWeeklyDeals = async () => {
+	const result = await WeeklyDeals.find({});
+	return result[0];
+};
+
 export const searchFilterService = {
 	getSearchItemService,
+	updateWeeklyDeals,
+	getWeeklyDeals,
 };

@@ -13,7 +13,29 @@ const getSearchItemsController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const updateWeeklyDealsController = catchAsync(async (req, res) => {
+	const result = await searchFilterService.updateWeeklyDeals(req.body, req.params.id as string);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "Speacial Deals updated successfully",
+		data: result,
+	});
+});
+const getWeeklyDealsController = catchAsync(async (req, res) => {
+	const result = await searchFilterService.getWeeklyDeals();
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "Speacial Deals found successfully",
+		data: result,
+	});
+});
 
 export const searchfiltercontroller = {
 	getSearchItemsController,
+	updateWeeklyDealsController,
+	getWeeklyDealsController,
 };

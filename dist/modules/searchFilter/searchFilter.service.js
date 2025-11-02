@@ -8,6 +8,7 @@ const accessory_model_1 = __importDefault(require("../accessory/accessory.model"
 const contactlens_model_1 = __importDefault(require("../contactLens/contactlens.model"));
 const lenses_model_1 = require("../lenses/lenses.model");
 const products_model_1 = __importDefault(require("../products/products.model"));
+const weeklydeals_model_1 = require("../weeklyDeals/weeklydeals.model");
 const getSearchItemService = async (search) => {
     const { query } = search;
     const getAccessory = await accessory_model_1.default.find({});
@@ -65,7 +66,17 @@ const getSearchItemService = async (search) => {
     ];
     return allItems;
 };
+const updateWeeklyDeals = async (payload, id) => {
+    const result = await weeklydeals_model_1.WeeklyDeals.updateOne({ _id: id }, { $set: payload }, { runValidators: true });
+    return result;
+};
+const getWeeklyDeals = async () => {
+    const result = await weeklydeals_model_1.WeeklyDeals.find({});
+    return result[0];
+};
 exports.searchFilterService = {
     getSearchItemService,
+    updateWeeklyDeals,
+    getWeeklyDeals,
 };
 //# sourceMappingURL=searchFilter.service.js.map
