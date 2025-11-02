@@ -3,6 +3,8 @@ export declare const searchFilterService: {
     getSearchItemService: (search: Record<string, unknown>) => Promise<({
         category: string;
         _id: unknown;
+        images: string[];
+        color: string;
         name: string;
         salesPrice: number;
         brand: string;

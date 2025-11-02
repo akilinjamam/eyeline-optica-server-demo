@@ -22,6 +22,8 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 
 		return {
 			_id: item?._id,
+			images: item.images,
+			color: "no-color",
 			name,
 			salesPrice: price,
 			brand,
@@ -59,7 +61,7 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 		];
 	}
 
-	const projection = "_id name salesPrice brand weeklyDeals";
+	const projection = "_id name salesPrice brand weeklyDeals images color";
 	const [frame, lenses, contactlenses] = await Promise.all([
 		Product.find(searchFilterForFrame).select(projection),
 		Lens.find(searchFilterForLensAndContactLens).select(projection),

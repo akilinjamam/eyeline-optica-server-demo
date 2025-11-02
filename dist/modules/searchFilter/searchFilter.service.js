@@ -20,6 +20,8 @@ const getSearchItemService = async (search) => {
         const brand = item?.items?.map((value) => value.brand)?.join("+");
         return {
             _id: item?._id,
+            images: item.images,
+            color: "no-color",
             name,
             salesPrice: price,
             brand,
@@ -53,7 +55,7 @@ const getSearchItemService = async (search) => {
             { "items.brand": { $regex: query, $options: "i" } },
         ];
     }
-    const projection = "_id name salesPrice brand weeklyDeals";
+    const projection = "_id name salesPrice brand weeklyDeals images color";
     const [frame, lenses, contactlenses] = await Promise.all([
         products_model_1.default.find(searchFilterForFrame).select(projection),
         lenses_model_1.Lens.find(searchFilterForLensAndContactLens).select(projection),
