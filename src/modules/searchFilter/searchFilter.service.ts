@@ -25,6 +25,7 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 			name,
 			salesPrice: price,
 			brand,
+			WeeklyDeals: item.weeklyDeals,
 		};
 	});
 
@@ -58,7 +59,7 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 		];
 	}
 
-	const projection = "_id name salesPrice brand ";
+	const projection = "_id name salesPrice brand weeklyDeals";
 	const [frame, lenses, contactlenses] = await Promise.all([
 		Product.find(searchFilterForFrame).select(projection),
 		Lens.find(searchFilterForLensAndContactLens).select(projection),
