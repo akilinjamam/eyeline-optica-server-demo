@@ -27,7 +27,7 @@ const getSearchItemService = async (search: Record<string, unknown>) => {
 			name,
 			salesPrice: price,
 			brand,
-			WeeklyDeals: item.weeklyDeals,
+			weeklyDeals: item.weeklyDeals,
 			badge: "no-badge",
 		};
 	});

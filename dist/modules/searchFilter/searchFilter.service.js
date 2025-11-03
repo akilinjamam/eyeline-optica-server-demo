@@ -25,7 +25,7 @@ const getSearchItemService = async (search) => {
             name,
             salesPrice: price,
             brand,
-            WeeklyDeals: item.weeklyDeals,
+            weeklyDeals: item.weeklyDeals,
             badge: "no-badge",
         };
     });
