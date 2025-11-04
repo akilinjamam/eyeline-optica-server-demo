@@ -12,7 +12,7 @@ export interface IPaymentHistory extends Document {
 	deliveryFee: number;
 	subtotal: number;
 	status: "Order received" | "processsing" | "packaging" | "on the way" | "delivered";
-	dealsOn: string;
+	discountOn: string;
 	dealsDiscount: number;
 }
 
@@ -53,7 +53,7 @@ const paymentHistorySchema = new Schema<IPaymentHistory>(
 			enum: ["Order received", "processsing", "packaging", "on the way", "delivered"],
 			default: "Order received",
 		},
-		dealsOn: { type: String, default: "" },
+		discountOn: { type: String, default: "" },
 		dealsDiscount: { type: Number, default: 0 },
 	},
 	{

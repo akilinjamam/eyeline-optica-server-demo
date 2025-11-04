@@ -11,7 +11,7 @@ export interface IPaymentHistory extends Document {
     deliveryFee: number;
     subtotal: number;
     status: "Order received" | "processsing" | "packaging" | "on the way" | "delivered";
-    dealsOn: string;
+    discountOn: string;
     dealsDiscount: number;
 }
 export declare const PaymentHistory: Model<IPaymentHistory>;

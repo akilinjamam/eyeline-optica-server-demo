@@ -56,7 +56,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		const transectionId = `REF${uuidv4()}`;
 		let productName = "";
 		let saleType = "";
-		let dealsOn = "no-discount";
+		let discountOn = "no-discount";
 		let dealsDiscount = 0;
 
 		const isWeeklyDealsAvailable = await WeeklyDeals.find({});
@@ -68,15 +68,15 @@ const createPaymentService = async (payload: TPaymentData) => {
 			saleType = "Frame and Lens";
 			if (active) {
 				if (productId?.weeklyDeals && lensId?.weeklyDeals) {
-					dealsOn = "discount on Frame and Lens";
+					discountOn = "discount on Frame and Lens";
 					dealsDiscount = discountPercent;
 				}
 				if (productId?.weeklyDeals && !lensId?.weeklyDeals) {
-					dealsOn = "discount on Frame ";
+					discountOn = "discount on Frame ";
 					dealsDiscount = discountPercent;
 				}
 				if (!productId?.weeklyDeals && lensId?.weeklyDeals) {
-					dealsOn = "discount on Lens ";
+					discountOn = "discount on Lens ";
 					dealsDiscount = discountPercent;
 				}
 			}
@@ -86,7 +86,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			saleType = "Only Frame";
 			if (active) {
 				if (productId?.weeklyDeals) {
-					dealsOn = "discount on Frame";
+					discountOn = "discount on Frame";
 					dealsDiscount = discountPercent;
 				}
 			}
@@ -96,7 +96,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			saleType = "Only Lens";
 			if (active) {
 				if (lensId?.weeklyDeals) {
-					dealsOn = "discount on Lens";
+					discountOn = "discount on Lens";
 					dealsDiscount = discountPercent;
 				}
 			}
@@ -106,7 +106,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			saleType = "Only Contact-Lens";
 			if (active) {
 				if (contactLensId?.weeklyDeals) {
-					dealsOn = "discount on Contact Lens";
+					discountOn = "discount on Contact Lens";
 					dealsDiscount = discountPercent;
 				}
 			}
@@ -116,7 +116,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			saleType = "Only Accessory";
 			if (active) {
 				if (accessoryId?.weeklyDeals) {
-					dealsOn = "discount on Accessory";
+					discountOn = "discount on Accessory";
 					dealsDiscount = discountPercent;
 				}
 			}
@@ -126,15 +126,15 @@ const createPaymentService = async (payload: TPaymentData) => {
 			saleType = "Contact-Lens and Accessory";
 			if (active) {
 				if (contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
-					dealsOn = "discount on Contact Lens and Accessory";
+					discountOn = "discount on Contact Lens and Accessory";
 					dealsDiscount = discountPercent;
 				}
 				if (contactLensId?.weeklyDeals && !accessoryId?.weeklyDeals) {
-					dealsOn = "discount on Contact Lens ";
+					discountOn = "discount on Contact Lens ";
 					dealsDiscount = discountPercent;
 				}
 				if (!contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
-					dealsOn = "discount on Accessory ";
+					discountOn = "discount on Accessory ";
 					dealsDiscount = discountPercent;
 				}
 			}
@@ -188,7 +188,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			prescriptionImg,
 			leftEye,
 			rightEye,
-			dealsOn,
+			discountOn,
 			dealsDiscount,
 		};
 		console.log(salesData);
@@ -345,7 +345,7 @@ const paymentSuccessService = async (salesId: string) => {
 			deliveryFee,
 			quantity,
 			subtotal,
-			dealsOn,
+			discountOn,
 			dealsDiscount,
 		} = findSales;
 
@@ -360,7 +360,7 @@ const paymentSuccessService = async (salesId: string) => {
 			deliveryFee,
 			quantity,
 			subtotal,
-			dealsOn,
+			discountOn,
 			dealsDiscount,
 		};
 
