@@ -110,6 +110,7 @@ const saleSchema = new mongoose_1.Schema({
     rightEye: { type: prescriptionSchema, default: null },
     prescriptionImg: { type: [String], default: null },
     submitType: { type: String, default: "" },
+    dealsDiscount: { type: Number, default: 0 },
 }, {
     timestamps: true, // adds createdAt and updatedAt
 });

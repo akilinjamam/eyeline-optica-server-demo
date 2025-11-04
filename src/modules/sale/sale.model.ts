@@ -32,6 +32,7 @@ export interface ISale extends Document {
 	leftEye: IPrescriptionSchema;
 	rightEye: IPrescriptionSchema;
 	submitType: string;
+	dealsDiscount: number;
 }
 
 const prescriptionSchema = new Schema<IPrescriptionSchema>(
@@ -114,6 +115,7 @@ const saleSchema = new Schema<ISale>(
 		rightEye: { type: prescriptionSchema, default: null },
 		prescriptionImg: { type: [String], default: null },
 		submitType: { type: String, default: "" },
+		dealsDiscount: { type: Number, default: 0 },
 	},
 	{
 		timestamps: true, // adds createdAt and updatedAt

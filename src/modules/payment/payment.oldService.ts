@@ -20,6 +20,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		payableAmount,
 		dueAmount,
 		quantity,
+		totalCost,
 	} = payload;
 
 	const findCart = (await Cart.findOne({ _id: cart_id })
@@ -27,7 +28,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		.populate("items.lensId")
 		.populate("items.contactLensId")) as any;
 
-	const { productId, lensId, contactLensId, subtotal } = findCart?.items[0] || ({} as any);
+	const { productId, lensId, contactLensId } = findCart?.items[0] || ({} as any);
 	const deliveryFee = findCart?.deliveryFee;
 	const { customerId } = findCart as ICart;
 
@@ -89,7 +90,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		lensId: lensId?._id,
 		contactLensId: contactLensId?._id,
 		deliveryFee,
-		subtotal,
+		subtotal: totalCost,
 	};
 
 	if (findCart?.items[0]?.productId) {
