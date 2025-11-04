@@ -26,6 +26,7 @@ export interface ISale extends Document {
     rightEye: IPrescriptionSchema;
     submitType: string;
     dealsDiscount: number;
+    discountOn: string;
 }
 export declare const Sale: Model<ISale>;
 //# sourceMappingURL=sale.model.d.ts.map

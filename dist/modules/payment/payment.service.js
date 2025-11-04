@@ -17,11 +17,12 @@ const contactlens_model_1 = __importDefault(require("../contactLens/contactlens.
 const paymentHistory_model_1 = require("../paymentHistory/paymentHistory.model");
 const mongoose_1 = __importDefault(require("mongoose"));
 const accessory_model_1 = __importDefault(require("../accessory/accessory.model"));
+const weeklydeals_model_1 = require("../weeklyDeals/weeklydeals.model");
 const createPaymentService = async (payload) => {
     const session = await mongoose_1.default.startSession();
     session.startTransaction();
     try {
-        const { cart_id, customer_name, customer_phone, customer_address, customer_email, payableAmount, dueAmount, quantity, } = payload;
+        const { cart_id, customer_name, customer_phone, customer_address, customer_email, payableAmount, dueAmount, quantity, totalCost, } = payload;
         const findCart = (await cart_model_1.Cart.findOne({ _id: cart_id })
             .populate("items.productId")
             .populate("items.lensId")
@@ -29,35 +30,91 @@ const createPaymentService = async (payload) => {
             .populate("items.accessoryId"));
         if (!findCart)
             throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_FOUND, "cart-not-found");
-        const { productId, lensId, contactLensId, accessoryId, subtotal, pd, prescriptionImg, rightEye, leftEye, submitType, } = findCart?.items[0] || {};
+        const { productId, lensId, contactLensId, accessoryId, pd, prescriptionImg, rightEye, leftEye, submitType, } = findCart?.items[0] || {};
         const deliveryFee = findCart?.deliveryFee;
         const { customerId } = findCart;
         const transectionId = `REF${(0, uuid_1.v4)()}`;
         let productName = "";
         let saleType = "";
+        let dealsOn = "no-discount";
+        let dealsDiscount = 0;
+        const isWeeklyDealsAvailable = await weeklydeals_model_1.WeeklyDeals.find({});
+        const { active, discountPercent } = isWeeklyDealsAvailable[0];
         if (productId && lensId) {
             productName = `${productId?.name} + ${lensId?.name}`;
             saleType = "Frame and Lens";
+            if (active) {
+                if (productId?.weeklyDeals && lensId?.weeklyDeals) {
+                    dealsOn = "discount on Frame and Lens";
+                    dealsDiscount = discountPercent;
+                }
+                if (productId?.weeklyDeals && !lensId?.weeklyDeals) {
+                    dealsOn = "discount on Frame ";
+                    dealsDiscount = discountPercent;
+                }
+                if (!productId?.weeklyDeals && lensId?.weeklyDeals) {
+                    dealsOn = "discount on Lens ";
+                    dealsDiscount = discountPercent;
+                }
+            }
         }
         if (productId && !lensId) {
             productName = productId?.name;
             saleType = "Only Frame";
+            if (active) {
+                if (productId?.weeklyDeals) {
+                    dealsOn = "discount on Frame";
+                    dealsDiscount = discountPercent;
+                }
+            }
         }
         if (!productId && lensId) {
             productName = lensId?.name;
             saleType = "Only Lens";
+            if (active) {
+                if (lensId?.weeklyDeals) {
+                    dealsOn = "discount on Lens";
+                    dealsDiscount = discountPercent;
+                }
+            }
         }
         if (contactLensId && !accessoryId) {
             productName = contactLensId?.name;
             saleType = "Only Contact-Lens";
+            if (active) {
+                if (contactLensId?.weeklyDeals) {
+                    dealsOn = "discount on Contact Lens";
+                    dealsDiscount = discountPercent;
+                }
+            }
         }
         if (!contactLensId && accessoryId) {
             productName = accessoryId?.type;
             saleType = "Only Accessory";
+            if (active) {
+                if (accessoryId?.weeklyDeals) {
+                    dealsOn = "discount on Accessory";
+                    dealsDiscount = discountPercent;
+                }
+            }
         }
         if (contactLensId && accessoryId) {
             productName = `${contactLensId?.name} + ${accessoryId?.type}`;
             saleType = "Contact-Lens and Accessory";
+            if (active) {
+                if (contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
+                    dealsOn = "discount on Contact Lens and Accessory";
+                    dealsDiscount = discountPercent;
+                }
+                if (contactLensId?.weeklyDeals && !accessoryId?.weeklyDeals) {
+                    dealsOn = "discount on Contact Lens ";
+                    dealsDiscount = discountPercent;
+                }
+                if (!contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
+                    dealsOn = "discount on Accessory ";
+                    dealsDiscount = discountPercent;
+                }
+            }
         }
         const date = new Date();
         const arrangeDate = `${date.getFullYear()}${(date.getMonth() + 1)
@@ -100,12 +157,14 @@ const createPaymentService = async (payload) => {
             contactLensId: contactLensId?._id,
             accessoryId: accessoryId?._id,
             deliveryFee,
-            subtotal,
+            subtotal: totalCost,
             submitType,
             pd,
             prescriptionImg,
             leftEye,
             rightEye,
+            dealsOn,
+            dealsDiscount,
         };
         console.log(salesData);
         // Stock validation
@@ -224,7 +283,7 @@ const paymentSuccessService = async (salesId) => {
             await accessory_model_1.default.updateOne({ _id: findSales?.accessoryId._id }, { $set: { "items.$[elem].stock": false } }, { arrayFilters: [{ "elem.quantity": { $lte: 0 } }], session });
         }
         // Save Payment History
-        const { customerId, productId, lensId, contactLensId, accessoryId, payableAmount, dueAmount, deliveryFee, quantity, subtotal, } = findSales;
+        const { customerId, productId, lensId, contactLensId, accessoryId, payableAmount, dueAmount, deliveryFee, quantity, subtotal, dealsOn, dealsDiscount, } = findSales;
         const paymentHistoryData = {
             customerId,
             productId,
@@ -236,6 +295,8 @@ const paymentSuccessService = async (salesId) => {
             deliveryFee,
             quantity,
             subtotal,
+            dealsOn,
+            dealsDiscount,
         };
         const [paymentHistory] = await paymentHistory_model_1.PaymentHistory.create([paymentHistoryData], { session });
         await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received", paymentHistoryId: paymentHistory?._id }, { new: true, runValidators: true, session });

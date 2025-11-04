@@ -16,12 +16,12 @@ const lenses_model_1 = require("../lenses/lenses.model");
 const contactlens_model_1 = __importDefault(require("../contactLens/contactlens.model"));
 const paymentHistory_model_1 = require("../paymentHistory/paymentHistory.model");
 const createPaymentService = async (payload) => {
-    const { cart_id, customer_name, customer_phone, customer_address, customer_email, payableAmount, dueAmount, quantity, totalCost, } = payload;
+    const { cart_id, customer_name, customer_phone, customer_address, customer_email, payableAmount, dueAmount, quantity, } = payload;
     const findCart = (await cart_model_1.Cart.findOne({ _id: cart_id })
         .populate("items.productId")
         .populate("items.lensId")
         .populate("items.contactLensId"));
-    const { productId, lensId, contactLensId } = findCart?.items[0] || {};
+    const { productId, lensId, contactLensId, subtotal } = findCart?.items[0] || {};
     const deliveryFee = findCart?.deliveryFee;
     const { customerId } = findCart;
     const transectionId = `REF${(0, uuid_1.v4)()}`;
@@ -76,7 +76,7 @@ const createPaymentService = async (payload) => {
         lensId: lensId?._id,
         contactLensId: contactLensId?._id,
         deliveryFee,
-        subtotal: totalCost,
+        subtotal,
     };
     if (findCart?.items[0]?.productId) {
         const productQty = findCart?.items[0]?.productId?.quantity;

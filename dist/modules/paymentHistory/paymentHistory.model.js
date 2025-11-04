@@ -71,6 +71,8 @@ const paymentHistorySchema = new mongoose_1.Schema({
         enum: ["Order received", "processsing", "packaging", "on the way", "delivered"],
         default: "Order received",
     },
+    dealsOn: { type: String, default: "" },
+    dealsDiscount: { type: Number, default: 0 },
 }, {
     timestamps: true, // adds createdAt & updatedAt automatically
 });

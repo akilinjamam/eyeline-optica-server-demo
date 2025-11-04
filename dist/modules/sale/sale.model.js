@@ -111,6 +111,7 @@ const saleSchema = new mongoose_1.Schema({
     prescriptionImg: { type: [String], default: null },
     submitType: { type: String, default: "" },
     dealsDiscount: { type: Number, default: 0 },
+    discountOn: { type: String, default: "" },
 }, {
     timestamps: true, // adds createdAt and updatedAt
 });

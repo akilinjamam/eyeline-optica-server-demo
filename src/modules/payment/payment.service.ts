@@ -12,6 +12,7 @@ import ContactLens from "../contactLens/contactlens.model";
 import { PaymentHistory } from "../paymentHistory/paymentHistory.model";
 import mongoose from "mongoose";
 import Accessory from "../accessory/accessory.model";
+import { IWeeklyDeals, WeeklyDeals } from "../weeklyDeals/weeklydeals.model";
 
 const createPaymentService = async (payload: TPaymentData) => {
 	const session = await mongoose.startSession();
@@ -27,6 +28,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			payableAmount,
 			dueAmount,
 			quantity,
+			totalCost,
 		} = payload;
 
 		const findCart = (await Cart.findOne({ _id: cart_id })
@@ -42,7 +44,6 @@ const createPaymentService = async (payload: TPaymentData) => {
 			lensId,
 			contactLensId,
 			accessoryId,
-			subtotal,
 			pd,
 			prescriptionImg,
 			rightEye,
@@ -55,30 +56,88 @@ const createPaymentService = async (payload: TPaymentData) => {
 		const transectionId = `REF${uuidv4()}`;
 		let productName = "";
 		let saleType = "";
+		let dealsOn = "no-discount";
+		let dealsDiscount = 0;
+
+		const isWeeklyDealsAvailable = await WeeklyDeals.find({});
+
+		const { active, discountPercent } = isWeeklyDealsAvailable[0] as IWeeklyDeals;
 
 		if (productId && lensId) {
 			productName = `${productId?.name} + ${lensId?.name}`;
 			saleType = "Frame and Lens";
+			if (active) {
+				if (productId?.weeklyDeals && lensId?.weeklyDeals) {
+					dealsOn = "discount on Frame and Lens";
+					dealsDiscount = discountPercent;
+				}
+				if (productId?.weeklyDeals && !lensId?.weeklyDeals) {
+					dealsOn = "discount on Frame ";
+					dealsDiscount = discountPercent;
+				}
+				if (!productId?.weeklyDeals && lensId?.weeklyDeals) {
+					dealsOn = "discount on Lens ";
+					dealsDiscount = discountPercent;
+				}
+			}
 		}
 		if (productId && !lensId) {
 			productName = productId?.name;
 			saleType = "Only Frame";
+			if (active) {
+				if (productId?.weeklyDeals) {
+					dealsOn = "discount on Frame";
+					dealsDiscount = discountPercent;
+				}
+			}
 		}
 		if (!productId && lensId) {
 			productName = lensId?.name;
 			saleType = "Only Lens";
+			if (active) {
+				if (lensId?.weeklyDeals) {
+					dealsOn = "discount on Lens";
+					dealsDiscount = discountPercent;
+				}
+			}
 		}
 		if (contactLensId && !accessoryId) {
 			productName = contactLensId?.name;
 			saleType = "Only Contact-Lens";
+			if (active) {
+				if (contactLensId?.weeklyDeals) {
+					dealsOn = "discount on Contact Lens";
+					dealsDiscount = discountPercent;
+				}
+			}
 		}
 		if (!contactLensId && accessoryId) {
 			productName = accessoryId?.type;
 			saleType = "Only Accessory";
+			if (active) {
+				if (accessoryId?.weeklyDeals) {
+					dealsOn = "discount on Accessory";
+					dealsDiscount = discountPercent;
+				}
+			}
 		}
 		if (contactLensId && accessoryId) {
 			productName = `${contactLensId?.name} + ${accessoryId?.type}`;
 			saleType = "Contact-Lens and Accessory";
+			if (active) {
+				if (contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
+					dealsOn = "discount on Contact Lens and Accessory";
+					dealsDiscount = discountPercent;
+				}
+				if (contactLensId?.weeklyDeals && !accessoryId?.weeklyDeals) {
+					dealsOn = "discount on Contact Lens ";
+					dealsDiscount = discountPercent;
+				}
+				if (!contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
+					dealsOn = "discount on Accessory ";
+					dealsDiscount = discountPercent;
+				}
+			}
 		}
 
 		const date = new Date();
@@ -123,12 +182,14 @@ const createPaymentService = async (payload: TPaymentData) => {
 			contactLensId: contactLensId?._id,
 			accessoryId: accessoryId?._id,
 			deliveryFee,
-			subtotal,
+			subtotal: totalCost,
 			submitType,
 			pd,
 			prescriptionImg,
 			leftEye,
 			rightEye,
+			dealsOn,
+			dealsDiscount,
 		};
 		console.log(salesData);
 		// Stock validation
@@ -284,6 +345,8 @@ const paymentSuccessService = async (salesId: string) => {
 			deliveryFee,
 			quantity,
 			subtotal,
+			dealsOn,
+			dealsDiscount,
 		} = findSales;
 
 		const paymentHistoryData = {
@@ -297,6 +360,8 @@ const paymentSuccessService = async (salesId: string) => {
 			deliveryFee,
 			quantity,
 			subtotal,
+			dealsOn,
+			dealsDiscount,
 		};
 
 		const [paymentHistory] = await PaymentHistory.create([paymentHistoryData], { session });
