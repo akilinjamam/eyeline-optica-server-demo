@@ -63,10 +63,10 @@ const getSearchItemService = async (search) => {
         contactlens_model_1.default.find(searchFilterForLensAndContactLens).select(projection),
     ]);
     const allItems = [
-        ...modifyAccessory.map((item) => ({ ...item, category: "Accessory" })),
         ...frame.map((item) => ({ ...item.toObject(), category: "Frame" })),
         ...lenses.map((item) => ({ ...item.toObject(), category: "Lens" })),
         ...contactlenses.map((item) => ({ ...item.toObject(), category: "Contact Lens" })),
+        ...modifyAccessory.map((item) => ({ ...item, category: "Accessory" })),
     ];
     return allItems;
 };

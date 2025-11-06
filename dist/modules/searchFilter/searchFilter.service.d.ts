@@ -2,16 +2,6 @@ import { IWeeklyDeals } from "../weeklyDeals/weeklydeals.model";
 export declare const searchFilterService: {
     getSearchItemService: (search: Record<string, unknown>) => Promise<({
         category: string;
-        _id: unknown;
-        images: string[];
-        color: string;
-        name: string;
-        salesPrice: number;
-        brand: string;
-        weeklyDeals: boolean;
-        badge: string;
-    } | {
-        category: string;
         name: string;
         description?: string;
         purchasePrice: number;
@@ -67,6 +57,16 @@ export declare const searchFilterService: {
         weeklyDeals: boolean;
         _id: import("mongoose").Types.ObjectId;
         __v: number;
+    } | {
+        category: string;
+        _id: unknown;
+        images: string[];
+        color: string;
+        name: string;
+        salesPrice: number;
+        brand: string;
+        weeklyDeals: boolean;
+        badge: string;
     })[]>;
     updateWeeklyDeals: (payload: IWeeklyDeals, id: string) => Promise<import("mongoose").UpdateWriteOpResult>;
     getWeeklyDeals: () => Promise<(import("mongoose").Document<unknown, {}, IWeeklyDeals, {}, {}> & IWeeklyDeals & Required<{
