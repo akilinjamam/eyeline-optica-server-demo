@@ -27,4 +27,14 @@ export const productSchema = z.object({
 	prescriptionDetails: z.string().optional(),
 	reviews: z.array(z.any()).optional(),
 	stock: z.boolean().default(true),
+	otherImages: z
+		.array(
+			z.object({
+				colorName: z.string().min(1, "Color name is required"),
+				fromColor: z.string().min(1, "From color is required"),
+				toColor: z.string().min(1, "To color is required"),
+				images: z.array(z.string().url()).optional(),
+			})
+		)
+		.optional(),
 });

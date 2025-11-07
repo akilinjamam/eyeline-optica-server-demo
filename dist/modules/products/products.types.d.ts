@@ -6,6 +6,14 @@ export type ShapeCategory = "oval" | "round" | "square" | "cats eye" | "rectangl
 export type BiologyCategory = "men" | "women" | "kids";
 export type Badge = "popular" | "new" | "premium" | "luxury" | "best" | "trending" | "budget";
 export type Brand = "raybon" | "Alex Perry" | "Oakley";
+export type TOtherImages = {
+    _id?: string;
+    colorName: string;
+    fromColor: string;
+    toColor: string;
+    images: string[];
+    imagesToKeep?: string[];
+};
 export interface IProduct {
     name: string;
     images: string[];
@@ -33,5 +41,6 @@ export interface IProduct {
     frameDetails: string;
     prescriptionDetails: string;
     stock: boolean;
+    otherImages: TOtherImages[];
 }
 //# sourceMappingURL=products.types.d.ts.map

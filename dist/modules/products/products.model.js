@@ -37,6 +37,15 @@ const mongoose_1 = __importStar(require("mongoose"));
 const ProductSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     images: [{ type: String }],
+    otherImages: [
+        {
+            colorName: { type: String, required: true },
+            fromColor: { type: String, required: true },
+            toColor: { type: String, required: true },
+            images: [{ type: String, required: true }],
+            imagesToKeep: [{ type: String }],
+        },
+    ],
     type: {
         type: String,
         enum: [

@@ -29,5 +29,13 @@ exports.productSchema = zod_1.z.object({
     prescriptionDetails: zod_1.z.string().optional(),
     reviews: zod_1.z.array(zod_1.z.any()).optional(),
     stock: zod_1.z.boolean().default(true),
+    otherImages: zod_1.z
+        .array(zod_1.z.object({
+        colorName: zod_1.z.string().min(1, "Color name is required"),
+        fromColor: zod_1.z.string().min(1, "From color is required"),
+        toColor: zod_1.z.string().min(1, "To color is required"),
+        images: zod_1.z.array(zod_1.z.string().url()).optional(),
+    }))
+        .optional(),
 });
 //# sourceMappingURL=products.validation.js.map

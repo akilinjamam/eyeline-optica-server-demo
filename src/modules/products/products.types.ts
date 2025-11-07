@@ -27,6 +27,15 @@ export type Badge = "popular" | "new" | "premium" | "luxury" | "best" | "trendin
 
 export type Brand = "raybon" | "Alex Perry" | "Oakley";
 
+export type TOtherImages = {
+	_id?: string;
+	colorName: string;
+	fromColor: string;
+	toColor: string;
+	images: string[];
+	imagesToKeep?: string[];
+};
+
 export interface IProduct {
 	name: string;
 	images: string[];
@@ -54,4 +63,5 @@ export interface IProduct {
 	frameDetails: string;
 	prescriptionDetails: string;
 	stock: boolean;
+	otherImages: TOtherImages[];
 }

@@ -25,5 +25,11 @@ export declare const productSchema: z.ZodObject<{
     prescriptionDetails: z.ZodOptional<z.ZodString>;
     reviews: z.ZodOptional<z.ZodArray<z.ZodAny>>;
     stock: z.ZodDefault<z.ZodBoolean>;
+    otherImages: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        colorName: z.ZodString;
+        fromColor: z.ZodString;
+        toColor: z.ZodString;
+        images: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    }, z.core.$strip>>>;
 }, z.core.$strip>;
 //# sourceMappingURL=products.validation.d.ts.map
