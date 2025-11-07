@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import cloudinary from "../config/cloudinary";
-import { deleteFile } from "../utils/deleteFile";
+import { deleteFileAsync } from "../utils/deleteFileAsync";
+
 import { IProduct } from "../../modules/products/products.types";
 
 const combineImagesWithTextDataForFrame = async (
@@ -32,32 +33,35 @@ const combineImagesWithTextDataForFrame = async (
 
 				// Upload new files
 				for (const file of groupFiles) {
-					const result = await cloudinary.uploader.upload(file.path, {
-						folder: "products/variants",
-					});
-					uploadedUrls.push(result.secure_url);
-					deleteFile(file.path);
+					try {
+						const result = await cloudinary.uploader.upload(file.path, {
+							folder: "products/variants",
+						});
+						uploadedUrls.push(result.secure_url);
+					} catch (uploadErr) {
+						console.error(`Failed to upload ${file.path}:`, uploadErr);
+					} finally {
+						await deleteFileAsync(file.path);
+					}
 				}
 
 				// Merge or replace logic
 				let finalGroupImages: string[] = [];
 
 				if (req.method === "PUT") {
-					// Find old version of this group (if it exists)
 					const oldGroup = oldOtherImages?.find((g: any) => g._id?.toString() === group?._id);
 
-					// Get existing images (after possible deletions)
 					const remainingOldImages = Array.isArray(group?.imagesToKeep)
-						? group?.imagesToKeep
+						? group.imagesToKeep
 						: oldGroup?.images || [];
 
-					// Combine kept + new
 					finalGroupImages = [...remainingOldImages, ...uploadedUrls];
 				} else {
 					finalGroupImages = uploadedUrls;
 				}
 
 				uploadedOtherImages.push({
+					_id: group?._id,
 					colorName: group?.colorName,
 					fromColor: group?.fromColor,
 					toColor: group?.toColor,
@@ -66,9 +70,7 @@ const combineImagesWithTextDataForFrame = async (
 			}
 		}
 
-		// ------------------------
-		// Final result
-		// ------------------------
+		// Final merged data
 		req.body = {
 			...remainingTextData,
 			otherImages: uploadedOtherImages,
@@ -76,7 +78,9 @@ const combineImagesWithTextDataForFrame = async (
 
 		next();
 	} catch (error) {
-		if (files) files.forEach((file) => deleteFile(file.path));
+		if (files?.length) {
+			await Promise.all(files.map((f) => deleteFileAsync(f.path)));
+		}
 
 		return res.status(400).json({
 			success: false,
