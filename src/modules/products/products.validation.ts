@@ -13,7 +13,7 @@ export const productSchema = z.object({
 	color: z.string(),
 	purchase: z.number().nonnegative(),
 	salesPrice: z.number().nonnegative(),
-	discount: z.number().min(0).max(100),
+	discount: z.number().min(0),
 	quantity: z.number().int().nonnegative(),
 	sold: z.number().int().nonnegative().optional(),
 	features: z.array(z.string()).optional(),
