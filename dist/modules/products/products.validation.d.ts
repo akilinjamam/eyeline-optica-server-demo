@@ -26,9 +26,9 @@ export declare const productSchema: z.ZodObject<{
     reviews: z.ZodOptional<z.ZodArray<z.ZodAny>>;
     stock: z.ZodDefault<z.ZodBoolean>;
     otherImages: z.ZodOptional<z.ZodArray<z.ZodObject<{
-        colorName: z.ZodString;
-        fromColor: z.ZodString;
-        toColor: z.ZodString;
+        colorName: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        fromColor: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        toColor: z.ZodDefault<z.ZodOptional<z.ZodString>>;
         images: z.ZodOptional<z.ZodArray<z.ZodString>>;
     }, z.core.$strip>>>;
 }, z.core.$strip>;

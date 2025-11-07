@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import cloudinary from "../config/cloudinary";
 import { deleteFileAsync } from "../utils/deleteFileAsync";
-
 import { IProduct } from "../../modules/products/products.types";
 
 const combineImagesWithTextDataForFrame = async (
@@ -18,46 +17,49 @@ const combineImagesWithTextDataForFrame = async (
 		// Group uploaded files by fieldname
 		const filesByField: Record<string, Express.Multer.File[]> = {};
 		for (const file of files) {
-			const key = file.fieldname;
+			const key = file?.fieldname;
+			if (!file?.fieldname) continue;
 			if (!filesByField[key]) filesByField[key] = [];
 			filesByField[key].push(file);
 		}
 
-		const uploadedOtherImages = [];
+		const uploadedOtherImages: any[] = [];
 
 		if (Array.isArray(textData.otherImages)) {
 			for (let i = 0; i < textData.otherImages.length; i++) {
 				const group = textData.otherImages[i];
-				const groupFiles = filesByField[`otherImages_${i}`] || [];
-				const uploadedUrls: string[] = [];
+				const groupField = `otherImages_${i}`;
+				const groupFiles = filesByField[groupField] || [];
 
-				// Upload new files
-				for (const file of groupFiles) {
-					try {
-						const result = await cloudinary.uploader.upload(file.path, {
-							folder: "products/variants",
-						});
-						uploadedUrls.push(result.secure_url);
-					} catch (uploadErr) {
-						console.error(`Failed to upload ${file.path}:`, uploadErr);
-					} finally {
-						await deleteFileAsync(file.path);
-					}
-				}
+				// ✅ Upload files for this group in parallel
+				const uploadedUrls = await Promise.all(
+					groupFiles.map(async (file) => {
+						try {
+							const result = await cloudinary.uploader.upload(file.path, {
+								folder: "products/variants",
+							});
+							return result.secure_url;
+						} catch (err) {
+							console.error(`Upload failed for ${file.path}:`, err);
+							return null;
+						} finally {
+							await deleteFileAsync(file.path);
+						}
+					})
+				).then((urls) => urls.filter(Boolean)); // remove nulls
 
-				// Merge or replace logic
 				let finalGroupImages: string[] = [];
 
 				if (req.method === "PUT") {
 					const oldGroup = oldOtherImages?.find((g: any) => g._id?.toString() === group?._id);
 
-					const remainingOldImages = Array.isArray(group?.imagesToKeep)
+					const remainingOldImages: string[] = Array.isArray(group?.imagesToKeep)
 						? group.imagesToKeep
 						: oldGroup?.images || [];
 
-					finalGroupImages = [...remainingOldImages, ...uploadedUrls];
+					finalGroupImages = [...remainingOldImages, ...(uploadedUrls as string[])];
 				} else {
-					finalGroupImages = uploadedUrls;
+					finalGroupImages = uploadedUrls as string[];
 				}
 
 				uploadedOtherImages.push({
@@ -70,7 +72,6 @@ const combineImagesWithTextDataForFrame = async (
 			}
 		}
 
-		// Final merged data
 		req.body = {
 			...remainingTextData,
 			otherImages: uploadedOtherImages,

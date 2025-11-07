@@ -31,9 +31,9 @@ exports.productSchema = zod_1.z.object({
     stock: zod_1.z.boolean().default(true),
     otherImages: zod_1.z
         .array(zod_1.z.object({
-        colorName: zod_1.z.string().min(1, "Color name is required"),
-        fromColor: zod_1.z.string().min(1, "From color is required"),
-        toColor: zod_1.z.string().min(1, "To color is required"),
+        colorName: zod_1.z.string().optional().default("Black"),
+        fromColor: zod_1.z.string().optional().default("#000000"),
+        toColor: zod_1.z.string().optional().default("#000000"),
         images: zod_1.z.array(zod_1.z.string().url()).optional(),
     }))
         .optional(),

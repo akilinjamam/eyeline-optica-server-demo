@@ -1,11 +1,4 @@
-export type ProductType = "sunglasses" | "eye glasses" | "special glasses" | "power sunglasses" | "progressive lense";
-export type MaterialCategory = "metal" | "plastic" | "acetate" | "titanium" | "wood" | "texture";
-export type FrameCategory = "full-rim" | "half rim" | "rimless";
-export type SizeCategory = "small" | "medium" | "large";
-export type ShapeCategory = "oval" | "round" | "square" | "cats eye" | "rectangle" | "avietor" | "browline" | "horn";
 export type BiologyCategory = "men" | "women" | "kids";
-export type Badge = "popular" | "new" | "premium" | "luxury" | "best" | "trending" | "budget";
-export type Brand = "raybon" | "Alex Perry" | "Oakley";
 export type TOtherImages = {
     _id?: string;
     colorName: string;
@@ -17,11 +10,11 @@ export type TOtherImages = {
 export interface IProduct {
     name: string;
     images: string[];
-    type: ProductType;
-    materialsCategory: MaterialCategory;
-    frameCategory: FrameCategory;
-    sizeCategory: SizeCategory;
-    shapeCategory: ShapeCategory;
+    type: string;
+    materialsCategory: string;
+    frameCategory: string;
+    sizeCategory: string;
+    shapeCategory: string;
     biologyCategory: BiologyCategory;
     color: string;
     date: Date;
@@ -31,9 +24,9 @@ export interface IProduct {
     quantity: number;
     sold: number;
     features: string[];
-    brand: Brand;
+    brand: string;
     barcode: string;
-    badge: Badge;
+    badge: string;
     description: string;
     weeklyDeals: boolean;
     reviews: string[];

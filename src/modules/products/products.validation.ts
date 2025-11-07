@@ -30,9 +30,9 @@ export const productSchema = z.object({
 	otherImages: z
 		.array(
 			z.object({
-				colorName: z.string().min(1, "Color name is required"),
-				fromColor: z.string().min(1, "From color is required"),
-				toColor: z.string().min(1, "To color is required"),
+				colorName: z.string().optional().default("Black"),
+				fromColor: z.string().optional().default("#000000"),
+				toColor: z.string().optional().default("#000000"),
 				images: z.array(z.string().url()).optional(),
 			})
 		)

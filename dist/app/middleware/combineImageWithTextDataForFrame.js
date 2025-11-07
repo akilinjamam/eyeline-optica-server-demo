@@ -13,7 +13,9 @@ const combineImagesWithTextDataForFrame = async (req, res, next) => {
         // Group uploaded files by fieldname
         const filesByField = {};
         for (const file of files) {
-            const key = file.fieldname;
+            const key = file?.fieldname;
+            if (!file?.fieldname)
+                continue;
             if (!filesByField[key])
                 filesByField[key] = [];
             filesByField[key].push(file);
@@ -22,24 +24,24 @@ const combineImagesWithTextDataForFrame = async (req, res, next) => {
         if (Array.isArray(textData.otherImages)) {
             for (let i = 0; i < textData.otherImages.length; i++) {
                 const group = textData.otherImages[i];
-                const groupFiles = filesByField[`otherImages_${i}`] || [];
-                const uploadedUrls = [];
-                // Upload new files
-                for (const file of groupFiles) {
+                const groupField = `otherImages_${i}`;
+                const groupFiles = filesByField[groupField] || [];
+                // ✅ Upload files for this group in parallel
+                const uploadedUrls = await Promise.all(groupFiles.map(async (file) => {
                     try {
                         const result = await cloudinary_1.default.uploader.upload(file.path, {
                             folder: "products/variants",
                         });
-                        uploadedUrls.push(result.secure_url);
+                        return result.secure_url;
                     }
-                    catch (uploadErr) {
-                        console.error(`Failed to upload ${file.path}:`, uploadErr);
+                    catch (err) {
+                        console.error(`Upload failed for ${file.path}:`, err);
+                        return null;
                     }
                     finally {
                         await (0, deleteFileAsync_1.deleteFileAsync)(file.path);
                     }
-                }
-                // Merge or replace logic
+                })).then((urls) => urls.filter(Boolean)); // remove nulls
                 let finalGroupImages = [];
                 if (req.method === "PUT") {
                     const oldGroup = oldOtherImages?.find((g) => g._id?.toString() === group?._id);
@@ -60,7 +62,6 @@ const combineImagesWithTextDataForFrame = async (req, res, next) => {
                 });
             }
         }
-        // Final merged data
         req.body = {
             ...remainingTextData,
             otherImages: uploadedOtherImages,
