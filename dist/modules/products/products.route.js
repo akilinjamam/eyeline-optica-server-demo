@@ -8,20 +8,12 @@ const multer_1 = require("../../app/middleware/multer");
 const products_controller_1 = require("./products.controller");
 const products_validation_1 = require("./products.validation");
 const validateRequest_1 = __importDefault(require("../../app/middleware/validateRequest"));
-const combineImagesWithData_1 = __importDefault(require("../../app/middleware/combineImagesWithData"));
 const combineImageWithTextDataForFrame_1 = __importDefault(require("../../app/middleware/combineImageWithTextDataForFrame"));
 const productrouter = express_1.default.Router();
 productrouter.post("/create-product", multer_1.upload.any(), combineImageWithTextDataForFrame_1.default, (0, validateRequest_1.default)(products_validation_1.productSchema), products_controller_1.productController.createProductController);
-// productrouter.post(
-// 	"/create-product",
-// 	upload.array("images", 10),
-// 	combineImagesWithTextData,
-// 	validateRequest(productSchema),
-// 	productController.createProductController
-// );
 productrouter.get("/", products_controller_1.productController.getAllProductController);
 productrouter.get("/get-single-product/:id", products_controller_1.productController.getSingleProductController);
-productrouter.put("/update-product/:id", multer_1.upload.array("images", 10), combineImagesWithData_1.default, products_controller_1.productController.updateProductController);
+productrouter.put("/update-product/:id", multer_1.upload.any(), combineImageWithTextDataForFrame_1.default, products_controller_1.productController.updateProductController);
 productrouter.delete("/delete-product", products_controller_1.productController.deleteProductController);
 exports.default = productrouter;
 //# sourceMappingURL=products.route.js.map

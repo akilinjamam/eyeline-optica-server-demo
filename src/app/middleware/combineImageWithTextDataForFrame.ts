@@ -9,7 +9,6 @@ const combineImagesWithTextDataForFrame = async (
 	next: NextFunction
 ) => {
 	const files = req.files as Express.Multer.File[];
-
 	try {
 		const textData: IProduct = JSON.parse(req.body.data);
 		const { otherImages: oldOtherImages, ...remainingTextData } = textData;
