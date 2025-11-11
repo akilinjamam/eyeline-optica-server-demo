@@ -29,6 +29,17 @@ exports.productSchema = zod_1.z.object({
     prescriptionDetails: zod_1.z.string().optional(),
     reviews: zod_1.z.array(zod_1.z.any()).optional(),
     stock: zod_1.z.boolean().default(true),
+    frameWidth: zod_1.z.string().default("Not-added"),
+    bridge: zod_1.z.string().default("Not-added"),
+    lensWidth: zod_1.z.string().default("Not-added"),
+    lensHeight: zod_1.z.string().default("Not-added"),
+    templeLength: zod_1.z.string().default("Not-added"),
+    size: zod_1.z.string().default("Not-added"),
+    weight: zod_1.z.string().default("Not-added"),
+    pdRange: zod_1.z.string().default("Not-added"),
+    prescriptionRange: zod_1.z.string().default("Not-added"),
+    availableAsProBi: zod_1.z.boolean().default(false),
+    availableAsReader: zod_1.z.boolean().default(false),
     otherImages: zod_1.z
         .array(zod_1.z.object({
         colorName: zod_1.z.string().optional().default("Black"),

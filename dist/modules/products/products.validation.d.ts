@@ -25,6 +25,17 @@ export declare const productSchema: z.ZodObject<{
     prescriptionDetails: z.ZodOptional<z.ZodString>;
     reviews: z.ZodOptional<z.ZodArray<z.ZodAny>>;
     stock: z.ZodDefault<z.ZodBoolean>;
+    frameWidth: z.ZodDefault<z.ZodString>;
+    bridge: z.ZodDefault<z.ZodString>;
+    lensWidth: z.ZodDefault<z.ZodString>;
+    lensHeight: z.ZodDefault<z.ZodString>;
+    templeLength: z.ZodDefault<z.ZodString>;
+    size: z.ZodDefault<z.ZodString>;
+    weight: z.ZodDefault<z.ZodString>;
+    pdRange: z.ZodDefault<z.ZodString>;
+    prescriptionRange: z.ZodDefault<z.ZodString>;
+    availableAsProBi: z.ZodDefault<z.ZodBoolean>;
+    availableAsReader: z.ZodDefault<z.ZodBoolean>;
     otherImages: z.ZodOptional<z.ZodArray<z.ZodObject<{
         colorName: z.ZodDefault<z.ZodOptional<z.ZodString>>;
         fromColor: z.ZodDefault<z.ZodOptional<z.ZodString>>;

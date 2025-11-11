@@ -27,6 +27,18 @@ export const productSchema = z.object({
 	prescriptionDetails: z.string().optional(),
 	reviews: z.array(z.any()).optional(),
 	stock: z.boolean().default(true),
+	frameWidth: z.string().default("Not-added"),
+	bridge: z.string().default("Not-added"),
+	lensWidth: z.string().default("Not-added"),
+	lensHeight: z.string().default("Not-added"),
+	templeLength: z.string().default("Not-added"),
+	size: z.string().default("Not-added"),
+	weight: z.string().default("Not-added"),
+	pdRange: z.string().default("Not-added"),
+	prescriptionRange: z.string().default("Not-added"),
+	availableAsProBi: z.boolean().default(false),
+	availableAsReader: z.boolean().default(false),
+
 	otherImages: z
 		.array(
 			z.object({

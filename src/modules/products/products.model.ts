@@ -49,6 +49,17 @@ const ProductSchema = new Schema<IProduct>(
 		frameDetails: { type: String },
 		prescriptionDetails: { type: String },
 		stock: { type: Boolean, default: true },
+		frameWidth: { type: String, default: "Not-added" },
+		bridge: { type: String, default: "Not-added" },
+		lensWidth: { type: String, default: "Not-added" },
+		lensHeight: { type: String, default: "Not-added" },
+		templeLength: { type: String, default: "Not-added" },
+		size: { type: String, default: "Not-added" },
+		weight: { type: String, default: "Not-added" },
+		pdRange: { type: String, default: "Not-added" },
+		prescriptionRange: { type: String, default: "Not-added" },
+		availableAsProBi: { type: Boolean, default: false },
+		availableAsReader: { type: Boolean, default: false },
 	},
 	{ timestamps: true }
 );

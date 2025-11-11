@@ -37,4 +37,15 @@ export interface IProduct {
 	prescriptionDetails: string;
 	stock: boolean;
 	otherImages: TOtherImages[];
+	frameWidth: string;
+	bridge: string;
+	lensWidth: string;
+	lensHeight: string;
+	templeLength: string;
+	size: string;
+	weight: string;
+	pdRange: string;
+	prescriptionRange: string;
+	availableAsProBi: boolean;
+	availableAsReader: boolean;
 }
