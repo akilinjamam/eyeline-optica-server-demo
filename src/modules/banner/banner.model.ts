@@ -16,7 +16,16 @@ const bannerSchema = new Schema<IBanner>(
 			required: true,
 			trim: true,
 		},
-		images: { type: [String], default: [] },
+		images: {
+			type: [String],
+			required: true,
+			validate: {
+				validator: function (arr: string[]) {
+					return arr.length > 0; // Ensure at least one image
+				},
+				message: "At least one image is required.",
+			},
+		},
 	},
 	{
 		timestamps: true,
