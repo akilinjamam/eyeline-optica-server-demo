@@ -8,16 +8,7 @@ const bannerSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
     },
-    images: {
-        type: [String],
-        required: true,
-        validate: {
-            validator: function (arr) {
-                return arr.length > 0; // Ensure at least one image
-            },
-            message: "At least one image is required.",
-        },
-    },
+    images: { type: [String], default: [] },
 }, {
     timestamps: true,
 });
