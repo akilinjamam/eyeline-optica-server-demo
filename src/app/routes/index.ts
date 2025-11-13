@@ -15,6 +15,7 @@ import paymentHistoryRouter from "../../modules/paymentHistory/paymentHistory.ro
 import salesRouter from "../../modules/sale/sale.route";
 import cateogoryRouter from "../../modules/category/category.route";
 import blogRouter from "../../modules/blog/blog.route";
+import bannerRoute from "../../modules/banner/banner.route";
 const router = express.Router();
 
 const allRoutes = [
@@ -81,6 +82,10 @@ const allRoutes = [
 	{
 		path: "/blog",
 		route: blogRouter,
+	},
+	{
+		path: "/banner",
+		route: bannerRoute,
 	},
 ];
 

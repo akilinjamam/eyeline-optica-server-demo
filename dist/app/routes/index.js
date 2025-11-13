@@ -20,6 +20,7 @@ const paymentHistory_route_1 = __importDefault(require("../../modules/paymentHis
 const sale_route_1 = __importDefault(require("../../modules/sale/sale.route"));
 const category_route_1 = __importDefault(require("../../modules/category/category.route"));
 const blog_route_1 = __importDefault(require("../../modules/blog/blog.route"));
+const banner_route_1 = __importDefault(require("../../modules/banner/banner.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -85,6 +86,10 @@ const allRoutes = [
     {
         path: "/blog",
         route: blog_route_1.default,
+    },
+    {
+        path: "/banner",
+        route: banner_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));
