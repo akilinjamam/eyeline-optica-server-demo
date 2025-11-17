@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewSchemaZod = exports.DoctorSchemaZod = void 0;
 const zod_1 = require("zod");
 exports.DoctorSchemaZod = zod_1.z.object({
-    name: zod_1.z.string().min(1, "Name is required"),
-    specialities: zod_1.z.array(zod_1.z.string().min(1)).nonempty("At least one speciality is required"),
-    studies: zod_1.z.array(zod_1.z.string().min(1)).nonempty("At least one study is required"),
-    totalExperience: zod_1.z.number().min(0, "Experience must be positive"),
+    name: zod_1.z.string().optional(),
+    email: zod_1.z.email(),
+    specialities: zod_1.z.array(zod_1.z.string()).optional(),
+    studies: zod_1.z.array(zod_1.z.string()).optional(),
+    totalExperience: zod_1.z.number().optional(),
     bmdcNumber: zod_1.z.string().optional(),
     ratings: zod_1.z.number().min(0).optional(),
     currentlyWorking: zod_1.z.string().optional(),

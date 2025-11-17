@@ -41,7 +41,7 @@ const DoctorSchema = new mongoose_1.Schema({
     specialities: { type: [String], default: "add your specialities like Cardiology, Neurology" },
     studies: { type: [String], default: "add your Studies like MBBS, FCPS, FRCS" },
     totalExperience: { type: Number, default: 0 },
-    bmdcNumber: { type: String, default: "add your bmdc number" },
+    bmdcNumber: { type: String, default: "add your bmdc numberrrrr" },
     currentlyWorking: { type: String, default: "add where you work now" },
     description: { type: String, default: "write something about you" },
     experienceDetail: { type: String, default: "write your experience history" },

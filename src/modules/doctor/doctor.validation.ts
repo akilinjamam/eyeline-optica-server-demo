@@ -1,10 +1,11 @@
 import { z } from "zod";
 
 export const DoctorSchemaZod = z.object({
-	name: z.string().min(1, "Name is required"),
-	specialities: z.array(z.string().min(1)).nonempty("At least one speciality is required"),
-	studies: z.array(z.string().min(1)).nonempty("At least one study is required"),
-	totalExperience: z.number().min(0, "Experience must be positive"),
+	name: z.string().optional(),
+	email: z.email(),
+	specialities: z.array(z.string()).optional(),
+	studies: z.array(z.string()).optional(),
+	totalExperience: z.number().optional(),
 	bmdcNumber: z.string().optional(),
 	ratings: z.number().min(0).optional(),
 	currentlyWorking: z.string().optional(),

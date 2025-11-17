@@ -1,9 +1,10 @@
 import { z } from "zod";
 export declare const DoctorSchemaZod: z.ZodObject<{
-    name: z.ZodString;
-    specialities: z.ZodArray<z.ZodString>;
-    studies: z.ZodArray<z.ZodString>;
-    totalExperience: z.ZodNumber;
+    name: z.ZodOptional<z.ZodString>;
+    email: z.ZodEmail;
+    specialities: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    studies: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    totalExperience: z.ZodOptional<z.ZodNumber>;
     bmdcNumber: z.ZodOptional<z.ZodString>;
     ratings: z.ZodOptional<z.ZodNumber>;
     currentlyWorking: z.ZodOptional<z.ZodString>;
