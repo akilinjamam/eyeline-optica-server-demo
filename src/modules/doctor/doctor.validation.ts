@@ -5,7 +5,7 @@ export const DoctorSchemaZod = z.object({
 	specialities: z.array(z.string().min(1)).nonempty("At least one speciality is required"),
 	studies: z.array(z.string().min(1)).nonempty("At least one study is required"),
 	totalExperience: z.number().min(0, "Experience must be positive"),
-	bmdcNumber: z.string().min(1, "BMDC number is required"),
+	bmdcNumber: z.string().optional(),
 	ratings: z.number().min(0).optional(),
 	currentlyWorking: z.string().optional(),
 	description: z.string().optional(),

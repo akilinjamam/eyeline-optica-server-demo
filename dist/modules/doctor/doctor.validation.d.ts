@@ -4,7 +4,7 @@ export declare const DoctorSchemaZod: z.ZodObject<{
     specialities: z.ZodArray<z.ZodString>;
     studies: z.ZodArray<z.ZodString>;
     totalExperience: z.ZodNumber;
-    bmdcNumber: z.ZodString;
+    bmdcNumber: z.ZodOptional<z.ZodString>;
     ratings: z.ZodOptional<z.ZodNumber>;
     currentlyWorking: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodString>;
