@@ -10,6 +10,7 @@ export declare const DoctorSchemaZod: z.ZodObject<{
     description: z.ZodOptional<z.ZodString>;
     experienceDetail: z.ZodOptional<z.ZodString>;
     images: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    appointmentFee: z.ZodOptional<z.ZodNumber>;
 }, z.core.$strip>;
 export declare const ReviewSchemaZod: z.ZodObject<{
     doctor: z.ZodString;

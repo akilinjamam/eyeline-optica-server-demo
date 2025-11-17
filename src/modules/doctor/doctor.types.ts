@@ -21,4 +21,5 @@ export interface IDoctor {
 	description?: string;
 	experienceDetail?: string;
 	images?: string[];
+	appointmentFee?: number;
 }

@@ -11,6 +11,7 @@ export const DoctorSchemaZod = z.object({
 	description: z.string().optional(),
 	experienceDetail: z.string().optional(),
 	images: z.array(z.string().url()).optional(),
+	appointmentFee: z.number().min(0).optional(),
 });
 
 export const ReviewSchemaZod = z.object({

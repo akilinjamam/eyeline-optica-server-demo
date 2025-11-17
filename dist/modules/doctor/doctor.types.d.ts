@@ -17,5 +17,6 @@ export interface IDoctor {
     description?: string;
     experienceDetail?: string;
     images?: string[];
+    appointmentFee?: number;
 }
 //# sourceMappingURL=doctor.types.d.ts.map

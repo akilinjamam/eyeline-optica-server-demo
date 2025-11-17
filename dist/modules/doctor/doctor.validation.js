@@ -13,6 +13,7 @@ exports.DoctorSchemaZod = zod_1.z.object({
     description: zod_1.z.string().optional(),
     experienceDetail: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url()).optional(),
+    appointmentFee: zod_1.z.number().min(0).optional(),
 });
 exports.ReviewSchemaZod = zod_1.z.object({
     doctor: zod_1.z.string().min(1, "Doctor ID is required"), // expecting ObjectId as string
