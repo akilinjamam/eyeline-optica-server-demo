@@ -15,6 +15,9 @@ export default {
 	sandbox_store_id: process.env.SANDBOX_STORE_ID,
 	sandbox_store_pass: process.env.SANDBOX_STORE_PASSWORD,
 	success_url: process.env.SUCCESS_URL,
+	success_url_appointment: process.env.SUCCESS_URL_APPOINTMENT,
 	fail_url: process.env.FAIL_URL,
+	fail_url_appointment: process.env.FAIL_URL_APPOINTMENT,
 	cancelled_url: process.env.CANCELLED_URL,
+	cancelled_url_appointment: process.env.CANCELLED_URL_APPOINTMENT,
 };

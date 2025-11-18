@@ -21,6 +21,7 @@ const sale_route_1 = __importDefault(require("../../modules/sale/sale.route"));
 const category_route_1 = __importDefault(require("../../modules/category/category.route"));
 const blog_route_1 = __importDefault(require("../../modules/blog/blog.route"));
 const banner_route_1 = __importDefault(require("../../modules/banner/banner.route"));
+const paymentAppointment_route_1 = __importDefault(require("../../modules/payment-appointment/paymentAppointment.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -62,6 +63,10 @@ const allRoutes = [
     {
         path: "/ssl",
         route: payment_route_1.default,
+    },
+    {
+        path: "/ssl-appointment",
+        route: paymentAppointment_route_1.default,
     },
     {
         path: "/accessory",

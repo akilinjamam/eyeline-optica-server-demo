@@ -11,8 +11,11 @@ declare const _default: {
     sandbox_store_id: string | undefined;
     sandbox_store_pass: string | undefined;
     success_url: string | undefined;
+    success_url_appointment: string | undefined;
     fail_url: string | undefined;
+    fail_url_appointment: string | undefined;
     cancelled_url: string | undefined;
+    cancelled_url_appointment: string | undefined;
 };
 export default _default;
 //# sourceMappingURL=index.d.ts.map

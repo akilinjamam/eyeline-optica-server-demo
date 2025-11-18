@@ -16,6 +16,8 @@ import salesRouter from "../../modules/sale/sale.route";
 import cateogoryRouter from "../../modules/category/category.route";
 import blogRouter from "../../modules/blog/blog.route";
 import bannerRoute from "../../modules/banner/banner.route";
+import paymentAppointmentRouter from "../../modules/payment-appointment/paymentAppointment.route";
+
 const router = express.Router();
 
 const allRoutes = [
@@ -58,6 +60,10 @@ const allRoutes = [
 	{
 		path: "/ssl",
 		route: paymentRouter,
+	},
+	{
+		path: "/ssl-appointment",
+		route: paymentAppointmentRouter,
 	},
 	{
 		path: "/accessory",
