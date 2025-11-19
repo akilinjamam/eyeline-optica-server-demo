@@ -15,5 +15,7 @@ export interface ISlot {
     endAt: Date;
     isBooked: boolean;
     patient?: Types.ObjectId | null;
+    isVideo?: boolean;
+    isPrescription?: boolean;
 }
 //# sourceMappingURL=schedule.type.d.ts.map

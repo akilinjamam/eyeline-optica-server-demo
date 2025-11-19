@@ -21,6 +21,8 @@ const SlotSchema = new Schema<ISlot>({
 	endAt: { type: Date, required: true },
 	isBooked: { type: Boolean, default: false },
 	patient: { type: Schema.Types.ObjectId, ref: "Patient", default: null },
+	isVideo: { type: Boolean, default: false },
+	isPrescription: { type: Boolean, default: false },
 });
 
 SlotSchema.index({ doctor: 1, startAt: 1, endAt: 1 }); // helpful for conflict queries

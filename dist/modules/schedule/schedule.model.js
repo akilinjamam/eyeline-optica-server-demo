@@ -20,6 +20,8 @@ const SlotSchema = new mongoose_1.Schema({
     endAt: { type: Date, required: true },
     isBooked: { type: Boolean, default: false },
     patient: { type: mongoose_1.Schema.Types.ObjectId, ref: "Patient", default: null },
+    isVideo: { type: Boolean, default: false },
+    isPrescription: { type: Boolean, default: false },
 });
 SlotSchema.index({ doctor: 1, startAt: 1, endAt: 1 }); // helpful for conflict queries
 exports.Slot = (0, mongoose_2.model)("Slot", SlotSchema);
