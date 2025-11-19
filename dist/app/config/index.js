@@ -24,5 +24,7 @@ exports.default = {
     fail_url_appointment: process.env.FAIL_URL_APPOINTMENT,
     cancelled_url: process.env.CANCELLED_URL,
     cancelled_url_appointment: process.env.CANCELLED_URL_APPOINTMENT,
+    agora_app_id: process.env.AGORA_APP_ID,
+    agora_app_certificate: process.env.AGORA_PRIMARY_CERTIFICATE,
 };
 //# sourceMappingURL=index.js.map
