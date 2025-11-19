@@ -111,7 +111,7 @@ const createScheduleWithSlotService = async (data) => {
     }
 };
 const getAllSlot = async (doctorId) => {
-    const result = await schedule_model_1.Slot.find({ doctor: doctorId }).populate("doctor");
+    const result = await schedule_model_1.Slot.find({ doctor: doctorId }).populate("doctor").populate("patient");
     return result;
 };
 exports.scheduleService = {
