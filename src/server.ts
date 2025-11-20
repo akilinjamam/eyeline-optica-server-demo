@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import app from "./app";
 import config from "./app/config";
 import "./app/jobs/weeklyDealsJob";
+import "./app/jobs/cleanupOldSchedules";
 
 const port = config.port;
 
