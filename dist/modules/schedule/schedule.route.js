@@ -8,5 +8,6 @@ const schedule_controller_1 = require("./schedule.controller");
 const scheduleRoute = express_1.default.Router();
 scheduleRoute.post("/create-schedule", schedule_controller_1.schemduleController.createScheduleWithSlotController);
 scheduleRoute.get("/get-slot/:doctorId", schedule_controller_1.schemduleController.getAllSlotController);
+scheduleRoute.get("/get-single-slot/:slotId", schedule_controller_1.schemduleController.getSingleSlotController);
 exports.default = scheduleRoute;
 //# sourceMappingURL=schedule.route.js.map

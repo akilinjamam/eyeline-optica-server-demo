@@ -24,8 +24,20 @@ const getAllSlotController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const getSingleSlotController = catchAsync(async (req, res) => {
+	const { slotId } = req.params;
+	const result = await scheduleService.getSingleSlot(slotId as string);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		success: true,
+		message: "Single Slot found successfully",
+		data: result,
+	});
+});
 
 export const schemduleController = {
 	createScheduleWithSlotController,
 	getAllSlotController,
+	getSingleSlotController,
 };

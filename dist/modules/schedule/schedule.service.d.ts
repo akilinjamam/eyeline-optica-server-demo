@@ -24,5 +24,10 @@ export declare const scheduleService: {
     } & {
         __v: number;
     })[]>;
+    getSingleSlot: (slotId: string) => Promise<(mongoose.Document<unknown, {}, import("./schedule.type").ISlot, {}, {}> & import("./schedule.type").ISlot & {
+        _id: mongoose.Types.ObjectId;
+    } & {
+        __v: number;
+    }) | null>;
 };
 //# sourceMappingURL=schedule.service.d.ts.map
