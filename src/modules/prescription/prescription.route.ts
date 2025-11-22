@@ -12,7 +12,7 @@ prescriptionRouter.post(
 	prescriptionController.createPrescriptionController
 );
 
-prescriptionRouter.get("/", protect, prescriptionController.getAllPrescriptionController);
+prescriptionRouter.get("/", prescriptionController.getAllPrescriptionController);
 prescriptionRouter.get("/:id", protect, prescriptionController.getSinglePrescriptionController);
 prescriptionRouter.get(
 	"/get-single-prescription/:id",

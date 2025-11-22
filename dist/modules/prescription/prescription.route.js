@@ -10,7 +10,7 @@ const prescription_controller_1 = require("./prescription.controller");
 const auth_1 = require("../../app/middleware/auth");
 const prescriptionRouter = express_1.default.Router();
 prescriptionRouter.post("/create-prescription", (0, validateRequest_1.default)(prescription_validation_1.PrescriptionSchema), prescription_controller_1.prescriptionController.createPrescriptionController);
-prescriptionRouter.get("/", auth_1.protect, prescription_controller_1.prescriptionController.getAllPrescriptionController);
+prescriptionRouter.get("/", prescription_controller_1.prescriptionController.getAllPrescriptionController);
 prescriptionRouter.get("/:id", auth_1.protect, prescription_controller_1.prescriptionController.getSinglePrescriptionController);
 prescriptionRouter.get("/get-single-prescription/:id", auth_1.protect, prescription_controller_1.prescriptionController.getSinglePrescriptionController);
 prescriptionRouter.put("/update-prescription/:id", prescription_controller_1.prescriptionController.updatePrescriptionController);
