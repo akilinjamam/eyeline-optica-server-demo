@@ -141,9 +141,18 @@ const getSingleSlot = async (slotId: string) => {
 	const result = await Slot.findOne({ _id: slotId }).populate("doctor").populate("patient");
 	return result;
 };
+const updateVideoSlot = async (slotId: string, payload: Record<string, unknown>) => {
+	const result = await Slot.findByIdAndUpdate(
+		slotId,
+		{ $set: payload },
+		{ new: true, runValidators: true }
+	);
+	return result;
+};
 
 export const scheduleService = {
 	createScheduleWithSlotService,
 	getAllSlot,
 	getSingleSlot,
+	updateVideoSlot,
 };

@@ -35,9 +35,21 @@ const getSingleSlotController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const updateVideoSlotController = catchAsync(async (req, res) => {
+	const { slotId } = req.params;
+	const result = await scheduleService.updateVideoSlot(slotId as string, req.body);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		success: true,
+		message: "Slot updated successfully",
+		data: result,
+	});
+});
 
 export const schemduleController = {
 	createScheduleWithSlotController,
 	getAllSlotController,
 	getSingleSlotController,
+	updateVideoSlotController,
 };
