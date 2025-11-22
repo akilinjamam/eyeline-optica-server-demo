@@ -22,4 +22,7 @@ export interface IDoctor {
 	experienceDetail?: string;
 	images?: string[];
 	appointmentFee?: number;
+	clinicName?: string;
+	clinicAddress?: string;
+	phone?: string;
 }

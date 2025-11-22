@@ -14,6 +14,9 @@ const DoctorSchema: Schema<IDoctor> = new Schema(
 		experienceDetail: { type: String, default: "write your experience history" },
 		images: { type: [String], default: [] }, // e.g. Cloudinary/S3 URLs
 		appointmentFee: { type: Number, default: 0 },
+		clinicName: { type: String, default: "will be added" },
+		clinicAddress: { type: String, default: "will be added" },
+		phone: { type: String, default: "will be added" },
 	},
 	{ timestamps: true }
 );

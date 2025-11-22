@@ -13,6 +13,9 @@ exports.DoctorSchemaZod = zod_1.z.object({
     currentlyWorking: zod_1.z.string().optional(),
     description: zod_1.z.string().optional(),
     experienceDetail: zod_1.z.string().optional(),
+    clinicName: zod_1.z.string().optional(),
+    clinicAddress: zod_1.z.string().optional(),
+    phone: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url()).optional(),
     appointmentFee: zod_1.z.number().min(0).optional(),
 });

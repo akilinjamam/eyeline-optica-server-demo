@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 export const DoctorSchemaZod = z.object({
 	name: z.string().optional(),
 	email: z.email(),
@@ -11,6 +10,9 @@ export const DoctorSchemaZod = z.object({
 	currentlyWorking: z.string().optional(),
 	description: z.string().optional(),
 	experienceDetail: z.string().optional(),
+	clinicName: z.string().optional(),
+	clinicAddress: z.string().optional(),
+	phone: z.string().optional(),
 	images: z.array(z.string().url()).optional(),
 	appointmentFee: z.number().min(0).optional(),
 });
