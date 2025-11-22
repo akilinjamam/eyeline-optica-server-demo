@@ -11,7 +11,7 @@ const createPrescriptionService = async (payload) => {
     return result;
 };
 const getAllPrescription = async (query) => {
-    const response = new QueryBuilder_1.default(prescription_model_1.Prescription.find({}), query).sort();
+    const response = new QueryBuilder_1.default(prescription_model_1.Prescription.find({}).populate("doctorId").populate("patientId"), query).sort();
     const data = await response.modelQuery;
     const meta = await response.countTotal();
     return {

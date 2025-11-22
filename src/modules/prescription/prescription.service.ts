@@ -8,7 +8,10 @@ const createPrescriptionService = async (payload: TPrescription) => {
 };
 
 const getAllPrescription = async (query: Record<string, unknown>) => {
-	const response = new QueryBuilder(Prescription.find({}), query).sort();
+	const response = new QueryBuilder(
+		Prescription.find({}).populate("doctorId").populate("patientId"),
+		query
+	).sort();
 
 	const data = await response.modelQuery;
 	const meta = await response.countTotal();
