@@ -60,6 +60,7 @@ const ProductSchema = new Schema<IProduct>(
 		prescriptionRange: { type: String, default: "Not-added" },
 		availableAsProBi: { type: Boolean, default: false },
 		availableAsReader: { type: Boolean, default: false },
+		rating: { type: Number, min: 0, max: 5, default: 0 },
 	},
 	{ timestamps: true }
 );

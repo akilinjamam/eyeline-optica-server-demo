@@ -36,6 +36,7 @@ export const accessorySchema = z.object({
 		])
 		.default("others"),
 	weeklyDeals: z.boolean().default(false),
+	rating: z.number().min(0).max(5).default(0),
 	items: z.array(accessoryItemSchema).min(1, "At least one item is required"),
 });
 

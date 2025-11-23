@@ -92,6 +92,7 @@ const ProductSchema = new mongoose_1.Schema({
     prescriptionRange: { type: String, default: "Not-added" },
     availableAsProBi: { type: Boolean, default: false },
     availableAsReader: { type: Boolean, default: false },
+    rating: { type: Number, min: 0, max: 5, default: 0 },
 }, { timestamps: true });
 const Product = mongoose_1.default.model("Product", ProductSchema);
 exports.default = Product;

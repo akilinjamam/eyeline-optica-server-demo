@@ -36,6 +36,7 @@ export declare const productSchema: z.ZodObject<{
     prescriptionRange: z.ZodDefault<z.ZodString>;
     availableAsProBi: z.ZodDefault<z.ZodBoolean>;
     availableAsReader: z.ZodDefault<z.ZodBoolean>;
+    rating: z.ZodDefault<z.ZodNumber>;
     otherImages: z.ZodOptional<z.ZodArray<z.ZodObject<{
         colorName: z.ZodDefault<z.ZodOptional<z.ZodString>>;
         fromColor: z.ZodDefault<z.ZodOptional<z.ZodString>>;

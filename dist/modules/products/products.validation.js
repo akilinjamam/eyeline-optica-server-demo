@@ -40,6 +40,7 @@ exports.productSchema = zod_1.z.object({
     prescriptionRange: zod_1.z.string().default("Not-added"),
     availableAsProBi: zod_1.z.boolean().default(false),
     availableAsReader: zod_1.z.boolean().default(false),
+    rating: zod_1.z.number().min(0).max(5).default(0),
     otherImages: zod_1.z
         .array(zod_1.z.object({
         colorName: zod_1.z.string().optional().default("Black"),

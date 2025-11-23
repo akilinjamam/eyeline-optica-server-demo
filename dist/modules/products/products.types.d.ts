@@ -46,5 +46,6 @@ export interface IProduct {
     prescriptionRange: string;
     availableAsProBi: boolean;
     availableAsReader: boolean;
+    rating: number;
 }
 //# sourceMappingURL=products.types.d.ts.map

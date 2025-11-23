@@ -106,6 +106,7 @@ const AccessorySchema = new mongoose_1.Schema({
         ],
         default: "others",
     },
+    rating: { type: Number, min: 0, max: 5, default: 0 },
     items: { type: [AccessoryItemsSchema], required: true, default: [] },
 }, {
     timestamps: true,

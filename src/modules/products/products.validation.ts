@@ -38,6 +38,7 @@ export const productSchema = z.object({
 	prescriptionRange: z.string().default("Not-added"),
 	availableAsProBi: z.boolean().default(false),
 	availableAsReader: z.boolean().default(false),
+	rating: z.number().min(0).max(5).default(0),
 
 	otherImages: z
 		.array(

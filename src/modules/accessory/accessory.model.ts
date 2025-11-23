@@ -27,6 +27,7 @@ export interface IAccessory extends Document {
 		| "With Solution + Bag + Kit"
 		| "others";
 	weeklyDeals: boolean;
+	rating: number;
 	items: IAccessoryItems[];
 }
 
@@ -104,6 +105,7 @@ const AccessorySchema = new Schema<IAccessory>(
 			],
 			default: "others",
 		},
+		rating: { type: Number, min: 0, max: 5, default: 0 },
 		items: { type: [AccessoryItemsSchema], required: true, default: [] },
 	},
 	{

@@ -48,4 +48,5 @@ export interface IProduct {
 	prescriptionRange: string;
 	availableAsProBi: boolean;
 	availableAsReader: boolean;
+	rating: number;
 }
