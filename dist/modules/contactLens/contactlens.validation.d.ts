@@ -33,6 +33,7 @@ export declare const contactLensSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodString>;
     images: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>;
     weeklyDeals: z.ZodDefault<z.ZodBoolean>;
+    badge: z.ZodDefault<z.ZodString>;
 }, z.core.$strip>;
 export declare const createContactLensSchema: z.ZodObject<{
     name: z.ZodString;
@@ -68,6 +69,7 @@ export declare const createContactLensSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodString>;
     images: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>;
     weeklyDeals: z.ZodDefault<z.ZodBoolean>;
+    badge: z.ZodDefault<z.ZodString>;
 }, z.core.$strip>;
 export declare const updateContactLensSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
@@ -103,5 +105,6 @@ export declare const updateContactLensSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodOptional<z.ZodString>>;
     images: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>>;
     weeklyDeals: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    badge: z.ZodOptional<z.ZodDefault<z.ZodString>>;
 }, z.core.$strip>;
 //# sourceMappingURL=contactlens.validation.d.ts.map

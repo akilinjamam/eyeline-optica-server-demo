@@ -28,6 +28,7 @@ exports.contactLensSchema = zod_1.z.object({
     description: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url("Must be a valid URL")).optional().default([]),
     weeklyDeals: zod_1.z.boolean().default(false),
+    badge: zod_1.z.string().default("premium"),
 });
 // For creating new ContactLens
 exports.createContactLensSchema = exports.contactLensSchema;

@@ -23,5 +23,6 @@ export type IContactLens = {
     images: string[];
     powerType: "with power" | "without Power";
     weeklyDeals: boolean;
+    badge: string;
 };
 //# sourceMappingURL=contactlens.type.d.ts.map

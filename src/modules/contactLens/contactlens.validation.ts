@@ -31,6 +31,7 @@ export const contactLensSchema = z.object({
 	description: z.string().optional(),
 	images: z.array(z.string().url("Must be a valid URL")).optional().default([]),
 	weeklyDeals: z.boolean().default(false),
+	badge: z.string().default("premium"),
 });
 
 // For creating new ContactLens

@@ -62,6 +62,7 @@ const ContactLensSchema = new mongoose_1.Schema({
     images: [{ type: String }],
     powerType: { type: String, required: true, enum: ["with power", "without power"] },
     weeklyDeals: { type: Boolean, default: false },
+    badge: { type: String, default: "premium" },
 }, { timestamps: true });
 const ContactLens = mongoose_1.default.model("ContactLens", ContactLensSchema);
 exports.default = ContactLens;
