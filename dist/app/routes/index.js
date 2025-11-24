@@ -23,6 +23,7 @@ const blog_route_1 = __importDefault(require("../../modules/blog/blog.route"));
 const banner_route_1 = __importDefault(require("../../modules/banner/banner.route"));
 const paymentAppointment_route_1 = __importDefault(require("../../modules/payment-appointment/paymentAppointment.route"));
 const agora_route_1 = __importDefault(require("../../modules/agora/agora.route"));
+const wishlist_route_1 = __importDefault(require("../../modules/wishlist/wishlist.route"));
 const router = express_1.default.Router();
 const allRoutes = [
     {
@@ -100,6 +101,10 @@ const allRoutes = [
     {
         path: "/agora",
         route: agora_route_1.default,
+    },
+    {
+        path: "/wishlist",
+        route: wishlist_route_1.default,
     },
 ];
 allRoutes.forEach((route) => router.use(route.path, route.route));
