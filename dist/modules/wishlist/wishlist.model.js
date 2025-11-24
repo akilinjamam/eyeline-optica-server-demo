@@ -41,6 +41,7 @@ const wishListSchema = new mongoose_1.Schema({
     contactLensId: { type: mongoose_1.Schema.Types.ObjectId, ref: "ContactLens", default: null },
     accessoryId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Accessory", default: null },
     clicked: { type: Number, default: 1 },
+    productType: { type: String, default: "not-added" },
 }, {
     timestamps: true,
 });

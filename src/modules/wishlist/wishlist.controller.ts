@@ -12,7 +12,17 @@ const createWishlistController = catchAsync(async (req, res) => {
 		data: result,
 	});
 });
+const getWishlistAccordingToTypeController = catchAsync(async (req, res) => {
+	const result = await wwishListService.getAllWishlistAccordingToType(req?.query?.type as string);
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "wishlist successfully found",
+		data: result,
+	});
+});
 
 export const wishlistController = {
 	createWishlistController,
+	getWishlistAccordingToTypeController,
 };

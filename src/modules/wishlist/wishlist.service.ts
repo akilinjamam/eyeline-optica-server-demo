@@ -6,7 +6,7 @@ const createWishListService = async (payload: IWishList) => {
 		const findFrameWish = await WishList.findOne({ frameId: payload?.frameId });
 
 		if (!findFrameWish?._id) {
-			const result = await WishList.create(payload);
+			const result = await WishList.create({ ...payload, productType: "frame" });
 			if (result) return (newResult = "frame wish list added");
 		}
 		if (findFrameWish?._id) {
@@ -22,7 +22,7 @@ const createWishListService = async (payload: IWishList) => {
 	if (payload?.lensId) {
 		const findLensWish = await WishList.findOne({ lensId: payload?.lensId });
 		if (!findLensWish) {
-			const result = await WishList.create(payload);
+			const result = await WishList.create({ ...payload, productType: "lens" });
 			if (result) return (newResult = "lens wish list added");
 		} else {
 			const updatedClick = findLensWish.clicked ? findLensWish.clicked + 1 : 1;
@@ -37,7 +37,7 @@ const createWishListService = async (payload: IWishList) => {
 	if (payload?.contactLensId) {
 		const findCLensWish = await WishList.findOne({ contactLensId: payload?.contactLensId });
 		if (!findCLensWish) {
-			const result = await WishList.create(payload);
+			const result = await WishList.create({ ...payload, productType: "contactLens" });
 			if (result) return (newResult = "contact lens wish list added");
 		} else {
 			const updatedClick = findCLensWish.clicked ? findCLensWish.clicked + 1 : 1;
@@ -68,6 +68,12 @@ const createWishListService = async (payload: IWishList) => {
 	return newResult;
 };
 
+const getAllWishlistAccordingToType = async (type: string) => {
+	const result = await WishList.find({ productType: type });
+	return result;
+};
+
 export const wwishListService = {
 	createWishListService,
+	getAllWishlistAccordingToType,
 };

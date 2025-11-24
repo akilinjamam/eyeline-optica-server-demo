@@ -17,7 +17,17 @@ const createWishlistController = (0, catchAsync_1.default)(async (req, res) => {
         data: result,
     });
 });
+const getWishlistAccordingToTypeController = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await wishlist_service_1.wwishListService.getAllWishlistAccordingToType(req?.query?.type);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "wishlist successfully found",
+        data: result,
+    });
+});
 exports.wishlistController = {
     createWishlistController,
+    getWishlistAccordingToTypeController,
 };
 //# sourceMappingURL=wishlist.controller.js.map

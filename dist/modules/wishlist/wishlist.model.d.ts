@@ -5,6 +5,7 @@ export interface IWishList extends Document {
     contactLensId?: mongoose.Types.ObjectId;
     accessoryId?: mongoose.Types.ObjectId;
     clicked?: string;
+    productType?: string;
 }
 export declare const WishList: mongoose.Model<IWishList, {}, {}, {}, mongoose.Document<unknown, {}, IWishList, {}, {}> & IWishList & Required<{
     _id: unknown;

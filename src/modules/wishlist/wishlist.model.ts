@@ -6,6 +6,7 @@ export interface IWishList extends Document {
 	contactLensId?: mongoose.Types.ObjectId;
 	accessoryId?: mongoose.Types.ObjectId;
 	clicked?: string;
+	productType?: string;
 }
 
 const wishListSchema = new Schema<IWishList>(
@@ -15,6 +16,7 @@ const wishListSchema = new Schema<IWishList>(
 		contactLensId: { type: Schema.Types.ObjectId, ref: "ContactLens", default: null },
 		accessoryId: { type: Schema.Types.ObjectId, ref: "Accessory", default: null },
 		clicked: { type: Number, default: 1 },
+		productType: { type: String, default: "not-added" },
 	},
 	{
 		timestamps: true,
