@@ -69,7 +69,11 @@ const createWishListService = async (payload: IWishList) => {
 };
 
 const getAllWishlistAccordingToType = async (type: string) => {
-	const result = await WishList.find({ productType: type });
+	const result = await WishList.find({ productType: type })
+		.populate("frameId")
+		.populate("lensId")
+		.populate("contactLensId")
+		.populate("accessoryId");
 	return result;
 };
 

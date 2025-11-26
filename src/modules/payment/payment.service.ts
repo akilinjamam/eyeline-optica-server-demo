@@ -13,8 +13,14 @@ import { PaymentHistory } from "../paymentHistory/paymentHistory.model";
 import mongoose from "mongoose";
 import Accessory from "../accessory/accessory.model";
 import { IWeeklyDeals, WeeklyDeals } from "../weeklyDeals/weeklydeals.model";
+import { sendSms } from "../../app/utils/sendSms";
 
 const createPaymentService = async (payload: TPaymentData) => {
+	const phone = payload?.customer_phone?.toString();
+	if (phone?.length > 11) {
+		throw new AppError(StatusCodes.NOT_ACCEPTABLE, "phone number must have only 11 digit");
+	}
+
 	const session = await mongoose.startSession();
 	session.startTransaction();
 
@@ -246,6 +252,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			currency: "BDT",
 			tran_id: transectionId,
 			success_url: `${config.success_url}=${salesId}`,
+			// success_url: `http://localhost:5000/api/v1/ssl/payment-success?salesId=${salesId}`,
 			fail_url: `${config.fail_url}=${salesId}`,
 			cancel_url: `${config.cancelled_url}=${salesId}`,
 			ipn_url: "https://server.eyelineoptica.com/api/v1/ssl/ipn",
@@ -371,6 +378,13 @@ const paymentSuccessService = async (salesId: string) => {
 			{ status: "Order received", paymentHistoryId: paymentHistory?._id },
 			{ new: true, runValidators: true, session }
 		);
+
+		const messageLink = `https://www.eyelineoptica.com/paymentHistorySingle/${paymentHistory?._id}`;
+
+		const phoneNumber = `88${findSales?.customer_phone}`;
+		console.log(phoneNumber);
+		const smsResponse = await sendSms(phoneNumber, messageLink);
+		console.log(smsResponse);
 
 		await session.commitTransaction();
 		session.endSession();

@@ -18,7 +18,12 @@ const paymentHistory_model_1 = require("../paymentHistory/paymentHistory.model")
 const mongoose_1 = __importDefault(require("mongoose"));
 const accessory_model_1 = __importDefault(require("../accessory/accessory.model"));
 const weeklydeals_model_1 = require("../weeklyDeals/weeklydeals.model");
+const sendSms_1 = require("../../app/utils/sendSms");
 const createPaymentService = async (payload) => {
+    const phone = payload?.customer_phone?.toString();
+    if (phone?.length > 11) {
+        throw new AppError_1.AppError(http_status_codes_1.StatusCodes.NOT_ACCEPTABLE, "phone number must have only 11 digit");
+    }
     const session = await mongoose_1.default.startSession();
     session.startTransaction();
     try {
@@ -212,6 +217,7 @@ const createPaymentService = async (payload) => {
             currency: "BDT",
             tran_id: transectionId,
             success_url: `${config_1.default.success_url}=${salesId}`,
+            // success_url: `http://localhost:5000/api/v1/ssl/payment-success?salesId=${salesId}`,
             fail_url: `${config_1.default.fail_url}=${salesId}`,
             cancel_url: `${config_1.default.cancelled_url}=${salesId}`,
             ipn_url: "https://server.eyelineoptica.com/api/v1/ssl/ipn",
@@ -300,6 +306,11 @@ const paymentSuccessService = async (salesId) => {
         };
         const [paymentHistory] = await paymentHistory_model_1.PaymentHistory.create([paymentHistoryData], { session });
         await sale_model_1.Sale.findByIdAndUpdate(findSales._id, { status: "Order received", paymentHistoryId: paymentHistory?._id }, { new: true, runValidators: true, session });
+        const messageLink = `https://www.eyelineoptica.com/paymentHistorySingle/${paymentHistory?._id}`;
+        const phoneNumber = `88${findSales?.customer_phone}`;
+        console.log(phoneNumber);
+        const smsResponse = await (0, sendSms_1.sendSms)(phoneNumber, messageLink);
+        console.log(smsResponse);
         await session.commitTransaction();
         session.endSession();
         return "success";

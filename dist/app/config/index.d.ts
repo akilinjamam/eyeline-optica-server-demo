@@ -18,6 +18,8 @@ declare const _default: {
     cancelled_url_appointment: string | undefined;
     agora_app_id: string | undefined;
     agora_app_certificate: string | undefined;
+    sms_api_key: string | undefined;
+    sms_sid: string | undefined;
 };
 export default _default;
 //# sourceMappingURL=index.d.ts.map

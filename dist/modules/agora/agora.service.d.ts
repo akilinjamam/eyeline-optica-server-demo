@@ -1,12 +1,13 @@
+type AgoraRole = "publisher" | "subscriber";
 interface IAgoraPayload {
     channelName: string;
     uid: string;
-    role: string;
+    role: AgoraRole;
 }
 export declare const agoraTokenService: {
     createAgoraTokenService: (payload: IAgoraPayload) => Promise<{
         token: string;
-        appId: string | undefined;
+        appId: string;
     }>;
 };
 export {};

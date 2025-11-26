@@ -22,4 +22,6 @@ export default {
 	cancelled_url_appointment: process.env.CANCELLED_URL_APPOINTMENT,
 	agora_app_id: process.env.AGORA_APP_ID,
 	agora_app_certificate: process.env.AGORA_PRIMARY_CERTIFICATE,
+	sms_api_key: process.env.SMS_API_KEY,
+	sms_sid: process.env.SMS_SID,
 };
