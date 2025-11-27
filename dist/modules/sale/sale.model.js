@@ -39,6 +39,7 @@ const prescriptionSchema = new mongoose_1.Schema({
     sphere: { type: String, default: null },
     cylinder: { type: String, default: null },
     axis: { type: String, default: null },
+    near: { type: String, default: null },
 }, { _id: false });
 const saleSchema = new mongoose_1.Schema({
     invoiceNo: { type: String, required: true },

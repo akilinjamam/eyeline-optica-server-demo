@@ -19,11 +19,13 @@ export declare const cartItemSchema: z.ZodObject<{
         sphere: z.ZodOptional<z.ZodString>;
         cylinder: z.ZodOptional<z.ZodString>;
         axis: z.ZodOptional<z.ZodString>;
+        near: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>>;
     leftEye: z.ZodOptional<z.ZodObject<{
         sphere: z.ZodOptional<z.ZodString>;
         cylinder: z.ZodOptional<z.ZodString>;
         axis: z.ZodOptional<z.ZodString>;
+        near: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>>;
     quantity: z.ZodNumber;
     unitPrice: z.ZodNumber;
@@ -54,11 +56,13 @@ export declare const cartValidationSchema: z.ZodObject<{
             sphere: z.ZodOptional<z.ZodString>;
             cylinder: z.ZodOptional<z.ZodString>;
             axis: z.ZodOptional<z.ZodString>;
+            near: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
         leftEye: z.ZodOptional<z.ZodObject<{
             sphere: z.ZodOptional<z.ZodString>;
             cylinder: z.ZodOptional<z.ZodString>;
             axis: z.ZodOptional<z.ZodString>;
+            near: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
         quantity: z.ZodNumber;
         unitPrice: z.ZodNumber;

@@ -4,6 +4,7 @@ export interface IPrescriptionSchema {
 	sphere: string;
 	cylinder: string;
 	axis: string;
+	near: string;
 }
 
 export interface ICartItem extends Document {
@@ -46,6 +47,7 @@ const prescriptionSchema = new Schema<IPrescriptionSchema>(
 		sphere: { type: String },
 		cylinder: { type: String },
 		axis: { type: String },
+		near: { type: String },
 	},
 	{ _id: false }
 );

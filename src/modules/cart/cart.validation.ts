@@ -5,6 +5,7 @@ const prescriptionSchema = z.object({
 	sphere: z.string().optional(),
 	cylinder: z.string().optional(),
 	axis: z.string().optional(),
+	near: z.string().optional(),
 });
 
 // 🛒 Each item in the cart

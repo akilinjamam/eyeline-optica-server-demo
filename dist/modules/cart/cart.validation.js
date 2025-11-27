@@ -7,6 +7,7 @@ const prescriptionSchema = zod_1.z.object({
     sphere: zod_1.z.string().optional(),
     cylinder: zod_1.z.string().optional(),
     axis: zod_1.z.string().optional(),
+    near: zod_1.z.string().optional(),
 });
 // 🛒 Each item in the cart
 exports.cartItemSchema = zod_1.z.object({

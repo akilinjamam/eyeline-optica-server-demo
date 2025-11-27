@@ -39,6 +39,7 @@ const prescriptionSchema = new mongoose_1.Schema({
     sphere: { type: String },
     cylinder: { type: String },
     axis: { type: String },
+    near: { type: String },
 }, { _id: false });
 const CartItemSchema = new mongoose_1.Schema({
     productId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Product" },

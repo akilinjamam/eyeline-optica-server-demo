@@ -3,6 +3,7 @@ export interface IPrescriptionSchema {
     sphere: string;
     cylinder: string;
     axis: string;
+    near: string;
 }
 export interface ICartItem extends Document {
     productId?: mongoose.Schema.Types.ObjectId;

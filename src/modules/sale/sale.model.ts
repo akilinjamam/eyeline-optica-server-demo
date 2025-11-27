@@ -42,6 +42,7 @@ const prescriptionSchema = new Schema<IPrescriptionSchema>(
 		sphere: { type: String, default: null },
 		cylinder: { type: String, default: null },
 		axis: { type: String, default: null },
+		near: { type: String, default: null },
 	},
 	{ _id: false }
 );
