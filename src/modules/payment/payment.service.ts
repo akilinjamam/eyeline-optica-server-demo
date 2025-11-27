@@ -35,6 +35,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			dueAmount,
 			quantity,
 			totalCost,
+			frameColorName,
 		} = payload;
 
 		const findCart = (await Cart.findOne({ _id: cart_id })
@@ -196,6 +197,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			rightEye,
 			discountOn,
 			dealsDiscount,
+			frameColorName,
 		};
 		console.log(salesData);
 		// Stock validation

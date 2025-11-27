@@ -34,6 +34,7 @@ export interface ISale extends Document {
 	submitType: string;
 	dealsDiscount: number;
 	discountOn: string;
+	frameColorName: string;
 }
 
 const prescriptionSchema = new Schema<IPrescriptionSchema>(
@@ -59,6 +60,7 @@ const saleSchema = new Schema<ISale>(
 		},
 		quantity: { type: Number, required: true },
 		customer_name: { type: String, required: true },
+		frameColorName: { type: String, default: "not-added" },
 		customer_phone: { type: String, required: true },
 		customer_address: { type: String, required: true },
 		customer_email: { type: String, required: true },

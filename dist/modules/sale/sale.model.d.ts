@@ -27,6 +27,7 @@ export interface ISale extends Document {
     submitType: string;
     dealsDiscount: number;
     discountOn: string;
+    frameColorName: string;
 }
 export declare const Sale: Model<ISale>;
 //# sourceMappingURL=sale.model.d.ts.map

@@ -8,4 +8,5 @@ export type TPaymentData = {
 	totalCost: number;
 	payableAmount: number;
 	dueAmount: number;
+	frameColorName: string;
 };

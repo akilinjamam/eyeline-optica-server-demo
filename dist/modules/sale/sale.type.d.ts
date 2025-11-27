@@ -13,6 +13,7 @@ export type TSale = {
     contactLensId: mongoose.Types.ObjectId;
     deliveryFee: number;
     subtotal: number;
+    frameColorName: string;
     status: "pending" | "Order receieved" | "processsing" | "packaging" | "on the way" | "delivered";
 };
 //# sourceMappingURL=sale.type.d.ts.map

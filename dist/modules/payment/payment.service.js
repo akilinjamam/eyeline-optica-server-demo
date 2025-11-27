@@ -27,7 +27,7 @@ const createPaymentService = async (payload) => {
     const session = await mongoose_1.default.startSession();
     session.startTransaction();
     try {
-        const { cart_id, customer_name, customer_phone, customer_address, customer_email, payableAmount, dueAmount, quantity, totalCost, } = payload;
+        const { cart_id, customer_name, customer_phone, customer_address, customer_email, payableAmount, dueAmount, quantity, totalCost, frameColorName, } = payload;
         const findCart = (await cart_model_1.Cart.findOne({ _id: cart_id })
             .populate("items.productId")
             .populate("items.lensId")
@@ -170,6 +170,7 @@ const createPaymentService = async (payload) => {
             rightEye,
             discountOn,
             dealsDiscount,
+            frameColorName,
         };
         console.log(salesData);
         // Stock validation

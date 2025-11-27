@@ -8,5 +8,6 @@ export type TPaymentData = {
     totalCost: number;
     payableAmount: number;
     dueAmount: number;
+    frameColorName: string;
 };
 //# sourceMappingURL=payment.type.d.ts.map
