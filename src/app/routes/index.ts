@@ -19,6 +19,7 @@ import bannerRoute from "../../modules/banner/banner.route";
 import paymentAppointmentRouter from "../../modules/payment-appointment/paymentAppointment.route";
 import agoraRouter from "../../modules/agora/agora.route";
 import wishlistRouter from "../../modules/wishlist/wishlist.route";
+import patientRoute from "../../modules/patient/patient.route";
 
 const router = express.Router();
 
@@ -102,6 +103,10 @@ const allRoutes = [
 	{
 		path: "/wishlist",
 		route: wishlistRouter,
+	},
+	{
+		path: "/patient",
+		route: patientRoute,
 	},
 ];
 
