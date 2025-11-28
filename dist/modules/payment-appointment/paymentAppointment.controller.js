@@ -28,8 +28,7 @@ const successPaymentAppointmentController = (0, catchAsync_1.default)(async (req
         slotId,
     };
     const result = await paymentAppointment_service_1.paymentAppointmentService.successPaymentAppointment(data);
-    if (result === "success")
-        res.redirect("https://eyelineoptica.com/payment-success");
+    res.redirect(`https://eyelineoptica.com/payment-success?patientId=${result?.patientId}`);
 });
 const failedPaymentAppointmentController = (0, catchAsync_1.default)(async (req, res) => {
     res.redirect("https://eyelineoptica.com/payment-failed");
