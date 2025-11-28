@@ -110,9 +110,7 @@ const successPaymentAppointment = async (queryData: Record<string, unknown>) => 
 
 		// 3. Commit the transaction if all operations succeed
 		await session.commitTransaction();
-		return {
-			patientId,
-		};
+		return updateSlot?._id ? "success" : "faled";
 	} catch (error) {
 		// 4. Rollback the transaction if any operation fails
 		await session.abortTransaction();
