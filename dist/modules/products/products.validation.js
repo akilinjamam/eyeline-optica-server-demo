@@ -15,7 +15,7 @@ exports.productSchema = zod_1.z.object({
     color: zod_1.z.string(),
     purchase: zod_1.z.number().nonnegative(),
     salesPrice: zod_1.z.number().nonnegative(),
-    discount: zod_1.z.number().min(0),
+    discount: zod_1.z.number().optional().default(0),
     quantity: zod_1.z.number().int().nonnegative(),
     sold: zod_1.z.number().int().nonnegative().optional(),
     features: zod_1.z.array(zod_1.z.string()).optional(),

@@ -26,7 +26,7 @@ export declare const contactLensSchema: z.ZodObject<{
     stock: z.ZodDefault<z.ZodBoolean>;
     quantity: z.ZodNumber;
     sold: z.ZodDefault<z.ZodNumber>;
-    offer: z.ZodDefault<z.ZodNumber>;
+    offer: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
     rating: z.ZodDefault<z.ZodNumber>;
     barcode: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     features: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -62,7 +62,7 @@ export declare const createContactLensSchema: z.ZodObject<{
     stock: z.ZodDefault<z.ZodBoolean>;
     quantity: z.ZodNumber;
     sold: z.ZodDefault<z.ZodNumber>;
-    offer: z.ZodDefault<z.ZodNumber>;
+    offer: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
     rating: z.ZodDefault<z.ZodNumber>;
     barcode: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     features: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -98,7 +98,7 @@ export declare const updateContactLensSchema: z.ZodObject<{
     stock: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     quantity: z.ZodOptional<z.ZodNumber>;
     sold: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
-    offer: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
+    offer: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodNumber>>>;
     rating: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
     barcode: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodString>>>;
     features: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString>>>;

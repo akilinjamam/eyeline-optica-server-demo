@@ -11,7 +11,7 @@ export declare const productSchema: z.ZodObject<{
     color: z.ZodString;
     purchase: z.ZodNumber;
     salesPrice: z.ZodNumber;
-    discount: z.ZodNumber;
+    discount: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
     quantity: z.ZodNumber;
     sold: z.ZodOptional<z.ZodNumber>;
     features: z.ZodOptional<z.ZodArray<z.ZodString>>;

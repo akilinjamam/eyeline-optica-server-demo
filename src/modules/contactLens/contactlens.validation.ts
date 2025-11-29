@@ -24,7 +24,7 @@ export const contactLensSchema = z.object({
 	stock: z.boolean().default(true),
 	quantity: z.number().min(1, "Quantity must be at least 1"),
 	sold: z.number().default(0),
-	offer: z.number().min(0).max(100).default(0),
+	offer: z.number().min(0).max(100).optional().default(0),
 	rating: z.number().min(0).max(5).default(0),
 	barcode: z.string().optional().default("not-added"),
 	features: z.array(z.string()).optional(),
