@@ -27,6 +27,7 @@ exports.contactLensSchema = zod_1.z.object({
     features: zod_1.z.array(zod_1.z.string()).optional(),
     description: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url("Must be a valid URL")).optional().default([]),
+    imageIds: zod_1.z.array(zod_1.z.string()).optional().default([]),
     weeklyDeals: zod_1.z.boolean().default(false),
     badge: zod_1.z.string().default("premium"),
 });

@@ -23,6 +23,7 @@ export const accessoryItemSchema = z.object({
 // ✅ Schema for main accessory
 export const accessorySchema = z.object({
 	images: z.array(z.string()).default([]),
+	imageIds: z.array(z.string()).default([]),
 	type: z
 		.enum([
 			"With Solution",

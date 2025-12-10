@@ -15,6 +15,7 @@ export interface IAccessoryItems extends Document {
 }
 export interface IAccessory extends Document {
     images: string[];
+    imageIds: string[];
     type: "With Solution" | "With Bag" | "With Kit" | "With Solution + Kit" | "With Solution + Bag" | "With Kit + Bag" | "With Solution + Bag + Kit" | "others";
     weeklyDeals: boolean;
     rating: number;

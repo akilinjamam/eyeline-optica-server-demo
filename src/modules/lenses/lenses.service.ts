@@ -3,6 +3,9 @@ import { AppError } from "../../app/errors/AppError";
 import QueryBuilder from "../../app/middleware/QueryBuilder";
 import { Lens } from "./lenses.model";
 import { ILens } from "./lenses.types";
+import mongoose from "mongoose";
+import cloudinary from "../../app/config/cloudinary";
+import { processPublicIds } from "../../app/utils/processPubliceId";
 
 const createLenseService = async (payload: ILens) => {
 	const result = await Lens.create(payload);
@@ -31,17 +34,40 @@ const getSingleLensService = async (id: string) => {
 	return result;
 };
 
-const updateLensService = async (payload: Record<string, unknown>, id: string) => {
-	const result = await Lens.findByIdAndUpdate(id, payload, {
-		new: true,
-		runValidators: true,
-	});
+const updateLensService = async (payload: any, id: string) => {
+	const publicIds = processPublicIds(payload?.imageIds);
 
-	if (!result) {
-		throw new AppError(StatusCodes.NOT_FOUND, "Product not found");
+	const session = await mongoose.startSession();
+	session.startTransaction();
+
+	try {
+		const result = await Lens.findByIdAndUpdate(id, payload, {
+			new: true,
+			runValidators: true,
+			session,
+		});
+
+		if (!result) {
+			throw new AppError(StatusCodes.NOT_FOUND, "Product not found");
+		}
+
+		const delatableIds = (publicIds as string[]) || [];
+
+		if (delatableIds.length > 0) {
+			for (const imgId of delatableIds) {
+				await cloudinary.uploader.destroy(imgId);
+			}
+		}
+
+		await session.commitTransaction();
+		session.endSession();
+
+		return result;
+	} catch (error: any) {
+		console.log(error);
+		await session.abortTransaction();
+		session.endSession();
 	}
-
-	return result;
 };
 
 const deleteLensService = async (ids: string[]) => {

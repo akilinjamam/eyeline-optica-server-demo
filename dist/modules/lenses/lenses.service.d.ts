@@ -1,7 +1,8 @@
 import { ILens } from "./lenses.types";
+import mongoose from "mongoose";
 export declare const lenseService: {
-    createLenseService: (payload: ILens) => Promise<import("mongoose").Document<unknown, {}, ILens, {}, {}> & ILens & {
-        _id: import("mongoose").Types.ObjectId;
+    createLenseService: (payload: ILens) => Promise<mongoose.Document<unknown, {}, ILens, {}, {}> & ILens & {
+        _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     }>;
@@ -12,20 +13,20 @@ export declare const lenseService: {
             total: number;
             totalPage: number;
         };
-        data: (import("mongoose").Document<unknown, {}, ILens, {}, {}> & ILens & {
-            _id: import("mongoose").Types.ObjectId;
+        data: (mongoose.Document<unknown, {}, ILens, {}, {}> & ILens & {
+            _id: mongoose.Types.ObjectId;
         } & {
             __v: number;
         })[];
     }>;
-    updateLensService: (payload: Record<string, unknown>, id: string) => Promise<import("mongoose").Document<unknown, {}, ILens, {}, {}> & ILens & {
-        _id: import("mongoose").Types.ObjectId;
+    updateLensService: (payload: any, id: string) => Promise<(mongoose.Document<unknown, {}, ILens, {}, {}> & ILens & {
+        _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
-    }>;
-    deleteLensService: (ids: string[]) => Promise<import("mongodb").DeleteResult>;
-    getSingleLensService: (id: string) => Promise<(import("mongoose").Document<unknown, {}, ILens, {}, {}> & ILens & {
-        _id: import("mongoose").Types.ObjectId;
+    }) | undefined>;
+    deleteLensService: (ids: string[]) => Promise<mongoose.mongo.DeleteResult>;
+    getSingleLensService: (id: string) => Promise<(mongoose.Document<unknown, {}, ILens, {}, {}> & ILens & {
+        _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     }) | null>;

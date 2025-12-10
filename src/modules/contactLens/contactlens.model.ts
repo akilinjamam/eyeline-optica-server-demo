@@ -28,6 +28,7 @@ const ContactLensSchema: Schema<IContactLens> = new Schema(
 		rating: { type: Number, min: 0, max: 5, default: 0 },
 		description: { type: String },
 		images: [{ type: String }],
+		imageIds: [{ type: String }],
 		powerType: { type: String, required: true, enum: ["with power", "without power"] },
 		weeklyDeals: { type: Boolean, default: false },
 		badge: { type: String, default: "premium" },

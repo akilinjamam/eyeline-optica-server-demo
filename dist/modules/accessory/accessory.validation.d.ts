@@ -15,6 +15,7 @@ export declare const accessoryItemSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const accessorySchema: z.ZodObject<{
     images: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    imageIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
     type: z.ZodDefault<z.ZodEnum<{
         "With Solution": "With Solution";
         "With Bag": "With Bag";

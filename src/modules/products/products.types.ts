@@ -12,6 +12,7 @@ export type TOtherImages = {
 export interface IProduct {
 	name: string;
 	images: string[];
+	imageIds?: string[];
 	type: string;
 	materialsCategory: string;
 	frameCategory: string;

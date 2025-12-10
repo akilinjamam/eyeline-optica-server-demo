@@ -13,6 +13,7 @@ export interface ILens {
     brand?: string;
     sold: number;
     images: string[];
+    imageIds: string[];
     lensType: LensType;
     material: LensMaterial;
     coatings?: string[];

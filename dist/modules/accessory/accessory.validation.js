@@ -23,6 +23,7 @@ exports.accessoryItemSchema = zod_1.z.object({
 // ✅ Schema for main accessory
 exports.accessorySchema = zod_1.z.object({
     images: zod_1.z.array(zod_1.z.string()).default([]),
+    imageIds: zod_1.z.array(zod_1.z.string()).default([]),
     type: zod_1.z
         .enum([
         "With Solution",

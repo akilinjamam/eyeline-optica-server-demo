@@ -11,6 +11,7 @@ export declare const lensValidationSchema: z.ZodObject<{
     category: z.ZodDefault<z.ZodString>;
     brand: z.ZodOptional<z.ZodString>;
     images: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    imageIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     sold: z.ZodDefault<z.ZodNumber>;
     lensType: z.ZodEnum<{
         "single vision": "single vision";

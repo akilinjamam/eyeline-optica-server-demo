@@ -91,6 +91,7 @@ const AccessoryItemsSchema = new mongoose_1.Schema({
 });
 const AccessorySchema = new mongoose_1.Schema({
     images: { type: [String], default: [] },
+    imageIds: { type: [String], default: [] },
     weeklyDeals: { type: Boolean, default: false },
     type: {
         type: String,

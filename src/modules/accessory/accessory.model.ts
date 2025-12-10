@@ -17,6 +17,7 @@ export interface IAccessoryItems extends Document {
 
 export interface IAccessory extends Document {
 	images: string[];
+	imageIds: string[];
 	type:
 		| "With Solution"
 		| "With Bag"
@@ -90,6 +91,7 @@ const AccessoryItemsSchema = new Schema<IAccessoryItems>({
 const AccessorySchema = new Schema<IAccessory>(
 	{
 		images: { type: [String], default: [] },
+		imageIds: { type: [String], default: [] },
 		weeklyDeals: { type: Boolean, default: false },
 		type: {
 			type: String,

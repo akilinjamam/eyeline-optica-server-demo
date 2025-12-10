@@ -16,6 +16,7 @@ const LensSchema = new mongoose_1.Schema({
     category: { type: String, default: "lens" },
     brand: { type: String },
     images: { type: [String], default: [] },
+    imageIds: { type: [String], default: [] },
     lensType: {
         type: String,
         enum: ["single vision", "bifocal", "progressive", "reading", "zero power"],

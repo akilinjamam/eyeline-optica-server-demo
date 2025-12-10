@@ -21,6 +21,7 @@ export type IContactLens = {
     rating: number;
     description: string;
     images: string[];
+    imageIds: string[];
     powerType: "with power" | "without Power";
     weeklyDeals: boolean;
     badge: string;

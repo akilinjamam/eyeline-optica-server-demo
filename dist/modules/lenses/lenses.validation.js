@@ -14,6 +14,7 @@ exports.lensValidationSchema = zod_1.z.object({
     category: zod_1.z.string().default("lens"),
     brand: zod_1.z.string().optional(),
     images: zod_1.z.array(zod_1.z.string().url("Invalid image URL")).optional(),
+    imageIds: zod_1.z.array(zod_1.z.string().url("Invalid image URL")).optional(),
     sold: zod_1.z.number().default(0),
     lensType: zod_1.z.enum(["single vision", "bifocal", "progressive", "reading", "zero power"]),
     material: zod_1.z.enum(["plastic", "polycarbonate", "high-index", "glass"]),

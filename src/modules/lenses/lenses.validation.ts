@@ -12,6 +12,7 @@ export const lensValidationSchema = z.object({
 	category: z.string().default("lens"),
 	brand: z.string().optional(),
 	images: z.array(z.string().url("Invalid image URL")).optional(),
+	imageIds: z.array(z.string().url("Invalid image URL")).optional(),
 	sold: z.number().default(0),
 	lensType: z.enum(["single vision", "bifocal", "progressive", "reading", "zero power"]),
 	material: z.enum(["plastic", "polycarbonate", "high-index", "glass"]),

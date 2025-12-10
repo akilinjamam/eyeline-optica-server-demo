@@ -13,6 +13,7 @@ export declare const searchFilterService: {
         brand?: string;
         sold: number;
         images: string[];
+        imageIds: string[];
         lensType: import("../lenses/lenses.types").LensType;
         material: import("../lenses/lenses.types").LensMaterial;
         coatings?: string[];
