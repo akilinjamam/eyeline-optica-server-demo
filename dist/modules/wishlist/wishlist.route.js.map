@@ -1,1 +1,0 @@
-{"version":3,"file":"wishlist.route.js","sourceRoot":"","sources":["../../../src/modules/wishlist/wishlist.route.ts"],"names":[],"mappings":";;;;;AAAA,sDAA8B;AAC9B,+DAA2D;AAE3D,MAAM,cAAc,GAAG,iBAAO,CAAC,MAAM,EAAE,CAAC;AAExC,cAAc,CAAC,IAAI,CAAC,kBAAkB,EAAE,wCAAkB,CAAC,wBAAwB,CAAC,CAAC;AACrF,cAAc,CAAC,GAAG,CAAC,eAAe,EAAE,wCAAkB,CAAC,oCAAoC,CAAC,CAAC;AAE7F,kBAAe,cAAc,CAAC"}
