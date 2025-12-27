@@ -39,6 +39,7 @@ const ProductSchema = new Schema<IProduct>(
 		features: [{ type: String }],
 		brand: { type: String, default: "No Brand" },
 		barcode: { type: String, unique: true, required: true },
+		sizeCode: { type: String, default: "Not-added" },
 		badge: {
 			type: String,
 		},

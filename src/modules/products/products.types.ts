@@ -29,6 +29,7 @@ export interface IProduct {
 	features: string[];
 	brand: string;
 	barcode: string;
+	sizeCode: string;
 	badge: string;
 	description: string;
 	weeklyDeals: boolean;

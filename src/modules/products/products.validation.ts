@@ -19,6 +19,7 @@ export const productSchema = z.object({
 	features: z.array(z.string()).optional(),
 	brand: z.string(),
 	barcode: z.string(),
+	sizeCode: z.string().default("Not-added"),
 	badge: z.string().optional(),
 	description: z.string(),
 	weeklyDeals: z.boolean(),
