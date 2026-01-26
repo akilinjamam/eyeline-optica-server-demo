@@ -8,7 +8,15 @@ const ContactLensSchema: Schema<IContactLens> = new Schema(
 		color: { type: String, required: true, trim: true },
 		type: {
 			type: String,
-			enum: ["daily disposable", "weekly", "monthly", "monthly (colored)", "toric", "multifocal"],
+			enum: [
+				"daily disposable",
+				"weekly",
+				"monthly",
+				"yearly",
+				"monthly (colored)",
+				"toric",
+				"multifocal",
+			],
 			default: "daily disposable",
 		},
 		material: { type: String, required: true },
