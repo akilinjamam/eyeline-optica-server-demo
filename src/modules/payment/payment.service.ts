@@ -248,7 +248,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		session.endSession();
 		// success_url: `${config.success_url}=${salesId}`,
 		// SSLCommerz initialization (outside transaction)
-		const is_live = false;
+		const is_live = true;
 		const data = {
 			total_amount: payableAmount,
 			currency: "BDT",
