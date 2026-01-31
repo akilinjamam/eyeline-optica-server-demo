@@ -248,7 +248,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 		session.endSession();
 		// success_url: `${config.success_url}=${salesId}`,
 		// SSLCommerz initialization (outside transaction)
-		const is_live = false;
+		const is_live = true;
 		const data = {
 			total_amount: payableAmount,
 			currency: "BDT",
@@ -281,11 +281,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			ship_country: "Bangladesh",
 		};
 
-		const sslcz = new SSLCommerzPayment(
-			config.sandbox_store_id,
-			config.sandbox_store_pass,
-			is_live
-		);
+		const sslcz = new SSLCommerzPayment(config.store_id, config.store_pass, is_live);
 		const apiResponse = await sslcz.init(data);
 		return apiResponse.GatewayPageURL;
 	} catch (error) {
