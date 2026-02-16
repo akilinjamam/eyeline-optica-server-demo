@@ -22,6 +22,7 @@ app.use(
 			"https://cms.eyelineoptica.com",
 			"http://cms.eyelineoptica.com",
 			"https://www.cms.eyelineoptica.com",
+			"https://adorable-churros-a5462d.netlify.app",
 			"http://localhost:3000",
 		],
 	})
