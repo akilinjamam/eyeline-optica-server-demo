@@ -16,6 +16,7 @@ app.use(
 	cors({
 		origin: [
 			"http://localhost:5173",
+			"https://eyeline-optica-client-demo.vercel.app",
 			"https://eyelineoptica.com",
 			"https://www.eyelineoptica.com",
 			"https://cms.eyelineoptica.com",
