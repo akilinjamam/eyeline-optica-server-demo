@@ -10,8 +10,6 @@ export default {
 	api_key: process.env.API_KEY,
 	api_secret: process.env.API_SECRET,
 	jwt_secret: process.env.JWT_SECRET,
-	store_id: process.env.STORE_ID,
-	store_pass: process.env.STORE_PASSWORD,
 	sandbox_store_id: process.env.SANDBOX_STORE_ID,
 	sandbox_store_pass: process.env.SANDBOX_STORE_PASSWORD,
 	success_url: process.env.SUCCESS_URL,

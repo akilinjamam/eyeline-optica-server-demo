@@ -159,7 +159,11 @@ const createPaymentService = async (payload: TPaymentData) => {
 		ship_country: "Bangladesh",
 	};
 
-	const sslcz = await new SSLCommerzPayment(config.store_id, config.store_pass, is_live);
+	const sslcz = await new SSLCommerzPayment(
+		config.sandbox_store_id,
+		config.sandbox_store_pass,
+		is_live
+	);
 
 	const res = await sslcz.init(data).then((apiResponse: any) => {
 		const result = apiResponse.GatewayPageURL;
