@@ -7,7 +7,7 @@ export const registrationSchema = z.object({
 		.min(2, "Name must be at least 2 characters long")
 		.max(50, "Name must be at most 50 characters long"),
 	email: z.string().email("Invalid email address"),
-	role: z.enum(["doctor", "employee"]),
+	role: z.enum(["doctor", "employee", "marketer"]),
 	password: z
 		.string()
 		.min(6, "Password must be at least 6 characters long")
