@@ -21,6 +21,7 @@ import agoraRouter from "../../modules/agora/agora.route";
 import wishlistRouter from "../../modules/wishlist/wishlist.route";
 import patientRoute from "../../modules/patient/patient.route";
 import appointmentLogin from "../../modules/patient-login/patientLogin.route";
+import metaRoute from "../../modules/metadata/metadata.route";
 
 const router = express.Router();
 
@@ -112,6 +113,10 @@ const allRoutes = [
 	{
 		path: "/patient-login",
 		route: appointmentLogin,
+	},
+	{
+		path: "/meta",
+		route: metaRoute,
 	},
 ];
 
