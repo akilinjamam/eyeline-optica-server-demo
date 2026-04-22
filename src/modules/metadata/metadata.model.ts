@@ -4,6 +4,7 @@ import { Schema, model, Document } from "mongoose";
 export interface IMeta extends Document {
 	title: string;
 	description: string;
+	routeName: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -13,13 +14,18 @@ const metaSchema = new Schema<IMeta>(
 	{
 		title: {
 			type: String,
+			trim: true,
+			default: "blank",
+		},
+		routeName: {
+			type: String,
 			required: true,
 			trim: true,
 		},
 		description: {
 			type: String,
-			required: true,
 			trim: true,
+			default: "blank",
 		},
 	},
 	{
