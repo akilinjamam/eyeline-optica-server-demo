@@ -10,7 +10,7 @@ const createMetaService = async (payload: IMeta) => {
 
 const getAllMetaService = async (query: Record<string, unknown>) => {
 	const result = new QueryBuilder(Meta.find({}), query)
-		.search(["category"])
+		.search(["title", "description"])
 		.filter()
 		.fields()
 		.sort()
