@@ -1,11 +1,12 @@
 import * as cheerio from "cheerio";
+import { Element } from "domhandler";
 
-const extractImgUrls = (html: string) => {
+const extractImgUrls = (html: string): string[] => {
 	const $ = cheerio.load(html);
 
 	const urls: string[] = [];
 
-	$("img").each((_, element) => {
+	$("img").each((_: number, element: Element) => {
 		const src = $(element).attr("src");
 
 		if (src) {
