@@ -3,8 +3,22 @@ import QueryBuilder from "../../app/middleware/QueryBuilder";
 import { AppError } from "../../app/errors/AppError";
 import { Blog, IBlog } from "./blog.model";
 
+import BlogImg from "../blogImage/blogImg.model";
+import extractImgUrls from "../../app/utils/extractUrlFromHtml";
+
 const createBlogService = async (payload: IBlog) => {
 	const result = await Blog.create(payload);
+
+	if (!result) throw new AppError(StatusCodes.BAD_GATEWAY, "failed to load");
+
+	const { description } = payload || {};
+
+	const imageUrls = extractImgUrls(description);
+
+	if (imageUrls.length > 0) {
+		await BlogImg.updateMany({ url: { $in: imageUrls } }, { $set: { isStored: true } });
+	}
+
 	return result;
 };
 
