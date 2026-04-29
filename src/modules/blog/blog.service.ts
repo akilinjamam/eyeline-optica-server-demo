@@ -44,8 +44,8 @@ const getAllBlogService = async (query: Record<string, unknown>) => {
 	};
 };
 
-const getSingleBlogService = async (id: string) => {
-	const result = await Blog.findOne({ _id: id });
+const getSingleBlogService = async (slug: string) => {
+	const result = await Blog.findOne({ slug: slug });
 	return result;
 };
 

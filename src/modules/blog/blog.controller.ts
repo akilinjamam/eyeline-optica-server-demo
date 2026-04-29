@@ -25,7 +25,7 @@ const getAllBlogController = catchAsync(async (req, res) => {
 	});
 });
 const getSingleBlogController = catchAsync(async (req, res) => {
-	const result = await BlogService.getSingleBlogService(req.params.id as string);
+	const result = await BlogService.getSingleBlogService(req.params.slug as string);
 
 	sendResponse(res, {
 		statusCode: StatusCodes.OK,
