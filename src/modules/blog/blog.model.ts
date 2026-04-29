@@ -5,11 +5,13 @@ export interface IBlog extends Document {
 	images: string[];
 	category: string;
 	description: string;
+	slug: string;
 }
 
 const blogSchema = new Schema<IBlog>(
 	{
 		title: { type: String, required: true },
+		slug: { type: String, required: true, unique: true },
 		category: { type: String, required: true },
 		images: { type: [String], default: [] },
 		description: { type: String, required: true },

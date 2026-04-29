@@ -7,13 +7,16 @@ import BlogImg from "../blogImage/blogImg.model";
 import extractImgUrls from "../../app/utils/extractUrlFromHtml";
 import extractPublicIdFromUrl from "../../app/utils/extractPublicIdFromUrl";
 import deleteCloudinaryImage from "../../app/utils/deleteCloudinaryImg";
+import { slugify } from "../../app/utils/slugify";
 
 const createBlogService = async (payload: IBlog) => {
-	const result = await Blog.create(payload);
+	const slugifiedData = await slugify(payload, Blog, "title");
+
+	const result = await Blog.create(slugifiedData);
 
 	if (!result) throw new AppError(StatusCodes.BAD_GATEWAY, "failed to load");
 
-	const { description } = payload || {};
+	const { description } = slugifiedData || {};
 
 	const imageUrls = extractImgUrls(description);
 
