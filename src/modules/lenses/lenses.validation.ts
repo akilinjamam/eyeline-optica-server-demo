@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const lensValidationSchema = z.object({
 	name: z.string().min(1, "Lens name is required"),
+	slug: z.string().optional(),
 	description: z.string().optional(),
 	purchasePrice: z.number().min(0, "Price must be a positive number"),
 	salesPrice: z.number().min(0, "Price must be a positive number"),

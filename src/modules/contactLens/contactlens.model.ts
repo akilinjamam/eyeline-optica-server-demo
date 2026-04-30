@@ -4,6 +4,7 @@ import { IContactLens } from "./contactlens.type";
 const ContactLensSchema: Schema<IContactLens> = new Schema(
 	{
 		name: { type: String, required: true, trim: true },
+		slug: { type: String, default: "not-added" },
 		brand: { type: String, required: true, trim: true },
 		color: { type: String, required: true, trim: true },
 		type: {

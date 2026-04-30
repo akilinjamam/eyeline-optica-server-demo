@@ -1,5 +1,6 @@
 export type IContactLens = {
 	id?: string;
+	slug?: string;
 	name: string;
 	brand: string;
 	color: string;

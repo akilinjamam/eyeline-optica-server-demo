@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const contactLensSchema = z.object({
 	name: z.string().min(1, "Name is required"),
+	slug: z.string().optional(),
 	brand: z.string().min(1, "Brand is required"),
 	color: z.string().min(1, "Color is required"),
 

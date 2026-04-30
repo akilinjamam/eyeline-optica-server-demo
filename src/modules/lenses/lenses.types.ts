@@ -6,6 +6,7 @@ export type LensMaterial = "plastic" | "polycarbonate" | "high-index" | "glass";
 
 export interface ILens {
 	name: string;
+	slug: string;
 	description?: string;
 	purchasePrice: number;
 	salesPrice: number;
