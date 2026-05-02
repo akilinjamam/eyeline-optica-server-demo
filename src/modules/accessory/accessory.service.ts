@@ -39,6 +39,7 @@ const updateAccessoryService = async (id: string, payload: any) => {
 		{
 			type: payload.data.type,
 			images: payload.images || [],
+			slug: payload.slug,
 			items: payload.data.items,
 		},
 		{ new: true }
