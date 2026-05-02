@@ -24,7 +24,7 @@ const getAllAccessoryController = catchAsync(async (req, res) => {
 	});
 });
 const getSingleAccessoryController = catchAsync(async (req, res) => {
-	const result = await accessoryService.getSingleAccessoryService(req.params.id as string);
+	const result = await accessoryService.getSingleAccessoryService(req.params.slug as string);
 
 	sendResponse(res, {
 		success: true,

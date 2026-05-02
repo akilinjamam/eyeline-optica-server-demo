@@ -3,9 +3,11 @@ import QueryBuilder from "../../app/middleware/QueryBuilder";
 import ContactLens from "./contactlens.model";
 import { IContactLens } from "./contactlens.type";
 import { AppError } from "../../app/errors/AppError";
+import { slugify } from "../../app/utils/slugify";
 
 const createContactLensService = async (payload: IContactLens) => {
-	const result = await ContactLens.create(payload);
+	const slugifiedData = await slugify(payload, ContactLens, "name");
+	const result = await ContactLens.create(slugifiedData);
 
 	return result;
 };
@@ -27,8 +29,8 @@ const getAllContactLenseService = async (query: Record<string, unknown>) => {
 	};
 };
 
-const getSingleContactLensService = async (id: string) => {
-	const result = await ContactLens.findOne({ _id: id });
+const getSingleContactLensService = async (slug: string) => {
+	const result = await ContactLens.findOne({ slug: slug });
 	return result;
 };
 

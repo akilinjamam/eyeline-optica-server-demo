@@ -25,7 +25,7 @@ const getAllContactLenseController = catchAsync(async (req, res) => {
 	});
 });
 const getSingleContactLenseController = catchAsync(async (req, res) => {
-	const result = await contactLensService.getSingleContactLensService(req.params.id as string);
+	const result = await contactLensService.getSingleContactLensService(req.params.slug as string);
 
 	sendResponse(res, {
 		statusCode: StatusCodes.OK,

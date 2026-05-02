@@ -2,9 +2,11 @@ import { StatusCodes } from "http-status-codes";
 import { AppError } from "../../app/errors/AppError";
 import QueryBuilder from "../../app/middleware/QueryBuilder";
 import Accessory, { IAccessory } from "./accessory.model";
+import { slugify } from "../../app/utils/slugify";
 
 const createAccessoryService = async (payload: IAccessory) => {
-	const result = await Accessory.create(payload);
+	const slugifiedData = await slugify(payload, Accessory, "slug");
+	const result = await Accessory.create(slugifiedData);
 	return result;
 };
 
@@ -25,8 +27,8 @@ const getAllAccessoryService = async (query: Record<string, unknown>) => {
 	};
 };
 
-const getSingleAccessoryService = async (id: string) => {
-	const result = await Accessory.findById(id);
+const getSingleAccessoryService = async (slug: string) => {
+	const result = await Accessory.findOne({ slug: slug });
 	return result;
 };
 
