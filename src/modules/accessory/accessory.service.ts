@@ -33,13 +33,12 @@ const getSingleAccessoryService = async (slug: string) => {
 };
 
 const updateAccessoryService = async (id: string, payload: any) => {
-	console.log(payload);
 	const result = await Accessory.findByIdAndUpdate(
 		id,
 		{
 			type: payload.data.type,
 			images: payload.images || [],
-			slug: payload.slug,
+			slug: payload.data.slug,
 			items: payload.data.items,
 		},
 		{ new: true }
