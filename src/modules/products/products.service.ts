@@ -4,6 +4,7 @@ import Product from "./products.model";
 import { IProduct } from "./products.types";
 import { AppError } from "../../app/errors/AppError";
 import { slugify } from "../../app/utils/slugify";
+import { allowedQueryKeys } from "../../app/utils/allowedqueryKeys";
 
 const createProductService = async (payload: IProduct) => {
 	const slugifiedData = await slugify(payload, Product, "name");
@@ -12,7 +13,24 @@ const createProductService = async (payload: IProduct) => {
 };
 
 const getAllProductsService = async (query: Record<string, unknown>) => {
-	const result = new QueryBuilder(Product.find({}), query)
+	const filteredQuery = allowedQueryKeys(
+		[
+			"biologyCategory",
+			"shapeCategory",
+			"materialsCategory",
+			"frameCategory",
+			"sizeCategory",
+			"color",
+			"page",
+			"limit",
+			"sort",
+			"searchTerm",
+			"brand",
+			"type",
+		],
+		query
+	);
+	const result = new QueryBuilder(Product.find({}), filteredQuery)
 		.search(["name", "type"])
 		.filter()
 		.fields()

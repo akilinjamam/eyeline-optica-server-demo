@@ -3,6 +3,7 @@ import { AppError } from "../../app/errors/AppError";
 import QueryBuilder from "../../app/middleware/QueryBuilder";
 import Accessory, { IAccessory } from "./accessory.model";
 import { slugify } from "../../app/utils/slugify";
+import { allowedQueryKeys } from "../../app/utils/allowedqueryKeys";
 
 const createAccessoryService = async (payload: IAccessory) => {
 	const slugifiedData = await slugify(payload, Accessory, "slug");
@@ -11,7 +12,8 @@ const createAccessoryService = async (payload: IAccessory) => {
 };
 
 const getAllAccessoryService = async (query: Record<string, unknown>) => {
-	const result = new QueryBuilder(Accessory.find({}), query)
+	const filteredQuery = allowedQueryKeys(["page", "limit", "sort", "searchTerm", "type"], query);
+	const result = new QueryBuilder(Accessory.find({}), filteredQuery)
 		.search(["name", "type"])
 		.fields()
 		.filter()

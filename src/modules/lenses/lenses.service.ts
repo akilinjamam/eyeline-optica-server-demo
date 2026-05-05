@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import cloudinary from "../../app/config/cloudinary";
 import { processPublicIds } from "../../app/utils/processPubliceId";
 import { slugify } from "../../app/utils/slugify";
+import { allowedQueryKeys } from "../../app/utils/allowedqueryKeys";
 
 const createLenseService = async (payload: ILens) => {
 	const slugifiedData = await slugify(payload, Lens, "name");
@@ -15,7 +16,11 @@ const createLenseService = async (payload: ILens) => {
 };
 
 const getAllLenseService = async (query: Record<string, unknown>) => {
-	const result = new QueryBuilder(Lens.find({}), query)
+	const filteredQueryKey = allowedQueryKeys(
+		["page", "limit", "sort", "searchTerm", "color", "brand", "lensType", "material", "badge"],
+		query
+	);
+	const result = new QueryBuilder(Lens.find({}), filteredQueryKey)
 		.search(["name", "description"])
 		.filter()
 		.fields()
