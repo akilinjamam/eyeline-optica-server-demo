@@ -10,6 +10,7 @@ class SocketService {
 			cors: {
 				origin: [
 					"https://eyelineoptica.com",
+					"http://eyelineoptica.com",
 					"https://www.eyelineoptica.com",
 					"https://cms.eyelineoptica.com",
 					"http://localhost:3000",
