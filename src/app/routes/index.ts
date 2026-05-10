@@ -24,7 +24,6 @@ import appointmentLogin from "../../modules/patient-login/patientLogin.route";
 import promoRouter from "../../modules/apply-promo-code/promocode.route";
 import metaRoute from "../../modules/metadata/metadata.route";
 import blogImgRouter from "../../modules/blogImage/blogImg.route";
-import promoRouter from "../../modules/apply-promo-code/promocode.route";
 
 const router = express.Router();
 
