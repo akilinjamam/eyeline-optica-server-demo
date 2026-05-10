@@ -2,14 +2,18 @@ import { StatusCodes } from "http-status-codes";
 import { AppError } from "../../app/errors/AppError";
 import QueryBuilder from "../../app/middleware/QueryBuilder";
 import Accessory, { IAccessory } from "./accessory.model";
+import { slugify } from "../../app/utils/slugify";
+import { allowedQueryKeys } from "../../app/utils/allowedqueryKeys";
 
 const createAccessoryService = async (payload: IAccessory) => {
-	const result = await Accessory.create(payload);
+	const slugifiedData = await slugify(payload, Accessory, "slug");
+	const result = await Accessory.create(slugifiedData);
 	return result;
 };
 
 const getAllAccessoryService = async (query: Record<string, unknown>) => {
-	const result = new QueryBuilder(Accessory.find({}), query)
+	const filteredQuery = allowedQueryKeys(["page", "limit", "sort", "searchTerm", "type"], query);
+	const result = new QueryBuilder(Accessory.find({}), filteredQuery)
 		.search(["name", "type"])
 		.fields()
 		.filter()
@@ -25,18 +29,18 @@ const getAllAccessoryService = async (query: Record<string, unknown>) => {
 	};
 };
 
-const getSingleAccessoryService = async (id: string) => {
-	const result = await Accessory.findById(id);
+const getSingleAccessoryService = async (slug: string) => {
+	const result = await Accessory.findOne({ slug: slug });
 	return result;
 };
 
 const updateAccessoryService = async (id: string, payload: any) => {
-	console.log(payload);
 	const result = await Accessory.findByIdAndUpdate(
 		id,
 		{
 			type: payload.data.type,
 			images: payload.images || [],
+			slug: payload.data.slug,
 			items: payload.data.items,
 		},
 		{ new: true }

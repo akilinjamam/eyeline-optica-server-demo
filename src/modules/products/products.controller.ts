@@ -27,7 +27,7 @@ const getAllProductController = catchAsync(async (req, res) => {
 });
 
 const getSingleProductController = catchAsync(async (req, res) => {
-	const result = await productService.getSingleProductService(req.params.id as string);
+	const result = await productService.getSingleProductService(req.params.slug as string);
 
 	sendResponse(res, {
 		success: true,

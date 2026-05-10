@@ -24,7 +24,7 @@ const getAllLenseController = catchAsync(async (req, res) => {
 	});
 });
 const getsingleLenseController = catchAsync(async (req, res) => {
-	const result = await lenseService.getSingleLensService(req.params.id as string);
+	const result = await lenseService.getSingleLensService(req.params.slug as string);
 
 	sendResponse(res, {
 		statusCode: StatusCodes.OK,

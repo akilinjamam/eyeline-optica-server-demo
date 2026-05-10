@@ -6,14 +6,21 @@ import { ILens } from "./lenses.types";
 import mongoose from "mongoose";
 import cloudinary from "../../app/config/cloudinary";
 import { processPublicIds } from "../../app/utils/processPubliceId";
+import { slugify } from "../../app/utils/slugify";
+import { allowedQueryKeys } from "../../app/utils/allowedqueryKeys";
 
 const createLenseService = async (payload: ILens) => {
-	const result = await Lens.create(payload);
+	const slugifiedData = await slugify(payload, Lens, "name");
+	const result = await Lens.create(slugifiedData);
 	return result;
 };
 
 const getAllLenseService = async (query: Record<string, unknown>) => {
-	const result = new QueryBuilder(Lens.find({}), query)
+	const filteredQueryKey = allowedQueryKeys(
+		["page", "limit", "sort", "searchTerm", "color", "brand", "lensType", "material", "badge"],
+		query
+	);
+	const result = new QueryBuilder(Lens.find({}), filteredQueryKey)
 		.search(["name", "description"])
 		.filter()
 		.fields()
@@ -29,8 +36,8 @@ const getAllLenseService = async (query: Record<string, unknown>) => {
 	};
 };
 
-const getSingleLensService = async (id: string) => {
-	const result = await Lens.findOne({ _id: id });
+const getSingleLensService = async (slug: string) => {
+	const result = await Lens.findOne({ slug: slug });
 	return result;
 };
 

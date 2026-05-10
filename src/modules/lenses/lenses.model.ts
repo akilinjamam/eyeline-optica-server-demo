@@ -5,6 +5,7 @@ import { ILens } from "./lenses.types";
 const LensSchema = new Schema<ILens>(
 	{
 		name: { type: String, required: true },
+		slug: { type: String, default: "not-added" },
 		description: { type: String },
 		purchasePrice: { type: Number, required: true },
 		salesPrice: { type: Number, required: true },

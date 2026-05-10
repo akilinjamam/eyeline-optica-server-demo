@@ -25,6 +25,6 @@ accessoryRouter.put(
 	accessoryController.updateAccessoryController
 );
 accessoryRouter.delete("/delete-accessory", accessoryController.deleteAccessoryController);
-accessoryRouter.get("/get-accessory-by-id/:id", accessoryController.getSingleAccessoryController);
+accessoryRouter.get("/get-accessory-by-id/:slug", accessoryController.getSingleAccessoryController);
 
 export default accessoryRouter;

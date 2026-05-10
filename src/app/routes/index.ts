@@ -22,6 +22,9 @@ import wishlistRouter from "../../modules/wishlist/wishlist.route";
 import patientRoute from "../../modules/patient/patient.route";
 import appointmentLogin from "../../modules/patient-login/patientLogin.route";
 import promoRouter from "../../modules/apply-promo-code/promocode.route";
+import metaRoute from "../../modules/metadata/metadata.route";
+import blogImgRouter from "../../modules/blogImage/blogImg.route";
+import promoRouter from "../../modules/apply-promo-code/promocode.route";
 
 const router = express.Router();
 
@@ -95,6 +98,10 @@ const allRoutes = [
 		route: blogRouter,
 	},
 	{
+		path: "/blogImg",
+		route: blogImgRouter,
+	},
+	{
 		path: "/banner",
 		route: bannerRoute,
 	},
@@ -113,6 +120,14 @@ const allRoutes = [
 	{
 		path: "/patient-login",
 		route: appointmentLogin,
+	},
+	{
+		path: "/promo",
+		route: promoRouter,
+	},
+	{
+		path: "/meta",
+		route: metaRoute,
 	},
 	{
 		path: "/promo",

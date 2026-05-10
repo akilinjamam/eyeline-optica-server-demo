@@ -22,6 +22,6 @@ blogRouter.put(
 	BlogController.updateBlogController
 );
 blogRouter.delete("/delete-blog", protect, BlogController.deleteBlogController);
-blogRouter.get("/get-blog-by-id/:id", BlogController.getSingleBlogController);
+blogRouter.get("/get-blog-by-id/:slug", BlogController.getSingleBlogController);
 
 export default blogRouter;

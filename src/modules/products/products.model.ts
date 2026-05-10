@@ -4,6 +4,7 @@ import { IProduct } from "./products.types";
 const ProductSchema = new Schema<IProduct>(
 	{
 		name: { type: String, required: true },
+		slug: { type: String, default: "not-added" },
 		images: [{ type: String }],
 		otherImages: [
 			{

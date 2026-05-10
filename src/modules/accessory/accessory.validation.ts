@@ -1,9 +1,4 @@
 import { z } from "zod";
-
-// const objectIdSchema = z.string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
-// 	message: "Invalid customer ID",
-// });
-
 // ✅ Schema for individual accessory items
 export const accessoryItemSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -23,6 +18,7 @@ export const accessoryItemSchema = z.object({
 // ✅ Schema for main accessory
 export const accessorySchema = z.object({
 	images: z.array(z.string()).default([]),
+	slug: z.string().optional(),
 	imageIds: z.array(z.string()).default([]),
 	type: z
 		.enum([

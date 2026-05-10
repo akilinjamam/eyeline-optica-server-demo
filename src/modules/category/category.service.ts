@@ -10,6 +10,8 @@ const createCategoryService = async (payload: ICategory) => {
 	return result;
 };
 
+// category-service
+
 const getAllCategoryService = async (query: Record<string, unknown>) => {
 	const result = new QueryBuilder(Category.find({}), query)
 		.search(["categoryType", "category"])

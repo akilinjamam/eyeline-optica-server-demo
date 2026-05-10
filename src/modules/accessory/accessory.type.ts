@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export type TAccessory = {
 	customerId: mongoose.Types.ObjectId;
+	slug?: string;
 	name: string;
 	brand: string;
 	type:
