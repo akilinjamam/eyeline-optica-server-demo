@@ -29,7 +29,7 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("Hello, TypeScript + Express + MONGOOSE..!");
+	res.send("Hello, TypeScript + Express + MONGOOSE..! demo");
 });
 
 app.use("/api/v1/", router);
