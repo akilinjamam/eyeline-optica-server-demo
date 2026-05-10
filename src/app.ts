@@ -41,5 +41,3 @@ app.use(notFoundRoute);
 app.use(globalErrorHandler);
 
 export default app;
-
-//https://webuzo.com/docs/endusers-website-owners/guide-to-git-deployment/
