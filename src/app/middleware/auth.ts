@@ -55,11 +55,8 @@ export const protectPromo = async (req: AuthRequest, res: Response, next: NextFu
 		if (!decoded) throw new AppError(StatusCodes.UNAUTHORIZED, "token not varified");
 
 		const findUserFromCart = await Cart.findOne({ _id: decoded.id });
-		console.log(findUserFromCart);
 
 		if (!findUserFromCart) throw new AppError(StatusCodes.UNAUTHORIZED, "user not found in cart");
-
-		req.body = { name: req.body.name };
 
 		next();
 	} catch (error) {
