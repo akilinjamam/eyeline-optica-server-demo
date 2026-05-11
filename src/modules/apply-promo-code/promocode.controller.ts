@@ -3,6 +3,17 @@ import catchAsync from "../../app/utils/catchAsync";
 import sendResponse from "../../app/utils/sendResponse";
 import { promoService } from "./promocode.service";
 
+const applyPromoController = catchAsync(async (req, res) => {
+	const result = await promoService.applyPromoService(req.body.name);
+
+	sendResponse(res, {
+		statusCode: StatusCodes.OK,
+		message: "promo code applied successfully",
+		success: true,
+		data: result,
+	});
+});
+
 const createPromoController = catchAsync(async (req, res) => {
 	const result = await promoService.createPromoService(req.body);
 
@@ -53,4 +64,5 @@ export const promoController = {
 	getPromoController,
 	updatePromoController,
 	deletePromoController,
+	applyPromoController,
 };

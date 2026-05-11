@@ -3,6 +3,30 @@ import QueryBuilder from "../../app/middleware/QueryBuilder";
 import Promo, { IPromo } from "./promocode.model";
 import { AppError } from "../../app/errors/AppError";
 
+const applyPromoService = async (promoCode: string) => {
+	console.log(promoCode);
+	const checkAvailable = await Promo.findOne({ name: promoCode });
+	if (!checkAvailable) throw new AppError(StatusCodes.BAD_REQUEST, "sorry promo code is not found");
+	const checkActivity = checkAvailable.active;
+
+	if (!checkActivity)
+		throw new AppError(StatusCodes.BAD_REQUEST, "sorry promo code is not active now");
+
+	const now = new Date();
+
+	// Check promo start time
+	if (now < checkAvailable.startTime) {
+		throw new AppError(StatusCodes.BAD_REQUEST, "Promo code is not started yet");
+	}
+
+	// Check promo expiry
+	if (now > checkAvailable.endTime) {
+		throw new AppError(StatusCodes.BAD_REQUEST, "Promo code has expired");
+	}
+
+	return checkAvailable;
+};
+
 const createPromoService = async (payload: IPromo) => {
 	const result = await Promo.create(payload);
 	return result;
@@ -44,4 +68,5 @@ export const promoService = {
 	getPromoService,
 	updatePromoService,
 	deletePromoService,
+	applyPromoService,
 };

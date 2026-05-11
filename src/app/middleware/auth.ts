@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import config from "../config";
 import sendResponse from "../utils/sendResponse";
 import { RegistrationModel } from "../../modules/registration/registration.model";
+import { Cart } from "../../modules/cart/cart.model";
 
 export interface AuthRequest extends Request {
 	user?: any;
@@ -30,6 +31,36 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
 			throw new AppError(StatusCodes.UNAUTHORIZED, "access not allowed yet");
 
 		req.user = decoded;
+		next();
+	} catch (error) {
+		sendResponse(res, {
+			statusCode: StatusCodes.FORBIDDEN,
+			success: false,
+			message: "Token is invalid or expired",
+			data: `the error is: ${error as any}`,
+		});
+	}
+};
+
+export const protectPromo = async (req: AuthRequest, res: Response, next: NextFunction) => {
+	const token = req.headers.authorization?.split(" ")[1];
+
+	if (!token) {
+		throw new AppError(StatusCodes.UNAUTHORIZED, "Not authorized");
+	}
+
+	try {
+		const decoded = jwt.verify(token, config.jwt_secret as string) as any;
+
+		if (!decoded) throw new AppError(StatusCodes.UNAUTHORIZED, "token not varified");
+
+		const findUserFromCart = await Cart.findOne({ _id: decoded.id });
+		console.log(findUserFromCart);
+
+		if (!findUserFromCart) throw new AppError(StatusCodes.UNAUTHORIZED, "user not found in cart");
+
+		req.body = { name: req.body.name };
+
 		next();
 	} catch (error) {
 		sendResponse(res, {
