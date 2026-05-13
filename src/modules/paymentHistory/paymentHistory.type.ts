@@ -9,4 +9,7 @@ export type TPaymentHistory = {
 	deliveryFee: number;
 	subtotal: number;
 	status: "Order receieved" | "processsing" | "packaging" | "on the way" | "delivered";
+	promoName: string;
+	promoDiscount: number;
+	promoIsPercent: boolean;
 };

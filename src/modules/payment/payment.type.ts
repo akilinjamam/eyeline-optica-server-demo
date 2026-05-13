@@ -9,4 +9,7 @@ export type TPaymentData = {
 	payableAmount: number;
 	dueAmount: number;
 	frameColorName: string;
+	promoName: string;
+	promoDiscount: number;
+	promoIsPercent: boolean;
 };

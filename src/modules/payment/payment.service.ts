@@ -14,11 +14,16 @@ import mongoose from "mongoose";
 import Accessory from "../accessory/accessory.model";
 import { IWeeklyDeals, WeeklyDeals } from "../weeklyDeals/weeklydeals.model";
 import { sendSms } from "../../app/utils/sendSms";
+import { promoService } from "../apply-promo-code/promocode.service";
 
 const createPaymentService = async (payload: TPaymentData) => {
 	const phone = payload?.customer_phone?.toString();
 	if (phone?.length > 11) {
 		throw new AppError(StatusCodes.NOT_ACCEPTABLE, "phone number must have only 11 digit");
+	}
+
+	if (payload.promoName !== "") {
+		await promoService.applyPromoService(payload.promoName);
 	}
 
 	const session = await mongoose.startSession();
@@ -36,6 +41,9 @@ const createPaymentService = async (payload: TPaymentData) => {
 			quantity,
 			totalCost,
 			frameColorName,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
 		} = payload;
 
 		const findCart = (await Cart.findOne({ _id: cart_id })
@@ -198,8 +206,11 @@ const createPaymentService = async (payload: TPaymentData) => {
 			discountOn,
 			dealsDiscount,
 			frameColorName,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
 		};
-		console.log(salesData);
+
 		// Stock validation
 		if (productId) {
 			if (productId.quantity === 0) {
@@ -213,7 +224,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "lens out of stock");
 			}
 			if (lensId.quantity < quantity)
-				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame amount you have given out of stock");
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "lense you have given out of stock");
 		}
 		if (contactLensId) {
 			if (contactLensId.quantity === 0) {
@@ -356,6 +367,9 @@ const paymentSuccessService = async (salesId: string) => {
 			subtotal,
 			discountOn,
 			dealsDiscount,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
 		} = findSales;
 
 		const paymentHistoryData = {
@@ -371,7 +385,12 @@ const paymentSuccessService = async (salesId: string) => {
 			subtotal,
 			discountOn,
 			dealsDiscount,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
 		};
+
+		console.log("success", paymentHistoryData);
 
 		const [paymentHistory] = await PaymentHistory.create([paymentHistoryData], { session });
 

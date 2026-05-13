@@ -13,6 +13,7 @@ const promocodeSchema = new Schema<IPromo>({
 	name: {
 		type: String,
 		required: true,
+		unique: true,
 		trim: true,
 	},
 	amount: {

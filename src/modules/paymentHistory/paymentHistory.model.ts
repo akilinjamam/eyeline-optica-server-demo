@@ -14,6 +14,9 @@ export interface IPaymentHistory extends Document {
 	status: "Order received" | "processsing" | "packaging" | "on the way" | "delivered";
 	discountOn: string;
 	dealsDiscount: number;
+	promoName: string;
+	promoDiscount: number;
+	promoIsPercent: boolean;
 }
 
 const paymentHistorySchema = new Schema<IPaymentHistory>(
@@ -55,6 +58,9 @@ const paymentHistorySchema = new Schema<IPaymentHistory>(
 		},
 		discountOn: { type: String, default: "" },
 		dealsDiscount: { type: Number, default: 0 },
+		promoName: { type: String, default: "" },
+		promoDiscount: { type: Number, default: 0 },
+		promoIsPercent: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true, // adds createdAt & updatedAt automatically

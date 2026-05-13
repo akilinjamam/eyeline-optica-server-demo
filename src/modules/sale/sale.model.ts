@@ -35,6 +35,9 @@ export interface ISale extends Document {
 	dealsDiscount: number;
 	discountOn: string;
 	frameColorName: string;
+	promoName: string;
+	promoDiscount: number;
+	promoIsPercent: boolean;
 }
 
 const prescriptionSchema = new Schema<IPrescriptionSchema>(
@@ -121,6 +124,9 @@ const saleSchema = new Schema<ISale>(
 		submitType: { type: String, default: "" },
 		dealsDiscount: { type: Number, default: 0 },
 		discountOn: { type: String, default: "" },
+		promoName: { type: String, default: "" },
+		promoDiscount: { type: Number, default: 0 },
+		promoIsPercent: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true, // adds createdAt and updatedAt

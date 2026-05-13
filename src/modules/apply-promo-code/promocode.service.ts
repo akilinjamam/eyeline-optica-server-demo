@@ -4,7 +4,6 @@ import Promo, { IPromo } from "./promocode.model";
 import { AppError } from "../../app/errors/AppError";
 
 const applyPromoService = async (promoCode: string) => {
-	console.log(promoCode);
 	const checkAvailable = await Promo.findOne({ name: promoCode });
 	if (!checkAvailable) throw new AppError(StatusCodes.BAD_REQUEST, "sorry promo code is not found");
 	const checkActivity = checkAvailable.active;
