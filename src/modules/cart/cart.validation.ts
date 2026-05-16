@@ -18,6 +18,7 @@ export const cartItemSchema = z.object({
 		"contact_lens_with_accessory",
 		"accessory",
 	]),
+	frameColorName:z.string().optional(),
 	submitType: z.string().optional(),
 	productId: z.string().optional(),
 	lensId: z.string().optional(),

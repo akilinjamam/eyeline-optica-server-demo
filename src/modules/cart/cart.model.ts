@@ -23,6 +23,7 @@ export interface ICartItem extends Document {
 		| "contact_lens"
 		| "contact_lens_with_accessory"
 		| "accessory";
+	frameColorName: string;
 	submitType: string;
 	quantity: number;
 	unitPrice: number; // Price at time of adding to cart
@@ -71,6 +72,7 @@ const CartItemSchema = new Schema<ICartItem>(
 			],
 			required: true,
 		},
+		frameColorName: {type:String, default: ""},
 		submitType: { type: String },
 		pd: { type: Number, default: 0 },
 		leftEye: { type: prescriptionSchema },
