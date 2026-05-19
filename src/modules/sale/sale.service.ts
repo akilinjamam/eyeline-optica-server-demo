@@ -6,6 +6,7 @@ import { Sale } from "./sale.model";
 import { AppError } from "../../app/errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { PaymentHistory } from "../paymentHistory/paymentHistory.model";
+import { socketService } from "../socket-service/socket.service";
 
 const getSaleService = async (query: Record<string, unknown>) => {
 	const result = new NewQueryBuilder(
@@ -88,8 +89,23 @@ const updateStatusService = async (
 	}
 };
 
+const makeUnreadFalseService = async (id: string) => {
+	const result = await Sale.findByIdAndUpdate(
+		id,
+		{ unread: false },
+		{ new: true, runValidators: true }
+	);
+
+	if (result) {
+		socketService.io?.emit("REFRESH_SALES_DATA");
+	}
+
+	return result;
+};
+
 export const salesService = {
 	getSaleService,
 	getCustomerService,
 	updateStatusService,
+	makeUnreadFalseService,
 };

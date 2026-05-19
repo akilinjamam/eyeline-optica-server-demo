@@ -7,5 +7,6 @@ const salesRouter = express.Router();
 salesRouter.get("/get-sales", protect, salescontroller.getSalescontroller);
 salesRouter.get("/get-customer", salescontroller.getCustomercontroller);
 salesRouter.patch("/update-status/:id", protect, salescontroller.updateStatuscontroller);
+salesRouter.patch("/update-unread/:id", protect, salescontroller.makeUnreadFalseController);
 
 export default salesRouter;

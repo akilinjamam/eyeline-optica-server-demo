@@ -1,6 +1,14 @@
 import { Server as SocketServer } from "socket.io";
 import { Server as HttpServer } from "http";
 
+export interface INewOrderPayload {
+	invoiceNo: string;
+	customer_name: string;
+	payableAmount: number;
+	saleType: string;
+	createdAt?: Date | string;
+}
+
 class SocketService {
 	private _io: SocketServer | null = null;
 	private _liveUsers: number = 0;
@@ -40,6 +48,11 @@ class SocketService {
 
 	private broadcastCount() {
 		this._io?.emit("LIVE_USER_COUNT", this._liveUsers);
+	}
+
+	public broadcastNewOrder(orderData: INewOrderPayload): void {
+		this._io?.emit("new_order_notification", orderData);
+		console.log("triggered");
 	}
 
 	// Getter if you need to access io elsewhere in your modules

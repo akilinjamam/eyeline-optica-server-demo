@@ -35,8 +35,20 @@ const updateStatuscontroller = catchAsync(async (req, res) => {
 	});
 });
 
+const makeUnreadFalseController = catchAsync(async (req, res) => {
+	const result = await salesService.makeUnreadFalseService(req.params.id as string);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: StatusCodes.OK,
+		message: "success",
+		data: result,
+	});
+});
+
 export const salescontroller = {
 	getSalescontroller,
 	getCustomercontroller,
 	updateStatuscontroller,
+	makeUnreadFalseController,
 };

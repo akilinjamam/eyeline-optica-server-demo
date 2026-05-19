@@ -38,6 +38,7 @@ export interface ISale extends Document {
 	promoName: string;
 	promoDiscount: number;
 	promoIsPercent: boolean;
+	unread: boolean;
 }
 
 const prescriptionSchema = new Schema<IPrescriptionSchema>(
@@ -127,6 +128,7 @@ const saleSchema = new Schema<ISale>(
 		promoName: { type: String, default: "" },
 		promoDiscount: { type: Number, default: 0 },
 		promoIsPercent: { type: Boolean, default: false },
+		unread: { type: Boolean, default: true },
 	},
 	{
 		timestamps: true, // adds createdAt and updatedAt

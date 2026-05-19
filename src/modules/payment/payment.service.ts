@@ -15,6 +15,7 @@ import Accessory from "../accessory/accessory.model";
 import { IWeeklyDeals, WeeklyDeals } from "../weeklyDeals/weeklydeals.model";
 import { sendSms } from "../../app/utils/sendSms";
 import { promoService } from "../apply-promo-code/promocode.service";
+import { socketService } from "../socket-service/socket.service";
 
 const createPaymentService = async (payload: TPaymentData) => {
 	const phone = payload?.customer_phone?.toString();
@@ -353,6 +354,9 @@ const paymentSuccessService = async (salesId: string) => {
 			);
 		}
 
+		socketService.broadcastNewOrder(findSales);
+		socketService.io?.emit("REFRESH_SALES_DATA");
+
 		// Save Payment History
 		const {
 			customerId,
@@ -389,8 +393,6 @@ const paymentSuccessService = async (salesId: string) => {
 			promoDiscount,
 			promoIsPercent,
 		};
-
-		console.log("success", paymentHistoryData);
 
 		const [paymentHistory] = await PaymentHistory.create([paymentHistoryData], { session });
 
