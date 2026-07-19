@@ -64,6 +64,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			prescriptionImg,
 			rightEye,
 			leftEye,
+			powerType,
 			submitType,
 		} = findCart?.items[0] || ({} as any);
 		const deliveryFee = findCart?.deliveryFee;
@@ -199,6 +200,7 @@ const createPaymentService = async (payload: TPaymentData) => {
 			accessoryId: accessoryId?._id,
 			deliveryFee,
 			subtotal: totalCost,
+			powerType: powerType ?? "",
 			submitType,
 			pd,
 			prescriptionImg,

@@ -1,7 +1,7 @@
 import express from "express";
 import validateRequest from "../../app/middleware/validateRequest";
 
-import { cartValidationSchema } from "./cart.validation";
+import { cartValidationSchema, cartWithPrescriptionValidationSchema } from "./cart.validation";
 import { cartController } from "./cart.controller";
 import { upload } from "../../app/middleware/multer";
 import combineImagesWithTextDataForCart from "../../app/middleware/combineImagesWithDataForCart";
@@ -17,6 +17,7 @@ cartRouter.post(
 	"/create-cart-with-prescription",
 	upload.array("prescriptionImg", 10),
 	combineImagesWithTextDataForCart,
+	validateRequest(cartWithPrescriptionValidationSchema),
 	cartController.createCartWithPrescriptionImgController
 );
 

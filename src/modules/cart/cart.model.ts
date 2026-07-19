@@ -7,6 +7,11 @@ export interface IPrescriptionSchema {
 	near: string;
 }
 
+export type TPowerType = "with_power" | "without_power";
+
+// how the customer provides power when powerType is "with_power"
+export type TSubmitType = "add_power" | "prescription_image" | "submit_power_later";
+
 export interface ICartItem extends Document {
 	productId?: mongoose.Schema.Types.ObjectId; // Frame
 	lensId?: mongoose.Schema.Types.ObjectId; // Lens
@@ -24,7 +29,8 @@ export interface ICartItem extends Document {
 		| "contact_lens_with_accessory"
 		| "accessory";
 	frameColorName: string;
-	submitType: string;
+	powerType: TPowerType | null; // required for lens/contact-lens items, null for frame/accessory only
+	submitType: TSubmitType | "";
 	quantity: number;
 	unitPrice: number; // Price at time of adding to cart
 	subtotal: number; // quantity * unitPrice
@@ -73,7 +79,16 @@ const CartItemSchema = new Schema<ICartItem>(
 			required: true,
 		},
 		frameColorName: {type:String, default: ""},
-		submitType: { type: String },
+		powerType: {
+			type: String,
+			enum: ["with_power", "without_power", null],
+			default: null,
+		},
+		submitType: {
+			type: String,
+			enum: ["add_power", "prescription_image", "submit_power_later", ""],
+			default: "",
+		},
 		pd: { type: Number, default: 0 },
 		leftEye: { type: prescriptionSchema },
 		rightEye: { type: prescriptionSchema },

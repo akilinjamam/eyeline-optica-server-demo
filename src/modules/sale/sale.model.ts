@@ -31,6 +31,7 @@ export interface ISale extends Document {
 	prescriptionImg: string[];
 	leftEye: IPrescriptionSchema;
 	rightEye: IPrescriptionSchema;
+	powerType: "with_power" | "without_power" | "";
 	submitType: string;
 	dealsDiscount: number;
 	discountOn: string;
@@ -122,6 +123,11 @@ const saleSchema = new Schema<ISale>(
 		leftEye: { type: prescriptionSchema, default: null },
 		rightEye: { type: prescriptionSchema, default: null },
 		prescriptionImg: { type: [String], default: null },
+		powerType: {
+			type: String,
+			enum: ["with_power", "without_power", ""],
+			default: "",
+		},
 		submitType: { type: String, default: "" },
 		dealsDiscount: { type: Number, default: 0 },
 		discountOn: { type: String, default: "" },
