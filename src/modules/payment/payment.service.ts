@@ -1,0 +1,481 @@
+import { StatusCodes } from "http-status-codes";
+import config from "../../app/config";
+import { AppError } from "../../app/errors/AppError";
+import { Cart, ICart } from "../cart/cart.model";
+import Product from "../products/products.model";
+import { Sale } from "../sale/sale.model";
+import { TPaymentData } from "./payment.type";
+import SSLCommerzPayment from "sslcommerz-lts";
+import { v4 as uuidv4 } from "uuid";
+import { Lens } from "../lenses/lenses.model";
+import ContactLens from "../contactLens/contactlens.model";
+import { PaymentHistory } from "../paymentHistory/paymentHistory.model";
+import mongoose from "mongoose";
+import Accessory from "../accessory/accessory.model";
+import { IWeeklyDeals, WeeklyDeals } from "../weeklyDeals/weeklydeals.model";
+import { sendSms } from "../../app/utils/sendSms";
+import { promoService } from "../apply-promo-code/promocode.service";
+import { socketService } from "../socket-service/socket.service";
+
+const createPaymentService = async (payload: TPaymentData) => {
+	const phone = payload?.customer_phone?.toString();
+	if (phone?.length > 11) {
+		throw new AppError(StatusCodes.NOT_ACCEPTABLE, "phone number must have only 11 digit");
+	}
+
+	if (payload.promoName !== "") {
+		await promoService.applyPromoService(payload.promoName);
+	}
+
+	const session = await mongoose.startSession();
+	session.startTransaction();
+
+	try {
+		const {
+			cart_id,
+			customer_name,
+			customer_phone,
+			customer_address,
+			customer_email,
+			payableAmount,
+			dueAmount,
+			quantity,
+			totalCost,
+			frameColorName,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
+		} = payload;
+
+		const findCart = (await Cart.findOne({ _id: cart_id })
+			.populate("items.productId")
+			.populate("items.lensId")
+			.populate("items.contactLensId")
+			.populate("items.accessoryId")) as any;
+
+		if (!findCart) throw new AppError(StatusCodes.NOT_FOUND, "cart-not-found");
+
+		const {
+			productId,
+			lensId,
+			contactLensId,
+			accessoryId,
+			pd,
+			prescriptionImg,
+			rightEye,
+			leftEye,
+			submitType,
+		} = findCart?.items[0] || ({} as any);
+		const deliveryFee = findCart?.deliveryFee;
+		const { customerId } = findCart as ICart;
+
+		const transectionId = `REF${uuidv4()}`;
+		let productName = "";
+		let saleType = "";
+		let discountOn = "no-discount";
+		let dealsDiscount = 0;
+
+		const isWeeklyDealsAvailable = await WeeklyDeals.find({});
+
+		const { active, discountPercent } = isWeeklyDealsAvailable[0] || ({} as IWeeklyDeals);
+
+		if (productId && lensId) {
+			productName = `${productId?.name} + ${lensId?.name}`;
+			saleType = "Frame and Lens";
+			if (active) {
+				if (productId?.weeklyDeals && lensId?.weeklyDeals) {
+					discountOn = "discount on Frame and Lens";
+					dealsDiscount = discountPercent;
+				}
+				if (productId?.weeklyDeals && !lensId?.weeklyDeals) {
+					discountOn = "discount on Frame ";
+					dealsDiscount = discountPercent;
+				}
+				if (!productId?.weeklyDeals && lensId?.weeklyDeals) {
+					discountOn = "discount on Lens ";
+					dealsDiscount = discountPercent;
+				}
+			}
+		}
+		if (productId && !lensId) {
+			productName = productId?.name;
+			saleType = "Only Frame";
+			if (active) {
+				if (productId?.weeklyDeals) {
+					discountOn = "discount on Frame";
+					dealsDiscount = discountPercent;
+				}
+			}
+		}
+		if (!productId && lensId) {
+			productName = lensId?.name;
+			saleType = "Only Lens";
+			if (active) {
+				if (lensId?.weeklyDeals) {
+					discountOn = "discount on Lens";
+					dealsDiscount = discountPercent;
+				}
+			}
+		}
+		if (contactLensId && !accessoryId) {
+			productName = contactLensId?.name;
+			saleType = "Only Contact-Lens";
+			if (active) {
+				if (contactLensId?.weeklyDeals) {
+					discountOn = "discount on Contact Lens";
+					dealsDiscount = discountPercent;
+				}
+			}
+		}
+		if (!contactLensId && accessoryId) {
+			productName = accessoryId?.type;
+			saleType = "Only Accessory";
+			if (active) {
+				if (accessoryId?.weeklyDeals) {
+					discountOn = "discount on Accessory";
+					dealsDiscount = discountPercent;
+				}
+			}
+		}
+		if (contactLensId && accessoryId) {
+			productName = `${contactLensId?.name} + ${accessoryId?.type}`;
+			saleType = "Contact-Lens and Accessory";
+			if (active) {
+				if (contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
+					discountOn = "discount on Contact Lens and Accessory";
+					dealsDiscount = discountPercent;
+				}
+				if (contactLensId?.weeklyDeals && !accessoryId?.weeklyDeals) {
+					discountOn = "discount on Contact Lens ";
+					dealsDiscount = discountPercent;
+				}
+				if (!contactLensId?.weeklyDeals && accessoryId?.weeklyDeals) {
+					discountOn = "discount on Accessory ";
+					dealsDiscount = discountPercent;
+				}
+			}
+		}
+
+		const date = new Date();
+		const arrangeDate = `${date.getFullYear()}${(date.getMonth() + 1)
+			.toString()
+			.padStart(2, "0")}${date.getDate().toString().padStart(2, "0")}`;
+
+		const getLastSales = await Sale.findOne().sort({ createdAt: -1 });
+		const lastInvoice = getLastSales?.invoiceNo?.slice(8);
+		let newBarcode;
+
+		if (lastInvoice === "99999") {
+			newBarcode = "00001";
+		} else {
+			if (getLastSales) {
+				const zeros = "00000";
+				const zerosLength = zeros?.length;
+				const convertIntoNumberAndAddOne = Number(lastInvoice) + 1;
+				const barcodeNumberLength = convertIntoNumberAndAddOne?.toString()?.length;
+				const remainingZerosLength = zerosLength - barcodeNumberLength;
+				const remainingZeros = zeros?.slice(0, remainingZerosLength);
+				newBarcode = `${remainingZeros}${convertIntoNumberAndAddOne}`;
+			} else {
+				newBarcode = "00001";
+			}
+		}
+
+		const salesData = {
+			invoiceNo: `${arrangeDate}${newBarcode}`,
+			tran_id: transectionId,
+			saleType,
+			customerId,
+			customer_name,
+			customer_phone,
+			customer_address,
+			customer_email,
+			payableAmount,
+			dueAmount,
+			quantity,
+			productId: productId?._id,
+			lensId: lensId?._id,
+			contactLensId: contactLensId?._id,
+			accessoryId: accessoryId?._id,
+			deliveryFee,
+			subtotal: totalCost,
+			submitType,
+			pd,
+			prescriptionImg,
+			leftEye,
+			rightEye,
+			discountOn,
+			dealsDiscount,
+			frameColorName,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
+		};
+		// Stock validation
+		if (productId) {
+			if (productId.quantity === 0) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame out of stock");
+			}
+			if (productId.quantity < quantity)
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "frame amount you have given out of stock");
+
+			// Variant-level stock validation by selected frame color
+			if (frameColorName && productId?.otherImages?.length) {
+				const selectedVariant = productId.otherImages.find(
+					(item: any) => item?.colorName === frameColorName
+				);
+				if (selectedVariant) {
+					if (selectedVariant.qty === 0) {
+						throw new AppError(StatusCodes.NOT_ACCEPTABLE, "selected frame color out of stock");
+					}
+					if (selectedVariant.qty < quantity) {
+						throw new AppError(
+							StatusCodes.NOT_ACCEPTABLE,
+							"frame color amount you have given out of stock"
+						);
+					}
+				}
+			}
+		}
+		if (lensId) {
+			if (lensId.quantity === 0) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "lens out of stock");
+			}
+			if (lensId.quantity < quantity)
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "lense amount you have given out of stock");
+		}
+		if (contactLensId) {
+			if (contactLensId.quantity === 0) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "contact lens out of stock");
+			}
+			if (contactLensId.quantity < quantity) {
+				throw new AppError(
+					StatusCodes.NOT_ACCEPTABLE,
+					"contact lens pair amount you have given out of stock"
+				);
+			}
+		}
+
+		if (accessoryId) {
+			const findZeroQty = accessoryId?.items?.map((qty: any) => qty.quantity);
+			if (findZeroQty.some((qty: number) => qty < quantity)) {
+				throw new AppError(
+					StatusCodes.NOT_ACCEPTABLE,
+					"accessory amount you have given out of stock"
+				);
+			}
+			if (findZeroQty.includes(0)) {
+				throw new AppError(StatusCodes.NOT_ACCEPTABLE, "accessory out of stock");
+			}
+		}
+
+		// Create Sale with transaction
+		const saleDoc = (await Sale.create([salesData], { session })) as any;
+		const salesId = saleDoc[0]._id;
+
+		await session.commitTransaction();
+		session.endSession();
+		// success_url: `${config.success_url}=${salesId}`,
+		// SSLCommerz initialization (outside transaction)
+		const is_live = true;
+		const data = {
+			total_amount: payableAmount,
+			currency: "BDT",
+			tran_id: transectionId,
+			success_url: `${config.success_url}=${salesId}`,
+			fail_url: `${config.fail_url}=${salesId}`,
+			cancel_url: `${config.cancelled_url}=${salesId}`,
+			ipn_url: "https://server.eyelineoptica.com/api/v1/ssl/ipn",
+			shipping_method: "Courier",
+			product_name: productName,
+			product_category: "Optical",
+			product_profile: "general",
+			cus_name: customer_name,
+			cus_email: customer_email,
+			cus_add1: customer_address,
+			cus_add2: customer_address,
+			cus_city: customer_address,
+			cus_state: customer_address,
+			cus_postcode: "4000",
+			cus_country: "Bangladesh",
+			cus_phone: customer_phone,
+			cus_fax: customer_phone,
+			ship_name: customer_name,
+			ship_add1: customer_address,
+			ship_add2: customer_address,
+			ship_city: customer_address,
+			ship_state: customer_address,
+			ship_postcode: 4000,
+			ship_country: "Bangladesh",
+		};
+
+		const sslcz = new SSLCommerzPayment(config.store_id, config.store_pass, is_live);
+		const apiResponse = await sslcz.init(data);
+		return apiResponse.GatewayPageURL;
+	} catch (error) {
+		await session.abortTransaction();
+		session.endSession();
+		throw error;
+	}
+};
+
+const paymentSuccessService = async (salesId: string) => {
+	const session = await mongoose.startSession();
+	session.startTransaction();
+
+	try {
+		const findSales = (await Sale.findOne({ _id: salesId })
+			.populate("productId")
+			.populate("lensId")
+			.populate("contactLensId")
+			.populate("accessoryId")
+			.session(session)) as any;
+
+		if (!findSales) throw new AppError(StatusCodes.NOT_FOUND, "sales-not-found");
+
+		// Product stock update
+		const updateStock = async (model: any, item: any, soldQty: number) => {
+			const remaining = item.quantity - soldQty;
+			const sold = item.sold + soldQty;
+			const update: any = { quantity: remaining, sold };
+			if (remaining === 0) update.stock = false;
+			await model.findByIdAndUpdate(item._id, update, { session, new: true, runValidators: true });
+		};
+
+		if (findSales.productId) {
+			await updateStock(Product, findSales.productId, findSales.quantity);
+
+			// Decrement sold color variant qty in otherImages by frameColorName
+			if (findSales.frameColorName && findSales.frameColorName !== "not-added") {
+				await Product.updateOne(
+					{ _id: findSales.productId._id },
+					{ $inc: { "otherImages.$[elem].qty": -findSales.quantity } },
+					{ arrayFilters: [{ "elem.colorName": findSales.frameColorName }], session }
+				);
+
+				// Clamp negative qty to 0
+				await Product.updateOne(
+					{ _id: findSales.productId._id },
+					{ $set: { "otherImages.$[elem].qty": 0 } },
+					{ arrayFilters: [{ "elem.qty": { $lt: 0 } }], session }
+				);
+
+				// If every variant qty is 0, turn product stock off
+				const updatedProduct = await Product.findById(findSales.productId._id).session(session);
+				const allVariantsEmpty =
+					updatedProduct?.otherImages?.length &&
+					updatedProduct.otherImages.every((item) => item.qty === 0);
+				if (allVariantsEmpty) {
+					await Product.updateOne(
+						{ _id: findSales.productId._id },
+						{ $set: { stock: false } },
+						{ session }
+					);
+				}
+			}
+		}
+		if (findSales.lensId) await updateStock(Lens, findSales.lensId, findSales.quantity);
+		if (findSales.contactLensId)
+			await updateStock(ContactLens, findSales.contactLensId, findSales.quantity);
+
+		// Update Accessory stock
+		if (findSales?.accessoryId) {
+			const soldQty = findSales?.quantity;
+
+			// Step 1: decrement quantity & increment sold
+			await Accessory.updateOne(
+				{ _id: findSales?.accessoryId._id },
+				{ $inc: { "items.$[].quantity": -soldQty, "items.$[].sold": soldQty } },
+				{ session }
+			);
+
+			// Step 2: set stock=false for items where quantity <= 0
+			await Accessory.updateOne(
+				{ _id: findSales?.accessoryId._id },
+				{ $set: { "items.$[elem].stock": false } },
+				{ arrayFilters: [{ "elem.quantity": { $lte: 0 } }], session }
+			);
+		}
+
+		socketService.broadcastNewOrder(findSales);
+		socketService.io?.emit("REFRESH_SALES_DATA");
+
+		// Save Payment History
+		const {
+			customerId,
+			productId,
+			lensId,
+			contactLensId,
+			accessoryId,
+			payableAmount,
+			dueAmount,
+			deliveryFee,
+			quantity,
+			subtotal,
+			discountOn,
+			dealsDiscount,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
+		} = findSales;
+
+		const paymentHistoryData = {
+			customerId,
+			productId,
+			lensId,
+			contactLensId,
+			accessoryId,
+			payableAmount,
+			dueAmount,
+			deliveryFee,
+			quantity,
+			subtotal,
+			discountOn,
+			dealsDiscount,
+			promoName,
+			promoDiscount,
+			promoIsPercent,
+		};
+
+		const [paymentHistory] = await PaymentHistory.create([paymentHistoryData], { session });
+
+		await Sale.findByIdAndUpdate(
+			findSales._id,
+			{ status: "Order received", paymentHistoryId: paymentHistory?._id },
+			{ new: true, runValidators: true, session }
+		);
+
+		const messageLink = `https://www.eyelineoptica.com/paymentHistorySingle/${paymentHistory?._id}`;
+
+		const phoneNumber = `88${findSales?.customer_phone}`;
+		console.log(phoneNumber);
+		const smsResponse = await sendSms(phoneNumber, messageLink);
+		console.log(smsResponse);
+
+		await session.commitTransaction();
+		session.endSession();
+
+		return "success";
+	} catch (error) {
+		await session.abortTransaction();
+		session.endSession();
+		throw error;
+	}
+};
+
+const paymentFailService = async (saleId: string) => {
+	const result = await Sale.deleteOne({ _id: saleId });
+	if (result.acknowledged) return "saleData deleted";
+};
+
+const paymentCancelledService = async (saleId: string) => {
+	const result = await Sale.deleteOne({ _id: saleId });
+	if (result.acknowledged) return "saleData deleted";
+};
+
+export const paymentService = {
+	createPaymentService,
+	paymentSuccessService,
+	paymentFailService,
+	paymentCancelledService,
+};

@@ -1,0 +1,30 @@
+import express from "express";
+import { upload } from "../../app/middleware/multer";
+import combineImagesWithTextData from "../../app/middleware/combineImagesWithDataR2";
+import validateRequest from "../../app/middleware/validateRequest";
+import { contactLensSchema } from "./contactlens.validation";
+import { contactLensController } from "./contactlens.controller";
+const contactlensRouter = express.Router();
+
+contactlensRouter.post(
+	"/create-contact-lens",
+	upload.array("images", 10),
+	combineImagesWithTextData("contact-lens"),
+	validateRequest(contactLensSchema),
+	contactLensController.createContactLensController
+);
+
+contactlensRouter.get("/", contactLensController.getAllContactLenseController);
+contactlensRouter.put(
+	"/update-contact-lens/:id",
+	upload.array("images", 10),
+	combineImagesWithTextData("contact-lens"),
+	contactLensController.updateContactLensController
+);
+contactlensRouter.delete("/delete-contact-lens", contactLensController.deleteContactLensController);
+contactlensRouter.get(
+	"/get-contact-lens-by-id/:slug",
+	contactLensController.getSingleContactLenseController
+);
+
+export default contactlensRouter;

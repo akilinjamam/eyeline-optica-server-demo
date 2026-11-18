@@ -1,0 +1,140 @@
+import express from "express";
+import productrouter from "../../modules/products/products.route";
+import lenserouter from "../../modules/lenses/lenses.route";
+import cartRouter from "../../modules/cart/cart.route";
+import contactlensRouter from "../../modules/contactLens/contactlens.route";
+import registrationRouter from "../../modules/registration/registration.route";
+import doctorRouter from "../../modules/doctor/doctor.route";
+import scheduleRoute from "../../modules/schedule/schedule.route";
+import prescriptionRouter from "../../modules/prescription/prescription.route";
+import customerLoginRoute from "../../modules/customerLogin/customerLogin.route";
+import paymentRouter from "../../modules/payment/payment.route";
+import accessoryRouter from "../../modules/accessory/accessory.route";
+import searchRouter from "../../modules/searchFilter/searchFilter.route";
+import paymentHistoryRouter from "../../modules/paymentHistory/paymentHistory.route";
+import salesRouter from "../../modules/sale/sale.route";
+import cateogoryRouter from "../../modules/category/category.route";
+import blogRouter from "../../modules/blog/blog.route";
+import bannerRoute from "../../modules/banner/banner.route";
+import paymentAppointmentRouter from "../../modules/payment-appointment/paymentAppointment.route";
+import agoraRouter from "../../modules/agora/agora.route";
+import wishlistRouter from "../../modules/wishlist/wishlist.route";
+import patientRoute from "../../modules/patient/patient.route";
+import appointmentLogin from "../../modules/patient-login/patientLogin.route";
+import metaRoute from "../../modules/metadata/metadata.route";
+import blogImgRouter from "../../modules/blogImage/blogImg.route";
+import promoRouter from "../../modules/apply-promo-code/promocode.route";
+import analyticsRoute from "../../modules/analytics/analytices.route";
+
+const router = express.Router();
+
+const allRoutes = [
+	{
+		path: "/products",
+		route: productrouter,
+	},
+	{
+		path: "/lens",
+		route: lenserouter,
+	},
+	{
+		path: "/cart",
+		route: cartRouter,
+	},
+	{
+		path: "/contact-lens",
+		route: contactlensRouter,
+	},
+	{
+		path: "/registration",
+		route: registrationRouter,
+	},
+	{
+		path: "/doctors",
+		route: doctorRouter,
+	},
+	{
+		path: "/schedule",
+		route: scheduleRoute,
+	},
+	{
+		path: "/prescription",
+		route: prescriptionRouter,
+	},
+	{
+		path: "/login",
+		route: customerLoginRoute,
+	},
+	{
+		path: "/ssl",
+		route: paymentRouter,
+	},
+	{
+		path: "/ssl-appointment",
+		route: paymentAppointmentRouter,
+	},
+	{
+		path: "/accessory",
+		route: accessoryRouter,
+	},
+	{
+		path: "/search",
+		route: searchRouter,
+	},
+	{
+		path: "/payment-history",
+		route: paymentHistoryRouter,
+	},
+	{
+		path: "/sales",
+		route: salesRouter,
+	},
+	{
+		path: "/category",
+		route: cateogoryRouter,
+	},
+	{
+		path: "/blog",
+		route: blogRouter,
+	},
+	{
+		path: "/blogImg",
+		route: blogImgRouter,
+	},
+	{
+		path: "/banner",
+		route: bannerRoute,
+	},
+	{
+		path: "/agora",
+		route: agoraRouter,
+	},
+	{
+		path: "/wishlist",
+		route: wishlistRouter,
+	},
+	{
+		path: "/patient",
+		route: patientRoute,
+	},
+	{
+		path: "/patient-login",
+		route: appointmentLogin,
+	},
+	{
+		path: "/meta",
+		route: metaRoute,
+	},
+	{
+		path: "/promo",
+		route: promoRouter,
+	},
+	{
+		path: "/trace",
+		route: analyticsRoute,
+	},
+];
+
+allRoutes.forEach((route) => router.use(route.path, route.route as any));
+
+export default router;
