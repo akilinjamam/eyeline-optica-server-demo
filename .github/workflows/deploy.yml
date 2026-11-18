@@ -10,20 +10,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to VPS
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Copy Files to VPS via SCP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: "."
+          target: "/www/eyeline-optica-server-demo"
+
+      - name: Build and Restart Application
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          port: 22
           script: |
             cd /www/eyeline-optica-server-demo
-
-            echo "Pulling latest code..."
-            git pull origin main
 
             echo "Installing dependencies..."
             npm install
 
-            echo "build files...."
+            echo "Building application..."
             npm run build
+
+            echo "Removing development dependencies..."
+            npm prune --omit=dev
+
+            echo "Restarting application..."
+
+            if pm2 describe eyeline-optica-server-demo > /dev/null 2>&1; then
+              pm2 restart eyeline-optica-server-demo
+            else
+              pm2 start npm --name "eyeline-optica-server-demo" -- start
+            fi
+
+            pm2 save
+
+            echo "Deployment completed successfully!"
