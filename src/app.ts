@@ -14,26 +14,27 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
-	cors({
-		origin: [
-			"http://localhost:5173",
-			"https://eyelineoptica.com",
-			"https://www.eyelineoptica.com",
-			"http://www.eyelineoptica.com",
-			"http://eyelineoptica.com",
-			"https://cms.eyelineoptica.com",
-			"http://cms.eyelineoptica.com",
-			"https://www.cms.eyelineoptica.com",
-			"http://localhost:3000",
-		],
-	})
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://eyelineoptica.com",
+      "https://www.eyelineoptica.com",
+      "http://www.eyelineoptica.com",
+      "http://eyelineoptica.com",
+      "https://cms.eyelineoptica.com",
+      "http://cms.eyelineoptica.com",
+      "https://www.cms.eyelineoptica.com",
+      "https://eyelineoptica-cms.netlify.app",
+      "http://localhost:3000",
+    ],
+  }),
 );
 
 app.get("/", (req: Request, res: Response) => {
-	res.status(200).json({
-		status: true,
-		message: "Hello, TypeScript + Express + MONGOOSE",
-	});
+  res.status(200).json({
+    status: true,
+    message: "Hello, TypeScript + Express + MONGOOSE",
+  });
 });
 
 app.use("/api/v1/", router);
