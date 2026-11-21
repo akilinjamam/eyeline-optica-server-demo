@@ -22,6 +22,6 @@ router.patch(
 	CustomerControllers.updateCustomer
 );
 
-router.delete("/delete-update-fcb/:id", CustomerControllers.deleteCustomer);
+router.delete("/delete-customer-fcb/:id", CustomerControllers.deleteCustomer);
 
 export const CustomerFcbRoutes = router;

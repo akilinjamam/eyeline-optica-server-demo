@@ -25,114 +25,134 @@ import metaRoute from "../../modules/metadata/metadata.route";
 import blogImgRouter from "../../modules/blogImage/blogImg.route";
 import promoRouter from "../../modules/apply-promo-code/promocode.route";
 import analyticsRoute from "../../modules/analytics/analytices.route";
+import { ProductRoutes } from "../../modules/fcb/product/product.route";
+import { SupplierRoutes } from "../../modules/fcb/supplier/supplier.route";
+import { CustomerFcbRoutes } from "../../modules/fcb/customer/customer.route";
+import { StockRoutes } from "../../modules/fcb/stock/stock.route";
 
 const router = express.Router();
 
 const allRoutes = [
-	{
-		path: "/products",
-		route: productrouter,
-	},
-	{
-		path: "/lens",
-		route: lenserouter,
-	},
-	{
-		path: "/cart",
-		route: cartRouter,
-	},
-	{
-		path: "/contact-lens",
-		route: contactlensRouter,
-	},
-	{
-		path: "/registration",
-		route: registrationRouter,
-	},
-	{
-		path: "/doctors",
-		route: doctorRouter,
-	},
-	{
-		path: "/schedule",
-		route: scheduleRoute,
-	},
-	{
-		path: "/prescription",
-		route: prescriptionRouter,
-	},
-	{
-		path: "/login",
-		route: customerLoginRoute,
-	},
-	{
-		path: "/ssl",
-		route: paymentRouter,
-	},
-	{
-		path: "/ssl-appointment",
-		route: paymentAppointmentRouter,
-	},
-	{
-		path: "/accessory",
-		route: accessoryRouter,
-	},
-	{
-		path: "/search",
-		route: searchRouter,
-	},
-	{
-		path: "/payment-history",
-		route: paymentHistoryRouter,
-	},
-	{
-		path: "/sales",
-		route: salesRouter,
-	},
-	{
-		path: "/category",
-		route: cateogoryRouter,
-	},
-	{
-		path: "/blog",
-		route: blogRouter,
-	},
-	{
-		path: "/blogImg",
-		route: blogImgRouter,
-	},
-	{
-		path: "/banner",
-		route: bannerRoute,
-	},
-	{
-		path: "/agora",
-		route: agoraRouter,
-	},
-	{
-		path: "/wishlist",
-		route: wishlistRouter,
-	},
-	{
-		path: "/patient",
-		route: patientRoute,
-	},
-	{
-		path: "/patient-login",
-		route: appointmentLogin,
-	},
-	{
-		path: "/meta",
-		route: metaRoute,
-	},
-	{
-		path: "/promo",
-		route: promoRouter,
-	},
-	{
-		path: "/trace",
-		route: analyticsRoute,
-	},
+  {
+    path: "/products",
+    route: productrouter,
+  },
+  {
+    path: "/lens",
+    route: lenserouter,
+  },
+  {
+    path: "/cart",
+    route: cartRouter,
+  },
+  {
+    path: "/contact-lens",
+    route: contactlensRouter,
+  },
+  {
+    path: "/registration",
+    route: registrationRouter,
+  },
+  {
+    path: "/doctors",
+    route: doctorRouter,
+  },
+  {
+    path: "/schedule",
+    route: scheduleRoute,
+  },
+  {
+    path: "/prescription",
+    route: prescriptionRouter,
+  },
+  {
+    path: "/login",
+    route: customerLoginRoute,
+  },
+  {
+    path: "/ssl",
+    route: paymentRouter,
+  },
+  {
+    path: "/ssl-appointment",
+    route: paymentAppointmentRouter,
+  },
+  {
+    path: "/accessory",
+    route: accessoryRouter,
+  },
+  {
+    path: "/search",
+    route: searchRouter,
+  },
+  {
+    path: "/payment-history",
+    route: paymentHistoryRouter,
+  },
+  {
+    path: "/sales",
+    route: salesRouter,
+  },
+  {
+    path: "/category",
+    route: cateogoryRouter,
+  },
+  {
+    path: "/blog",
+    route: blogRouter,
+  },
+  {
+    path: "/blogImg",
+    route: blogImgRouter,
+  },
+  {
+    path: "/banner",
+    route: bannerRoute,
+  },
+  {
+    path: "/agora",
+    route: agoraRouter,
+  },
+  {
+    path: "/wishlist",
+    route: wishlistRouter,
+  },
+  {
+    path: "/patient",
+    route: patientRoute,
+  },
+  {
+    path: "/patient-login",
+    route: appointmentLogin,
+  },
+  {
+    path: "/meta",
+    route: metaRoute,
+  },
+  {
+    path: "/promo",
+    route: promoRouter,
+  },
+  {
+    path: "/trace",
+    route: analyticsRoute,
+  },
+  {
+    path: "/fcb-product",
+    route: ProductRoutes,
+  },
+  {
+    path: "/fcb-supplier",
+    route: SupplierRoutes,
+  },
+  {
+    path: "/fcb-customer",
+    route: CustomerFcbRoutes,
+  },
+  {
+    path: "fcb-stock",
+    route: StockRoutes,
+  },
 ];
 
 allRoutes.forEach((route) => router.use(route.path, route.route as any));
