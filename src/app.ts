@@ -25,6 +25,7 @@ app.use(
       "http://cms.eyelineoptica.com",
       "https://www.cms.eyelineoptica.com",
       "https://eyeline-optica-cms.netlify.app",
+      "https://fc-business.netlify.app",
       "http://localhost:3000",
     ],
   }),
