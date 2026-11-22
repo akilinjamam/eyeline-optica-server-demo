@@ -150,7 +150,7 @@ const allRoutes = [
     route: CustomerFcbRoutes,
   },
   {
-    path: "fcb-stock",
+    path: "/fcb-stock",
     route: StockRoutes,
   },
 ];
